@@ -1,0 +1,274 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+.cmn_sec_pad {
+  padding: 50px 20px;
+  color: #fff;
+}
+.cmn_h2_heading {
+  font-family: "Poppins";
+  font-size: 34px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 51px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.col_blue {
+  color: #4682e3;
+}
+.col_orng {
+  color: #fa6130;
+}
+/* cmn css part end */
+
+.our_feature_sec {
+  background: #21204c;
+  color: #fff;
+}
+.top_nav {
+  background: #21204c;
+}
+.btn.log_btn {
+  border-radius: 64px;
+  padding: 3px 15px;
+  font-size: 22px;
+  font-weight: 600;
+  background: #fa6130;
+  border: 2px solid #fa6130;
+}
+.btn.lo_ck_btn {
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 24px;
+  background: #fa6130;
+  border: 2px solid #fa6130;
+  border-radius: 64px;
+  position: relative;
+  top: 70px;
+  transform: all 0.5s ease-in-out;
+}
+.btn.lo_ck_btn:hover,
+.btn.up_sld_btn:hover {
+  color: #ffffff;
+  background-color: #4682e3;
+  border: 2px solid #4682e3;
+}
+.btn.up_sld_btn {
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 24px;
+  background: #fa6130;
+  border: 2px solid #fa6130;
+  border-radius: 64px;
+}
+.btn.sub_btn {
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 24px;
+  position: relative;
+  right: 151px;
+  background: #fa6130;
+  border: 2px solid #fa6130;
+  border-radius: 64px;
+  bottom: 2px;
+}
+.card.feature_card {
+  height: 520px;
+  width: 100%;
+  background: transparent;
+  border: none;
+}
+.crd_content {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: justify;
+}
+.subsid_login_page .incentive_sec_ites,
+.incentive_sec_elect,
+.incentive_sec_st_govt,
+.benefit_sec,
+.footer_sec {
+  background: #1d1c41;
+}
+.subsid_login_page .incentive_sec_msme,
+.incentive_sec_trxtile {
+  background: #21204c;
+}
+.nav_lst {
+  font-size: 24px;
+  line-height: 36px;
+}
+a.nav-link {
+  color: #fff;
+  margin-right: 20px;
+}
+.incen_content {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 39px;
+  font-style: italic;
+  color: #fff;
+}
+.incen_row_content {
+  align-items: center;
+}
+.footer_sec ul li {
+  list-style-type: none;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+.footer_sec ul li h4 {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
+  padding-bottom: 10px;
+}
+.footer_sec ul li a {
+  text-decoration: none;
+}
+.inpt_fld {
+  width: 480px;
+  height: 45px;
+  border-radius: 47px;
+  padding-left: 35px;
+  color: #000;
+  background: transparent;
+  border: 1px solid #4682e3;
+}
+a.navbar-brand img {
+  max-height: 41px;
+  margin-top: 16px;
+}
+a.navbar-brand .logo {
+  max-height: 63px;
+}
+span.swiper-pagination-bullet {
+  background: #1d1c41;
+  border: 1px solid #fa6130;
+  opacity: 1;
+  height: 15px;
+  width: 15px;
+}
+span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background: #fa6130;
+}
+li.f-item {
+  padding-bottom: 15px;
+}
+li.f-item a {
+  color: #d0d0d0;
+  transition: all 0.5s ease-in-out;
+}
+li.f-item a:hover {
+  color: #fa6130;
+}
+.social-icons {
+  padding: 0;
+}
+.social-icons li {
+  list-style: none;
+  display: inline;
+  margin-right: 20px;
+}
+ul.social-icons li a {
+  color: #fa6130;
+  transition: all 0.5s ease-in-out;
+}
+ul.social-icons li a:hover {
+  color: #4682e3;
+}
+.inner-section {
+  min-height: 500px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color: white;
+  text-align: justify;
+}
+.bg-inner {
+  background: #262555 !important;
+}
+li.nav-item.active a {
+  color: #fa6130;
+}
+.foot_slid {
+  background: #21204c;
+  color: #fff;
+}
+.foot_sld_crd {
+  background-color: #1d1c41;
+  width: 100%;
+  height: 400px;
+  border: 1px solid #fff;
+}
+.foot_sld_crd_content {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22px;
+  padding: 10px;
+}
+.foot_sld_crd_content::after {
+  content: " ";
+  height: 3px;
+  width: 10%;
+  background-color: #fa6130;
+  display: block;
+  position: relative;
+  left: 313px;
+  top: 7px;
+}
+.qut_icon {
+  font-size: 36px;
+  color: #fa6130;
+}
+.mySwiperClient .swiper-horizontal > .swiper-pagination-bullets,
+.mySwiperClient .swiper-pagination-bullets.swiper-pagination-horizontal,
+.mySwiperClient .swiper-pagination-custom,
+.mySwiperClient .swiper-pagination-fraction {
+  bottom: var(--swiper-pagination-bottom, 8px);
+  top: var(--swiper-pagination-top, auto);
+  left: 0;
+  width: 100%;
+  top: 43px;
+}
+.mySwiperClient .swiper-button-prev {
+  position: absolute;
+  top: 25px;
+  left: 175px;
+}
+.mySwiperClient .swiper-button-next {
+  position: absolute;
+  top: 25px;
+  right: 175px;
+}
+.mySwiperClient .swiper-button-next:after,
+.mySwiperClient .swiper-button-prev:after {
+  text-transform: none !important;
+  letter-spacing: 0;
+  font-variant: initial;
+  line-height: 1;
+  font-size: 19px;
+  font-weight: 700;
+  color: #fa6130;
+}
+.mySwiperClient span.swiper-pagination-bullet {
+  background: #ffffff;
+  border: none;
+  opacity: 1;
+  height: 10px;
+  width: 10px;
+}
+.mySwiperClient span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background: #fa6130;
+}
