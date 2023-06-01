@@ -1,12 +1,17 @@
 import Base from "@layouts/Baseof";
 import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "redux/Actions/userAction";
 
 const Login = ({ data }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [credential, setCredential] = useState({ email: "", password: "" });
+
+  const user = useSelector((state) => state?.user);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,21 +19,17 @@ const Login = ({ data }) => {
   };
 
   const handleLogin = async (e) => {
-    const response = await fetch("http://13.232.213.101/users/login", {
-      method: "POST",
-      mode: "cors",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credential),
-    });
-    const data = await response.json();
-    console.log(data);
-    const result = JSON.stringify(data?.access_token);
-    localStorage.setItem("accessToken", result);
-    router.push("/questions");
+    dispatch(userActions.login(credential));
+    // router.push("/questions");
   };
+
+  useEffect(() => {
+    if (user?.user?.access_token !== undefined) {
+      router.push("/questions");
+    } else {
+      router.push("/login");
+    }
+  }, [user?.user?.access_token]);
   return (
     <Base
       title={"title"}
@@ -49,23 +50,23 @@ const Login = ({ data }) => {
                   </h2>
                 </div>
                 <div style={{ margin: "auto", width: "300px" }}>
-                  <div class="form-floating mb-3">
+                  <div className="form-floating mb-3">
                     <input
                       type="email"
                       name="email"
                       onChange={(e) => handleChange(e)}
-                      class="form-control"
+                      className="form-control"
                       id="floatingInput"
                       placeholder="Email"
                     />
                   </div>
 
-                  <div class="form-floating">
+                  <div className="form-floating">
                     <input
                       type="password"
                       name="password"
                       onChange={(e) => handleChange(e)}
-                      class="form-control"
+                      className="form-control"
                       id="floatingPassword"
                       placeholder="Password"
                     />
@@ -83,7 +84,7 @@ const Login = ({ data }) => {
                 </div>
               </Form>
             </div>
-            <div classNameName="content col-12 md:col-6 lg:col-5"></div>
+            <div className="content col-12 md:col-6 lg:col-5"></div>
           </div>
         </div>
       </section>

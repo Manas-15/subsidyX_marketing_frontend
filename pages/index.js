@@ -7,6 +7,7 @@ import Portfolio from "layouts/components/Slider/portfolio";
 
 const Home = () => {
   const { title } = config.site;
+
   return (
     <Base title={title}>
       <Slider />

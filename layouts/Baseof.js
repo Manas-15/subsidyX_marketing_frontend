@@ -3,6 +3,10 @@ import Footer from "@layouts/partials/Footer";
 import Header from "@layouts/partials/Header";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { alertActions } from "redux/Actions/alertAction";
+import { notification } from "antd";
 
 const Base = ({
   title,
@@ -16,7 +20,24 @@ const Base = ({
   const { meta_image, meta_author, meta_description } = config.metadata;
   const { base_url } = config.site;
   const router = useRouter();
-  console.log(router.pathname);
+  const dispatch = useDispatch();
+
+  const alert = useSelector((state) => state.alert);
+
+  useEffect(() => {
+    dispatch(alertActions.clear());
+  }, [router.pathname]);
+
+  if (alert.message) {
+    setTimeout(() => {
+      dispatch(alertActions.clear());
+    }, 5000);
+  }
+  const openNotificationWithIcon = (type, message) => {
+    notification[type]({
+      message: message,
+    });
+  };
 
   return (
     <>
@@ -71,6 +92,7 @@ const Base = ({
         />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
+      {alert?.message && openNotificationWithIcon(alert?.type, alert?.message)}
       <main className="subsid_login_page">
         <Header />
         {/* main site */}

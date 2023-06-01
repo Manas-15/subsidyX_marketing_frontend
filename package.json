@@ -12,12 +12,20 @@
     "start": "next start"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "antd": "^5.5.2",
+    "axios": "^1.4.0",
     "bootstrap": "^4.6.2",
     "next": "13.0.6",
     "react": "18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
+    "react-redux": "^8.0.7",
+    "redux": "^4.2.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.4.2",
+    "redux-toolkit": "^1.1.2",
     "swiper": "^9.3.2"
   },
   "devDependencies": {

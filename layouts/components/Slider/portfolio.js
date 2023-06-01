@@ -42,7 +42,7 @@ function Portfolio() {
     },
   ];
   return (
-    <div class="sec">
+    <div className="sec">
       <Swiper
         spaceBetween={30}
         navigation={true}
@@ -60,17 +60,17 @@ function Portfolio() {
         {portfolio.map((item, index) => {
           return (
             <SwiperSlide key={index}>
-              <div class="foot_slid_content text-center">
-                <h3 class="pb-5">Hear From Our Clients</h3>
-                <div class="card foot_sld_crd ">
-                  <div class="row">
-                    <div class="col-md-4">
+              <div className="foot_slid_content text-center">
+                <h3 className="pb-5">Hear From Our Clients</h3>
+                <div className="card foot_sld_crd ">
+                  <div className="row">
+                    <div className="col-md-4">
                       <figure>
                         <img src={item.image} alt="" height="398" width="350" />
                       </figure>
                     </div>
-                    <div class="col-md-8">
-                      <figure class="pt-2">
+                    <div className="col-md-8">
+                      <figure className="pt-2">
                         <img
                           src={item.companyLogo}
                           alt=""
@@ -78,11 +78,11 @@ function Portfolio() {
                           width="100"
                         />
                       </figure>
-                      <div class="foot_sld_crd_content">
+                      <div className="foot_sld_crd_content">
                         <ImQuotesLeft className="qut_icon" />
                         <p className="pt-2">{item.comment}</p>
                       </div>
-                      <h4 class="pt-4 pr-4">
+                      <h4 className="pt-4 pr-4">
                         {item.name} - {item.role}
                       </h4>
                     </div>

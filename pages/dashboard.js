@@ -11,7 +11,7 @@ const Dashboard = ({ data }) => {
   const [next, setNext] = useState(false);
 
   const goToNext = () => {
-    setNext(!next);
+    setNext(true);
   };
 
   return (

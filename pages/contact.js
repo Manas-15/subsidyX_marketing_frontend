@@ -83,7 +83,7 @@ const Contact = ({ data }) => {
                 </div>
               </div>
             </div>
-            <div classNameName="content col-12 md:col-6 lg:col-5"></div>
+            <div className="content col-12 md:col-6 lg:col-5"></div>
           </div>
         </div>
       </section>
