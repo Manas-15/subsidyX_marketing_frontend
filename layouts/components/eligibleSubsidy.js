@@ -102,7 +102,14 @@ const EligibleSubsidy = ({ data }) => {
       industry_sector_id: eligibleUserInfo?.industrySectorID,
     };
     console.log(user_info);
-    setModalShow(true);
+    if (
+      eligibleUserInfo?.stateID !== 0 ||
+      eligibleUserInfo?.industryCategoryID !== 0 ||
+      eligibleUserInfo?.industrySectorID !== 0
+    ) {
+      setModalShow(true);
+    }
+
     // const response = await fetch(
     //   "http://192.168.2.115:1000/subsidy/eligible_subsidies",
     //   {
