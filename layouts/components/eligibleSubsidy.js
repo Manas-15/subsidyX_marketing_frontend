@@ -2,9 +2,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { IoIosArrowDropright, IoIosArrowDropleft } from "react-icons/io";
+import { stateAction } from "redux/Actions/stateAction";
+import { useDispatch } from "react-redux";
+import { CongratulationsModal } from "../components/Modal";
+import { alertActions } from "redux/Actions/alertAction";
 
 const EligibleSubsidy = ({ data }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const [modalShow, setModalShow] = useState(false);
   const [allState, setAllState] = useState([]);
   const [category, setCategory] = useState([]);
   const [sector, setSector] = useState([]);
@@ -28,6 +34,8 @@ const EligibleSubsidy = ({ data }) => {
       },
     });
     const data = await response.json();
+
+    dispatch(alertActions.error(data?.detail));
     setAllState(data);
   };
   const callCategoryApi = async () => {
@@ -41,7 +49,8 @@ const EligibleSubsidy = ({ data }) => {
       },
     });
     const data = await response.json();
-    console.log(data);
+    dispatch(alertActions.error(data?.detail));
+
     setCategory(data);
   };
   //   const callSectorApi = async () => {
@@ -74,13 +83,13 @@ const EligibleSubsidy = ({ data }) => {
   ];
 
   useEffect(() => {
+    // dispatch(stateAction.getStateList);
     callStateApi();
     callCategoryApi();
     // callSectorApi();
   }, []);
 
-  const handleSelectChange = (e, index) => {
-    console.log(e.target.name, e.target.value);
+  const handleSelectChange = (e) => {
     const { name, value } = e.target;
     setEligibleUserInfo({ ...eligibleUserInfo, [name]: value });
   };
@@ -93,7 +102,7 @@ const EligibleSubsidy = ({ data }) => {
       industry_sector_id: eligibleUserInfo?.industrySectorID,
     };
     console.log(user_info);
-    alert(user_info);
+    setModalShow(true);
     // const response = await fetch(
     //   "http://192.168.2.115:1000/subsidy/eligible_subsidies",
     //   {
@@ -111,67 +120,78 @@ const EligibleSubsidy = ({ data }) => {
   };
 
   return (
-    <div className="col-12 inner-section ">
-      <div className="d-flex justify-content-center mt-5 mb-5">
-        <h2 className="fw-bold text-dark">
-          Hey!! Do you have Udyam Aadhar Number or GST Number?
-        </h2>
-      </div>
-      <div style={{ margin: "auto" }}>
-        <div className="d-flex justify-content-center">
-          <select
-            className="form-control mb-3 w-25"
-            name="stateID"
-            onChange={(e) => handleSelectChange(e)}
-          >
-            <option value="none">Select State</option>
-            {allState?.map((state, index) => (
-              <option key={index} className="form-control" value={state?.id}>
-                {state?.name}
-              </option>
-            ))}
-          </select>
+    <>
+      {modalShow && (
+        <CongratulationsModal
+          // type={type}
+          // action={action}
+          show={modalShow}
+          setModalShow={setModalShow}
+          onHide={() => setModalShow(false)}
+        />
+      )}
+      <div className="col-12 inner-section ">
+        <div className="d-flex justify-content-center mt-5 mb-5">
+          <h2 className="fw-bold text-dark">
+            Hey!! Do you have Udyam Aadhar Number or GST Number?
+          </h2>
         </div>
+        <div style={{ margin: "auto" }}>
+          <div className="d-flex justify-content-center">
+            <select
+              className="form-control mb-3 w-25"
+              name="stateID"
+              onChange={(e) => handleSelectChange(e)}
+            >
+              <option value="none">Select State</option>
+              {allState?.map((state, index) => (
+                <option key={index} className="form-control" value={state?.id}>
+                  {state?.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="d-flex justify-content-center mt-3">
-          <select
-            className="form-control mb-3 w-25 mx-3"
-            name="industryCategoryID"
-            onChange={(e) => handleSelectChange(e)}
-          >
-            <option value="none">Select Industry Category</option>
-            {category?.map((cat, index) => (
-              <option className="form-control" value={cat?.id}>
-                {cat?.name}
-              </option>
-            ))}
-          </select>
+          <div className="d-flex justify-content-center mt-3">
+            <select
+              className="form-control mb-3 w-25 mx-3"
+              name="industryCategoryID"
+              onChange={(e) => handleSelectChange(e)}
+            >
+              <option value="none">Select Industry Category</option>
+              {category?.map((cat, index) => (
+                <option className="form-control" value={cat?.id}>
+                  {cat?.name}
+                </option>
+              ))}
+            </select>
 
-          <select
-            className="form-control mb-3 w-25"
-            name="industrySectorID"
-            onChange={(e) => handleSelectChange(e)}
-          >
-            <option value="none">Select Industry Sector</option>
-            {allSector?.map((sector, index) => (
-              <option key={index} className="form-control" value={sector?.id}>
-                {sector?.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mt-5 d-flex justify-content-center">
-          <IoIosArrowDropleft
-            style={{ fontSize: "50px", color: "#fa6130" }}
-            onClick={(e) => goToNext(e)}
-          />
-          <IoIosArrowDropright
-            style={{ fontSize: "50px", color: "#fa6130" }}
-            onClick={(e) => goToNext(e)}
-          />
+            <select
+              className="form-control mb-3 w-25"
+              name="industrySectorID"
+              onChange={(e) => handleSelectChange(e)}
+            >
+              <option value="none">Select Industry Sector</option>
+              {allSector?.map((sector, index) => (
+                <option key={index} className="form-control" value={sector?.id}>
+                  {sector?.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mt-5 d-flex justify-content-center">
+            <IoIosArrowDropleft
+              style={{ fontSize: "50px", color: "#fa6130" }}
+              onClick={(e) => goToNext(e)}
+            />
+            <IoIosArrowDropright
+              style={{ fontSize: "50px", color: "#fa6130" }}
+              onClick={(e) => goToNext(e)}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
