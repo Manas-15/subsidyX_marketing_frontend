@@ -292,7 +292,7 @@ const Home = () => {
               <div className="col-md-5">
                 <figure>
                   <Image
-                    src="/images/central_and_state.png"
+                    src="/images/central_and_state.gif"
                     width="400"
                     height="359"
                     alt=""

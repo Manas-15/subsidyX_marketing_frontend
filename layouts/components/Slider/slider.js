@@ -13,7 +13,7 @@ function Slider() {
         "Get your benifit report with in few minutes and start planning for your business",
       heading: "Instant benifits report",
       sub_heading: "Instant benifits report",
-      image: "images/slider1.png",
+      image: "images/slider1.gif",
     },
   ];
   return (
