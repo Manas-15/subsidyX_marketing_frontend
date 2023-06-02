@@ -6,7 +6,7 @@ export const userActions = {
   login,
   logout,
 };
-function login(data, from) {
+function login(data) {
   return (dispatch) => {
     dispatch(request({ data }));
     userService.login(data).then(
@@ -14,6 +14,7 @@ function login(data, from) {
         dispatch(success(res));
         const result = JSON.stringify(res?.data?.access_token);
         localStorage.setItem("accessToken", result);
+        // alert("User loggedin successfully");
         dispatch(alertActions.success("User loggedin successfully"));
       },
       (error) => {
@@ -34,10 +35,14 @@ function login(data, from) {
 }
 
 function logout() {
-  toast("Logged out successfully", {
-    hideProgressBar: true,
-    autoClose: 4000,
-    type: "success",
-  });
-  return { type: userConstants.LOGOUT };
+  return (dispatch) => {
+    dispatch(logout());
+    // alert("User logged out successfully");
+
+    dispatch(alertActions.success("User logged out successfully"));
+  };
+
+  function logout() {
+    return { type: userConstants.LOGOUT };
+  }
 }

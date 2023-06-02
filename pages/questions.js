@@ -3,10 +3,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { IoIosArrowDropright } from "react-icons/io";
 import { useRouter } from "next/router";
+import questilonList from "../config/questions.json";
 
 const QuestionPage = ({ data }) => {
   const router = useRouter();
   const [isSubsidy, setIsSubsidy] = useState("2");
+
+  console.log(questilonList);
 
   const handleRadioClick = (e) => {
     setIsSubsidy(e.target.value);

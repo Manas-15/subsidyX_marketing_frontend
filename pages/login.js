@@ -18,9 +18,8 @@ const Login = ({ data }) => {
     setCredential({ ...credential, [name]: value });
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     dispatch(userActions.login(credential));
-    // router.push("/questions");
   };
 
   useEffect(() => {

@@ -5,6 +5,8 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  height: 100%;
 }
 .cmn_sec_pad {
   padding: 50px 20px;
@@ -189,8 +191,9 @@ ul.social-icons li a {
 ul.social-icons li a:hover {
   color: #4682e3;
 }
+
 .inner-section {
-  min-height: 500px;
+  min-height: 536px;
   padding-top: 20px;
   padding-bottom: 20px;
   color: white;
@@ -271,4 +274,25 @@ li.nav-item.active a {
 }
 .mySwiperClient span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   background: #fa6130;
+}
+
+.modal-content {
+  background-image: url("../public/images/popupbg.png");
+  background-size: cover;
+  min-height: 420px;
+  background-color: transparent;
+  background-clip: padding-box;
+  border: none;
+}
+.modal-header {
+  border-bottom: none;
+}
+.modal-title {
+  /* padding: 47px; */
+}
+.modal-footer {
+  border-top: none;
+}
+.modal-body {
+  padding: 0;
 }
