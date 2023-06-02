@@ -28,7 +28,8 @@ const Login = ({ data }) => {
     } else {
       router.push("/login");
     }
-  }, [user?.user?.access_token]);
+  }, [user?.user?.access_token, router]);
+
   return (
     <Base
       title={"title"}
