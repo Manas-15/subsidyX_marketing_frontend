@@ -39,8 +39,13 @@ const Base = ({
     });
   };
 
+  const manas = (message) => {
+    console.log(message);
+  };
+
   return (
     <>
+      {/* {console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")} */}
       <Head>
         {/* title */}
         <title>subsidyX</title>
@@ -92,10 +97,9 @@ const Base = ({
         />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      {alert?.message && openNotificationWithIcon(alert?.type, alert?.message)}
+      {alert?.message && manas(alert?.message)}
       <main className="subsid_login_page">
         <Header />
-        {/* main site */}
 
         {children}
 

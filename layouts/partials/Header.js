@@ -4,12 +4,22 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Image from "next/image";
 import config from "@config/config.json";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "redux/Actions/userAction";
 const Header = () => {
   //router
+  const dispatch = useDispatch();
   const router = useRouter();
   const { base_url } = config.site;
   // states declaration
   const [navOpen, setNavOpen] = useState(false);
+
+  const user = useSelector((state) => state?.user);
+
+  const handleLogout = () => {
+    dispatch(userActions.logout());
+    router.push("/login");
+  };
 
   return (
     <header className="subsid_home_header">
@@ -60,14 +70,25 @@ const Header = () => {
                 </Link>
               </li>
               <li className="nav-item ml-2">
-                <button
-                  type="button"
-                  className="btn btn-primary log_btn"
-                  title="login"
-                  onClick={() => router.push("/login")}
-                >
-                  LOG IN
-                </button>
+                {user?.user?.access_token === undefined ? (
+                  <button
+                    type="button"
+                    className="btn btn-primary log_btn"
+                    title="login"
+                    onClick={() => router.push("/login")}
+                  >
+                    LOG IN
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn btn-primary log_btn"
+                    title="login"
+                    onClick={() => handleLogout()}
+                  >
+                    LOG OUT
+                  </button>
+                )}
               </li>
             </ul>
           </div>
