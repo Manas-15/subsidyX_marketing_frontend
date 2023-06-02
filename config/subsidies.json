@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "is_central": false,
+    "subsidy_id": 40,
+    "is_subscheme": true,
+    "scheme": "Capital Subsidy (Applicable to Manufacturing Sector Only)"
+  },
+  {
+    "id": 2,
+    "is_central": false,
+    "subsidy_id": 40,
+    "is_subscheme": true,
+    "scheme": "Interest Subsidy"
+  },
+  {
+    "id": 3,
+    "is_central": false,
+    "subsidy_id": 40,
+    "is_subscheme": true,
+    "scheme": "Net SGST Reimbursement to Micro, Small and Medium Enterprise "
+  },
+  {
+    "id": 4,
+    "is_central": false,
+    "subsidy_id": 40,
+    "is_subscheme": true,
+    "scheme": "EPF Reimbursement"
+  },
+  {
+    "id": 5,
+    "is_central": true,
+    "subsidy_id": 40,
+    "is_subscheme": true,
+    "scheme": "Assistance for Reimbursement of CGTMSE Fees"
+  }
+]

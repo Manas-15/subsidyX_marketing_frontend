@@ -1,28 +1,15 @@
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import { DropdownButton, Dropdown } from "react-bootstrap";
-import { BiFilter } from "react-icons/bi";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
 import { CustomButton } from "./CustomButton";
+import { useRouter } from "next/router";
+import subsidies from "../../config/subsidies.json";
 
 export const CongratulationsModal = (props) => {
-  const dispatch = useDispatch();
-  const [state, setState] = useState({});
-
-  //   const handleIndustryCategoryChange = (e) => {
-  //     setState({ name: e.target.value });
-  //   };
-
+  const router = useRouter();
   const submitModal = () => {
     props.setModalShow(false);
+    router.push("/questions-after-eligible");
   };
 
-  //   const industryCategoryDelete = () => {
-  //     dispatch(industryCategoryActions?.deleteCategory(props.action));
-  //     props.setModalShow(false);
-  //   };
   const cancelModal = () => {
     props.setModalShow(false);
   };
@@ -37,35 +24,62 @@ export const CongratulationsModal = (props) => {
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">
-            <div className="d-flex justify-content-center fw-bold">
+            <div className="d-flex justify-content-center fw-bold text-white mt-5">
               <h3> Congratulations!! </h3>
             </div>
-            <h5>
-              Based on information provided there are 2 subsidies applicable to
-              you.
-            </h5>
+            <div
+              style={{
+                fontSize: "17px",
+                marginLeft: "60px",
+                marginTop: "15px",
+              }}
+            >
+              <span className="text-white">
+                Based on information provided there are{" "}
+                {
+                  subsidies?.filter(
+                    (subsidy, ind) => subsidy.is_central === true
+                  ).length
+                }{" "}
+                subsidies applicable to you <br />
+                from Central Government and{" "}
+                {
+                  subsidies?.filter(
+                    (subsidy, ind) => subsidy.is_central === false
+                  ).length
+                }
+                <br />
+                Subsidies from Government of Gujurat.
+              </span>
+            </div>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          For more details would you like to proceed further?
-        </Modal.Body>
-        <Modal.Footer>
-          <>
+          <div style={{ paddingLeft: "69px", paddingRight: " 50px" }}>
+            <h5 style={{ color: "#4682E3" }}>
+              For more details would you like to proceed further?
+            </h5>
+          </div>
+
+          <div className="d-flex justify-content-center mt-4">
             <CustomButton
-              name="Yes"
+              name="YES"
               color="#FFFFFF"
+              width="100px"
               bgColor="#FA6130"
               onClick={() => submitModal()}
             />
             <CustomButton
-              name="No"
+              name="NO"
               color="#000000"
+              width="100px"
               bgColor="#FFFFFF"
               border="1px solid #000000"
               onClick={() => cancelModal()}
             />
-          </>
-        </Modal.Footer>
+          </div>
+        </Modal.Body>
+        <Modal.Footer></Modal.Footer>
       </Modal>
     </>
   );
