@@ -5,17 +5,18 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev -p 8000",
+    "dev": "node server.js",
     "build": "next build",
+    "start": "NODE_ENV=production node server.js",
     "export": "next build && next export",
-    "lint": "next lint",
-    "start": "next start"
+    "lint": "next lint"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "antd": "^5.5.2",
     "axios": "^1.4.0",
     "bootstrap": "^4.6.2",
+    "cors": "^2.8.5",
     "multiselect-react-dropdown": "^2.0.25",
     "next": "13.3.4",
     "react": "18.2.0",
