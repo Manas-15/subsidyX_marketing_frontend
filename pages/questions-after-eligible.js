@@ -155,7 +155,7 @@ const QuestionAfterEligible = ({ data }) => {
                 <div className="col-md-4">
                   {subsidyState?.map((sub, index) => {
                     return (
-                      <ul>
+                      <ul key={index}>
                         <span>
                           {index + 1} {sub.scheme}
                         </span>
