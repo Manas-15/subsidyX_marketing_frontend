@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDropright, IoIosArrowDropleft } from "react-icons/io";
 import { useRouter } from "next/router";
 import questilonList from "../config/questions.json";
+import subsidyList from "../config/subsidies.json";
+
 import { Form } from "react-bootstrap";
 import Multiselect from "multiselect-react-dropdown";
 
@@ -12,6 +14,7 @@ const QuestionAfterEligible = ({ data }) => {
   const [question, setQuestion] = useState();
   const [queNum, setQueNum] = useState(0);
   const [answer, setAnswer] = useState("");
+  const [subsidyState, setSubsidyState] = useState(subsidyList);
 
   console.log(questilonList);
 
@@ -36,16 +39,21 @@ const QuestionAfterEligible = ({ data }) => {
     }
   };
   const handleMultiValueSelect = (val, event) => {
-    console.log(val, event);
+    console.log(event);
+    const data = event.filter((val, idx) => {
+      return val?.option === "Micro";
+    });
+    if (data[0]?.option === "Micro") {
+      const list = [...subsidyState];
+      const filteredArray = list.filter((data, ind) => ind !== 2);
+      setSubsidyState(filteredArray);
+    }
   };
 
   const handleMultiValueRemove = (val, event) => {
     console.log(val, event);
   };
   const multiselectRef = useRef();
-  const resetSelectedValues = (e) => {
-    console.log("called");
-  };
 
   return (
     <Base
@@ -63,79 +71,97 @@ const QuestionAfterEligible = ({ data }) => {
               <div className="d-flex justify-content-center mt-5 mb-5">
                 <h2 className="fw-bold">{question?.label}</h2>
               </div>
-              <div style={{ margin: "auto", width: "300px" }}>
-                <div className="d-flex justify-content-center flex-column">
-                  {question?.field_type_id === 1 && (
-                    <Form>
-                      <Form.Group
-                        className="mb-3"
-                        controlId="formBasicPassword"
-                      >
-                        <Form.Control type="text" placeholder="Enter Amount" />
-                      </Form.Group>
-                    </Form>
-                  )}
+              <div className="row">
+                <div style={{ margin: "auto", width: "300px" }}>
+                  <div className="d-flex justify-content-center flex-column">
+                    {question?.field_type_id === 1 && (
+                      <Form>
+                        <Form.Group
+                          className="mb-3"
+                          controlId="formBasicPassword"
+                        >
+                          <Form.Control
+                            type="text"
+                            placeholder="Enter Amount"
+                          />
+                        </Form.Group>
+                      </Form>
+                    )}
 
-                  {question?.field_type_id === 2 && (
-                    <>
-                      <div className="d-flex justify-content-center">
-                        <input
-                          type="radio"
-                          name="subsidy"
-                          value="1"
-                          // checked={false}
-                          style={{
-                            width: "30px",
-                            height: "30px",
-                            marginRight: "10px",
-                          }}
-                          onChange={(e) => handleRadioClick(e)}
-                        />
-                        <h3>Yes</h3>
-                      </div>
+                    {question?.field_type_id === 2 && (
+                      <>
+                        <div className="d-flex justify-content-center">
+                          <input
+                            type="radio"
+                            name="subsidy"
+                            value="1"
+                            // checked={false}
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              marginRight: "10px",
+                            }}
+                            onChange={(e) => handleRadioClick(e)}
+                          />
+                          <h3>Yes</h3>
+                        </div>
 
-                      <div className="d-flex justify-content-center">
-                        <input
-                          type="radio"
-                          name="subsidy"
-                          value="1"
-                          // checked={true}
-                          style={{
-                            width: "30px",
-                            height: "30px",
-                            marginRight: "10px",
-                          }}
-                          onChange={(e) => handleRadioClick(e)}
-                        />
-                        <h3>No</h3>
-                      </div>
-                    </>
-                  )}
-                  {question?.field_type_id === 3 && (
-                    <Multiselect
-                      showCheckbox
-                      placeholder="Please Select"
-                      options={question?.options}
-                      ref={multiselectRef}
-                      className="text-dark"
-                      onSelect={(event) => {
-                        handleMultiValueSelect(name, event);
-                      }}
-                      onRemove={(event) => handleMultiValueRemove(name, event)}
-                      displayValue="option"
+                        <div className="d-flex justify-content-center">
+                          <input
+                            type="radio"
+                            name="subsidy"
+                            value="1"
+                            // checked={true}
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              marginRight: "10px",
+                            }}
+                            onChange={(e) => handleRadioClick(e)}
+                          />
+                          <h3>No</h3>
+                        </div>
+                      </>
+                    )}
+                    {question?.field_type_id === 3 && (
+                      <Multiselect
+                        showCheckbox
+                        placeholder="Please Select"
+                        options={question?.options}
+                        ref={multiselectRef}
+                        className="text-dark"
+                        onSelect={(event) => {
+                          handleMultiValueSelect(name, event);
+                        }}
+                        onRemove={(event) =>
+                          handleMultiValueRemove(name, event)
+                        }
+                        displayValue="option"
+                      />
+                    )}
+                  </div>
+
+                  <div className="mt-4 d-flex justify-content-center">
+                    <IoIosArrowDropleft
+                      style={{ fontSize: "50px", color: "#fa6130" }}
+                      onClick={(e) => goToPrev(e)}
                     />
-                  )}
+                    <IoIosArrowDropright
+                      style={{ fontSize: "50px", color: "#fa6130" }}
+                      onClick={(e) => goToNext(e)}
+                    />
+                  </div>
                 </div>
-
-                <div className="mt-4 d-flex justify-content-center">
-                  <IoIosArrowDropleft
-                    style={{ fontSize: "50px", color: "#fa6130" }}
-                    onClick={(e) => goToPrev(e)}
-                  />
-                  <IoIosArrowDropright
-                    style={{ fontSize: "50px", color: "#fa6130" }}
-                    onClick={(e) => goToNext(e)}
-                  />
+                <div className="col-md-4">
+                  {subsidyState?.map((sub, index) => {
+                    return (
+                      <ul>
+                        <span>
+                          {index + 1} {sub.scheme}
+                        </span>
+                      </ul>
+                    );
+                  })}
                 </div>
               </div>
             </div>
