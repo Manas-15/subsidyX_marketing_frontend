@@ -1,10 +1,17 @@
 import Modal from "react-bootstrap/Modal";
 import { CustomButton } from "./CustomButton";
 import { useRouter } from "next/router";
-import subsidies from "../../config/subsidies.json";
+import { useDispatch, useSelector } from "react-redux";
+import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 
 export const CongratulationsModal = (props) => {
+  console.log(props);
+  const subsidies = props?.action?.subsidies;
+  const dispatch = useDispatch();
   const router = useRouter();
+
+
+
   const submitModal = () => {
     props.setModalShow(false);
     router.push("/questions-after-eligible");
@@ -12,6 +19,7 @@ export const CongratulationsModal = (props) => {
 
   const cancelModal = () => {
     props.setModalShow(false);
+    dispatch(eligibleSubsidyAction.clearEligible());
   };
   return (
     <>

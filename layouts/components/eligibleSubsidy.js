@@ -7,11 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { CongratulationsModal } from "../components/Modal";
 import { categoryAction } from "redux/Actions/categoryAction";
 import { sectorAction } from "redux/Actions/sectorAction";
+import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
+import Loader from "./Loader";
 
 const EligibleSubsidy = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [eligibleUserInfo, setEligibleUserInfo] = useState({
     mobileNumber: 9784596522,
@@ -24,93 +27,68 @@ const EligibleSubsidy = ({ data }) => {
   const allCategories = useSelector(
     (state) => state?.industryCategory?.category
   );
-  console.log(allStates, allCategories);
-  //   const callSectorApi = async () => {
-  //     const response = await fetch(
-  //       "http://13.232.213.101/industry_sector/?page=1&page_size=10",
-  //       {
-  //         method: "GET",
-  //         mode: "cors",
-  //         credentials: "same-origin",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       }
-  //     );
-  //     const data = await response.json();
-  //     console.log(data);
-  //     setSector(data);
-  //   };
+  const allSectors = useSelector((state) => state?.industrySector?.sector);
 
-  const allSector = [
-    { id: 1, name: "Plastic" },
-    { id: 2, name: "Pharma" },
-    { id: 3, name: "Metal" },
-    { id: 4, name: "Paper" },
-    { id: 5, name: "Engineering" },
-    { id: 6, name: "Agriculture" },
-    { id: 7, name: "Chemical" },
-    { id: 8, name: "Textile" },
-  ];
+  const eligibleSubsidy = useSelector(
+    (state) => state?.eligibleSubsidy?.eligible_subsidy
+  );
 
   useEffect(() => {
     dispatch(stateAction.getStateList());
     dispatch(categoryAction.getCategoryList());
-    // dispatch(sectorAction.getSectorList());
-    // callCategoryApi();
-    // callSectorApi();
   }, []);
 
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
     setEligibleUserInfo({ ...eligibleUserInfo, [name]: value });
+
+    if (name === "industryCategoryID") {
+      dispatch(sectorAction.getSectorList(value));
+    }
   };
 
   const goToNext = async () => {
-    const user_info = {
-      mobile_number: eligibleUserInfo?.mobileNumber,
-      state_id: eligibleUserInfo?.stateID,
-      industry_category_id: eligibleUserInfo?.industryCategoryID,
-      industry_sector_id: eligibleUserInfo?.industrySectorID,
+    const data = {
+      user_info: {
+        mobile_number: eligibleUserInfo?.mobileNumber,
+        state_id: eligibleUserInfo?.stateID,
+        industry_category_id: eligibleUserInfo?.industryCategoryID,
+        industry_sector_id: eligibleUserInfo?.industrySectorID,
+      },
     };
-    console.log(user_info);
+    console.log(data);
     if (
       eligibleUserInfo?.stateID !== 0 ||
       eligibleUserInfo?.industryCategoryID !== 0 ||
       eligibleUserInfo?.industrySectorID !== 0
     ) {
+      // setIsLoading(true);
+      dispatch(eligibleSubsidyAction.getEligible(data));
+      dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
+    }
+  };
+  useEffect(() => {
+    if (eligibleSubsidy !== undefined && eligibleSubsidy !== null) {
+      // setIsLoading(false);
+      console.log("showwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
       setModalShow(true);
     }
-
-    // const response = await fetch(
-    //   "http://192.168.2.115:1000/subsidy/eligible_subsidies",
-    //   {
-    //     method: "POST",
-    //     mode: "cors",
-    //     credentials: "same-origin",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(user_info),
-    //   }
-    // );
-    // const data = await response.json();
-    // console.log(data);
-  };
+  }, [eligibleSubsidy]);
 
   return (
     <>
       {modalShow && (
         <CongratulationsModal
           // type={type}
-          // action={action}
+          action={eligibleSubsidy}
           show={modalShow}
           setModalShow={setModalShow}
           onHide={() => setModalShow(false)}
         />
       )}
       <div className="col-12 inner-section ">
+        {isLoading && <Loader />}
+
         <div className="d-flex justify-content-center mt-5 mb-5">
           <h2 className="fw-bold text-dark">
             Hey!! Do you have Udyam Aadhar Number or GST Number?
@@ -152,7 +130,7 @@ const EligibleSubsidy = ({ data }) => {
               onChange={(e) => handleSelectChange(e)}
             >
               <option value="none">Select Industry Sector</option>
-              {allSector?.map((sector, index) => (
+              {allSectors?.sectors?.map((sector, index) => (
                 <option key={index} className="form-control" value={sector?.id}>
                   {sector?.name}
                 </option>
@@ -160,10 +138,10 @@ const EligibleSubsidy = ({ data }) => {
             </select>
           </div>
           <div className="mt-5 d-flex justify-content-center">
-            <IoIosArrowDropleft
+            {/* <IoIosArrowDropleft
               style={{ fontSize: "50px", color: "#fa6130" }}
               onClick={(e) => goToNext(e)}
-            />
+            /> */}
             <IoIosArrowDropright
               style={{ fontSize: "50px", color: "#fa6130" }}
               onClick={(e) => goToNext(e)}
