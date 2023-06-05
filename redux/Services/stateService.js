@@ -1,4 +1,4 @@
-import authHeader from "redux/authHeader";
+import { authHeader } from "redux/authHeader";
 import api from "../api";
 
 export const stateService = {
@@ -7,6 +7,6 @@ export const stateService = {
 
 async function getStateList() {
   return await api.get(`state/`, {
-    headers: authHeader,
+    headers: authHeader(),
   });
 }

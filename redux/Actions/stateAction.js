@@ -1,3 +1,4 @@
+import { userConstants } from "redux/Constants/userConstant";
 import { alertActions } from "./alertAction";
 import { stateConstant } from "redux/Constants/stateConstant";
 import { stateService } from "redux/Services/stateService";
@@ -6,12 +7,11 @@ export const stateAction = {
   getStateList,
 };
 
-function getStateList(data, from) {
+function getStateList() {
   return (dispatch) => {
-    dispatch(request({ data }));
-    stateService.getStateList(data).then(
+    dispatch(request());
+    stateService.getStateList().then(
       (res) => {
-        console.log(res);
         dispatch(success(res));
       },
       (error) => {

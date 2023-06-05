@@ -3,17 +3,16 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { IoIosArrowDropright, IoIosArrowDropleft } from "react-icons/io";
 import { stateAction } from "redux/Actions/stateAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CongratulationsModal } from "../components/Modal";
-import { alertActions } from "redux/Actions/alertAction";
+import { categoryAction } from "redux/Actions/categoryAction";
+import { sectorAction } from "redux/Actions/sectorAction";
 
 const EligibleSubsidy = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
-  const [allState, setAllState] = useState([]);
-  const [category, setCategory] = useState([]);
-  const [sector, setSector] = useState([]);
+
   const [eligibleUserInfo, setEligibleUserInfo] = useState({
     mobileNumber: 9784596522,
     stateID: 0,
@@ -21,38 +20,11 @@ const EligibleSubsidy = ({ data }) => {
     industrySectorID: 0,
   });
 
-  let accessToken = JSON.parse(localStorage.getItem("accessToken"));
-
-  const callStateApi = async () => {
-    const response = await fetch("http://13.232.213.101/state/", {
-      method: "GET",
-      mode: "cors",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    const data = await response.json();
-
-    dispatch(alertActions.error(data?.detail));
-    setAllState(data);
-  };
-  const callCategoryApi = async () => {
-    const response = await fetch("http://13.232.213.101/industry/industries", {
-      method: "GET",
-      mode: "cors",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    const data = await response.json();
-    dispatch(alertActions.error(data?.detail));
-
-    setCategory(data);
-  };
+  const allStates = useSelector((state) => state?.state?.state);
+  const allCategories = useSelector(
+    (state) => state?.industryCategory?.category
+  );
+  console.log(allStates, allCategories);
   //   const callSectorApi = async () => {
   //     const response = await fetch(
   //       "http://13.232.213.101/industry_sector/?page=1&page_size=10",
@@ -83,9 +55,10 @@ const EligibleSubsidy = ({ data }) => {
   ];
 
   useEffect(() => {
-    // dispatch(stateAction.getStateList);
-    callStateApi();
-    callCategoryApi();
+    dispatch(stateAction.getStateList());
+    dispatch(categoryAction.getCategoryList());
+    // dispatch(sectorAction.getSectorList());
+    // callCategoryApi();
     // callSectorApi();
   }, []);
 
@@ -151,7 +124,7 @@ const EligibleSubsidy = ({ data }) => {
               onChange={(e) => handleSelectChange(e)}
             >
               <option value="none">Select State</option>
-              {allState?.map((state, index) => (
+              {allStates?.map((state, index) => (
                 <option key={index} className="form-control" value={state?.id}>
                   {state?.name}
                 </option>
@@ -166,7 +139,7 @@ const EligibleSubsidy = ({ data }) => {
               onChange={(e) => handleSelectChange(e)}
             >
               <option value="none">Select Industry Category</option>
-              {category?.map((cat, index) => (
+              {allCategories?.map((cat, index) => (
                 <option className="form-control" value={cat?.id}>
                   {cat?.name}
                 </option>

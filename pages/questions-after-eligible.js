@@ -16,7 +16,7 @@ const QuestionAfterEligible = ({ data }) => {
   const [answer, setAnswer] = useState("");
   const [subsidyState, setSubsidyState] = useState(subsidyList);
 
-  console.log(questilonList);
+  // console.log(questilonList);
 
   const handleRadioClick = (e) => {
     setAnswer(e.target.value);

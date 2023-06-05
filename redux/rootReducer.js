@@ -1,13 +1,17 @@
 import { combineReducers } from "redux";
+import { userConstants } from "./Constants/userConstant";
 import { user } from "./Reducers/userReducer";
 import { alert } from "./Reducers/alertReducer";
-import { userConstants } from "./Constants/userConstant";
 import { state } from "./Reducers/stateReducer";
+import { industryCategory } from "./Reducers/categoryReducer";
+import { industrySector } from "./Reducers/sectorReducer";
 
 const MainReducer = combineReducers({
   user,
   alert,
   state,
+  industryCategory,
+  industrySector,
 });
 
 const rootReducer = (state, action) => {
