@@ -1,0 +1,12 @@
+import { authHeader } from "redux/authHeader";
+import api from "../api";
+
+export const questionService = {
+  getQuestion,
+};
+
+async function getQuestion() {
+  return await api.get(`industry/industries`, {
+    headers: authHeader(),
+  });
+}
