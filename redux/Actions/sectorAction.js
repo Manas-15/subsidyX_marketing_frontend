@@ -8,10 +8,10 @@ export const sectorAction = {
   getSectorList,
 };
 
-function getSectorList() {
+function getSectorList(id) {
   return (dispatch) => {
-    dispatch(request());
-    sectorService.getSectorList().then(
+    dispatch(request(id));
+    sectorService.getSectorList(id).then(
       (res) => {
         dispatch(success(res));
       },

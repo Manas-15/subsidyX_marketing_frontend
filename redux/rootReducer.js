@@ -5,6 +5,7 @@ import { alert } from "./Reducers/alertReducer";
 import { state } from "./Reducers/stateReducer";
 import { industryCategory } from "./Reducers/categoryReducer";
 import { industrySector } from "./Reducers/sectorReducer";
+import { eligibleSubsidy } from "./Reducers/eligibleSubsidyReducer";
 
 const MainReducer = combineReducers({
   user,
@@ -12,6 +13,7 @@ const MainReducer = combineReducers({
   state,
   industryCategory,
   industrySector,
+  eligibleSubsidy,
 });
 
 const rootReducer = (state, action) => {
