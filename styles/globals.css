@@ -197,7 +197,7 @@ ul.social-icons li a:hover {
   padding-top: 20px;
   padding-bottom: 20px;
   color: white;
-  text-align: justify;
+  /* text-align: justify; */
 }
 .bg-inner {
   background: #262555 !important;
@@ -295,4 +295,13 @@ li.nav-item.active a {
 }
 .modal-body {
   padding: 0;
+}
+
+.example {
+  margin: 20px 0;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
 }
