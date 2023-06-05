@@ -3,57 +3,80 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDropright, IoIosArrowDropleft } from "react-icons/io";
 import { useRouter } from "next/router";
-import questilonList from "../config/questions.json";
-import subsidyList from "../config/subsidies.json";
-
 import { Form } from "react-bootstrap";
 import Multiselect from "multiselect-react-dropdown";
+import { useDispatch, useSelector } from "react-redux";
+import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 
 const QuestionAfterEligible = ({ data }) => {
+  const dispatch = useDispatch();
   const router = useRouter();
-  const [question, setQuestion] = useState();
-  const [queNum, setQueNum] = useState(0);
-  const [answer, setAnswer] = useState("");
-  const [subsidyState, setSubsidyState] = useState(subsidyList);
+  const multiselectRef = useRef();
 
-  // console.log(questilonList);
+  const [checkedValue, setCheckedValue] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+
+  const subsidyData = useSelector((state) => state?.eligibleSubsidy);
+  const questionData = subsidyData?.eligible_subsidy;
+  const subsidiesList = subsidyData?.eligible_subsidy?.subsidies;
+  console.log(selectedOptions);
+  console.log(inputValue);
 
   const handleRadioClick = (e) => {
-    setAnswer(e.target.value);
+    setCheckedValue(e.target.value);
   };
-
-  useEffect(() => {
-    const data = questilonList[queNum];
-    setQuestion(data);
-  }, [queNum]);
 
   const goToPrev = () => {
-    if (queNum > 0) {
-      setQueNum(queNum - 1);
-    }
-  };
-  const goToNext = () => {
-    setQueNum(queNum + 1);
-    if (question?.field_type_id === 3) {
-      multiselectRef.current.resetSelectedValues();
-    }
-  };
-  const handleMultiValueSelect = (val, event) => {
-    console.log(event);
-    const data = event.filter((val, idx) => {
-      return val?.option === "Micro";
-    });
-    if (data[0]?.option === "Micro") {
-      const list = [...subsidyState];
-      const filteredArray = list.filter((data, ind) => ind !== 2);
-      setSubsidyState(filteredArray);
-    }
+    dispatch(eligibleSubsidyAction.clearEligible());
+    router.push("/dashboard");
   };
 
-  const handleMultiValueRemove = (val, event) => {
-    console.log(val, event);
+  const goToNext = () => {
+    console.log(
+      selectedOptions?.[0]?.option,
+      selectedOptions?.[0]?.id,
+      "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
+    );
+    const user_info = subsidyData?.selected_data?.user_info;
+    const datas = {
+      user_info,
+      response: {
+        question_id: questionData?.question?.id,
+        option_id: selectedOptions?.[0]?.id ? selectedOptions?.[0]?.id : 0,
+        response: selectedOptions?.[0]?.option
+          ? selectedOptions?.[0]?.option
+          : inputValue !== ""
+          ? inputValue
+          : checkedValue !== ""
+          ? checkedValue
+          : "",
+        subscheme_id: questionData?.question?.subscheme_id,
+        subsidy_id: questionData?.question?.subsidy_id,
+      },
+      report_id: questionData?.report_id,
+    };
+    console.log(datas);
+    dispatch(eligibleSubsidyAction.getEligible(datas));
+
+    if (questionData?.question?.field_type_id === 3) {
+      multiselectRef.current.resetSelectedValues();
+      setSelectedOptions([]);
+    }
+    setInputValue("");
   };
-  const multiselectRef = useRef();
+
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleMultiValueSelect = (event) => {
+    setSelectedOptions(event);
+  };
+
+  const handleMultiValueRemove = (event) => {
+    setSelectedOptions(event);
+  };
 
   return (
     <Base
@@ -66,35 +89,43 @@ const QuestionAfterEligible = ({ data }) => {
     >
       <section className="section bg-inner">
         <div className="container">
-          <div className="section row pb-0">
-            <div className="col-12 inner-section">
-              <div className="d-flex justify-content-center mt-5 mb-5">
-                <h2 className="fw-bold">{question?.label}</h2>
-              </div>
-              <div className="row">
+          <div className="section pb-0">
+            <div className="row inner-section">
+              <div className="col-sm-8">
+                <div className="d-flex justify-content-center m-5">
+                  <h3 className="fw-bold">
+                    {questionData?.question?.name
+                      ? questionData?.question?.name
+                      : "No question available"}
+                  </h3>
+                </div>
                 <div style={{ margin: "auto", width: "300px" }}>
                   <div className="d-flex justify-content-center flex-column">
-                    {question?.field_type_id === 1 && (
+                    {questionData?.question?.field_type_id === 1 && (
                       <Form>
                         <Form.Group
                           className="mb-3"
-                          controlId="formBasicPassword"
+                          // controlId="formBasicPassword"
                         >
                           <Form.Control
                             type="text"
+                            name="name"
                             placeholder="Enter Amount"
+                            autoFocus
+                            value={inputValue}
+                            onChange={(e) => handleChange(e)}
                           />
                         </Form.Group>
                       </Form>
                     )}
 
-                    {question?.field_type_id === 2 && (
+                    {questionData?.question?.field_type_id === 2 && (
                       <>
                         <div className="d-flex justify-content-center">
                           <input
                             type="radio"
                             name="subsidy"
-                            value="1"
+                            value="Yes"
                             // checked={false}
                             style={{
                               width: "30px",
@@ -110,7 +141,7 @@ const QuestionAfterEligible = ({ data }) => {
                           <input
                             type="radio"
                             name="subsidy"
-                            value="1"
+                            value="No"
                             // checked={true}
                             style={{
                               width: "30px",
@@ -123,19 +154,18 @@ const QuestionAfterEligible = ({ data }) => {
                         </div>
                       </>
                     )}
-                    {question?.field_type_id === 3 && (
+                    {questionData?.question?.field_type_id === 3 && (
                       <Multiselect
                         showCheckbox
                         placeholder="Please Select"
-                        options={question?.options}
+                        options={questionData?.question?.options}
                         ref={multiselectRef}
+                        // closeOnSelect="true"
                         className="text-dark"
                         onSelect={(event) => {
-                          handleMultiValueSelect(name, event);
+                          handleMultiValueSelect(event);
                         }}
-                        onRemove={(event) =>
-                          handleMultiValueRemove(name, event)
-                        }
+                        onRemove={(event) => handleMultiValueRemove(event)}
                         displayValue="option"
                       />
                     )}
@@ -152,13 +182,15 @@ const QuestionAfterEligible = ({ data }) => {
                     />
                   </div>
                 </div>
-                <div className="col-md-4">
-                  {subsidyState?.map((sub, index) => {
+              </div>
+
+              <div className="col-sm-4">
+                <div className="mt-5">
+                  {subsidiesList?.map((sub, index) => {
                     return (
-                      <div key={index}>
-                        <span>
-                          {index + 1} {sub.scheme}
-                        </span>
+                      <div key={index} className="d-flex">
+                        {index + 1}{" "}
+                        <p style={{ marginLeft: "15px" }}>{sub.scheme}</p>
                       </div>
                     );
                   })}

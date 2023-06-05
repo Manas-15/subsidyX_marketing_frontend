@@ -18,7 +18,7 @@ const Login = ({ data }) => {
     setCredential({ ...credential, [name]: value });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = () => {
     dispatch(userActions.login(credential));
   };
 
@@ -43,7 +43,7 @@ const Login = ({ data }) => {
         <div className="container">
           <div className="section row pb-0">
             <div className="col-12 inner-section">
-              <Form>
+              <Form onSubmit={handleLogin}>
                 <div className="d-flex justify-content-center mt-5 mb-5">
                   <h2 className="fw-bold">
                     Great!! Enter your email and password to log in
@@ -73,10 +73,9 @@ const Login = ({ data }) => {
                   </div>
                   <div className="mt-5 d-flex justify-content-center">
                     <button
-                      type="button"
+                      type="submit"
                       className="btn btn-primary log_btn"
                       title="login"
-                      onClick={(e) => handleLogin(e)}
                     >
                       LOG IN
                     </button>
