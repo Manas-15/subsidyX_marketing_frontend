@@ -8,6 +8,7 @@ import Multiselect from "multiselect-react-dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 import { CustomButton } from "@layouts/components/CustomButton";
+import { CongratulationsModal } from "@layouts/components/Modal";
 
 const QuestionAfterEligible = ({ data }) => {
   const dispatch = useDispatch();
@@ -17,12 +18,21 @@ const QuestionAfterEligible = ({ data }) => {
   const [checkedValue, setCheckedValue] = useState("");
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [modalShow, setModalShow] = useState(false);
+  const [type, setType] = useState("");
 
   const subsidyData = useSelector((state) => state?.eligibleSubsidy);
   const questionData = subsidyData?.eligible_subsidy;
   const subsidiesList = subsidyData?.eligible_subsidy?.subsidies;
-  console.log(selectedOptions);
-  console.log(inputValue);
+
+  console.log(questionData);
+
+  useEffect(() => {
+    if (subsidiesList?.length === 0) {
+      setModalShow(true);
+      setType("warn");
+    }
+  }, [questionData?.question?.name]);
 
   const handleRadioClick = (e) => {
     setCheckedValue(e.target.value);
@@ -34,11 +44,6 @@ const QuestionAfterEligible = ({ data }) => {
   };
 
   const goToNext = () => {
-    console.log(
-      selectedOptions?.[0]?.option,
-      selectedOptions?.[0]?.id,
-      "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
-    );
     const user_info = subsidyData?.selected_data?.user_info;
     const datas = {
       user_info,
@@ -57,7 +62,6 @@ const QuestionAfterEligible = ({ data }) => {
       },
       report_id: questionData?.report_id,
     };
-    console.log(datas);
     dispatch(eligibleSubsidyAction.getEligible(datas));
 
     if (questionData?.question?.field_type_id === 3) {
@@ -88,6 +92,15 @@ const QuestionAfterEligible = ({ data }) => {
       noindex={"noindex"}
       canonical={"canonical"}
     >
+      {modalShow && (
+        <CongratulationsModal
+          type={type}
+          // action={eligibleSubsidy}
+          show={modalShow}
+          setModalShow={setModalShow}
+          onHide={() => setModalShow(false)}
+        />
+      )}
       <section className="section bg-inner">
         <div className="container">
           <div className="section pb-0">
@@ -197,7 +210,9 @@ const QuestionAfterEligible = ({ data }) => {
                   />
                 </div>
                 <div className="d-flex  mb-5 mt-3">
-                  <h4 style={{ textDecoration: "underline", fontWeight: "500" }}>
+                  <h4
+                    style={{ textDecoration: "underline", fontWeight: "500" }}
+                  >
                     Displaying eligible subsidies
                   </h4>
                 </div>

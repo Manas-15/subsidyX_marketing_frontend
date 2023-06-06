@@ -87,7 +87,7 @@ const EligibleSubsidy = ({ data }) => {
         />
       )}
       <div className="col-12 inner-section ">
-        {isLoading && <Loader />}
+        {/* {isLoading && <Loader />} */}
 
         <div className="d-flex justify-content-center mt-5 mb-5">
           <h2 className="fw-bold text-dark">
