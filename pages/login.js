@@ -18,7 +18,8 @@ const Login = ({ data }) => {
     setCredential({ ...credential, [name]: value });
   };
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
     dispatch(userActions.login(credential));
   };
 
@@ -43,7 +44,7 @@ const Login = ({ data }) => {
         <div className="container">
           <div className="section row pb-0">
             <div className="col-12 inner-section">
-              <Form onSubmit={handleLogin}>
+              <Form onSubmit={(e) => handleLogin(e)}>
                 <div className="d-flex justify-content-center mt-5 mb-5">
                   <h2 className="fw-bold">
                     Great!! Enter your email and password to log in
