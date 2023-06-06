@@ -7,6 +7,7 @@ import { Form } from "react-bootstrap";
 import Multiselect from "multiselect-react-dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
+import { CustomButton } from "@layouts/components/CustomButton";
 
 const QuestionAfterEligible = ({ data }) => {
   const dispatch = useDispatch();
@@ -172,10 +173,10 @@ const QuestionAfterEligible = ({ data }) => {
                   </div>
 
                   <div className="mt-4 d-flex justify-content-center">
-                    <IoIosArrowDropleft
+                    {/* <IoIosArrowDropleft
                       style={{ fontSize: "50px", color: "#fa6130" }}
                       onClick={(e) => goToPrev(e)}
-                    />
+                    /> */}
                     <IoIosArrowDropright
                       style={{ fontSize: "50px", color: "#fa6130" }}
                       onClick={(e) => goToNext(e)}
@@ -185,6 +186,21 @@ const QuestionAfterEligible = ({ data }) => {
               </div>
 
               <div className="col-sm-4">
+                <div className="d-flex justify-content-end">
+                  <CustomButton
+                    name="Restart Session"
+                    color="#FFFFFF"
+                    width="200px"
+                    bgColor="#FA6130"
+                    onClick={(e) => goToPrev(e)}
+                    className="position-relative"
+                  />
+                </div>
+                <div className="d-flex  mb-5 mt-3">
+                  <h4 style={{ textDecoration: "underline", fontWeight: "500" }}>
+                    Displaying eligible subsidies
+                  </h4>
+                </div>
                 <div className="mt-5">
                   {subsidiesList?.map((sub, index) => {
                     return (

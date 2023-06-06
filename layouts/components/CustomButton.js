@@ -3,6 +3,7 @@ import React from "react";
 // import { TfiExport } from "react-icons/tfi";
 // import { BiFilter } from "react-icons/bi";
 // import Dropdown from "react-bootstrap/Dropdown";
+import { VscDebugRestart } from "react-icons/vsc";
 
 export const CustomButton = ({
   name,
@@ -13,6 +14,7 @@ export const CustomButton = ({
   height,
   onClick,
   border,
+  className,
 }) => {
   return (
     <>
@@ -26,8 +28,14 @@ export const CustomButton = ({
           border: border,
         }}
         onClick={onClick}
-        className={`btn mx-2`}
+        className={`btn mx-2 ${className}`}
       >
+        {name === "Restart Session" && (
+          <VscDebugRestart
+            size="25px"
+            style={{ position: "absolute", left: "7px", top: "5px" }}
+          />
+        )}
         {name}
       </button>
     </>
