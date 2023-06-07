@@ -22,6 +22,8 @@ function IndustryCategory() {
 
   console.log(reports);
 
+  const subsidyReports = useSelector((state) => state?.eligibleSubsidy);
+
   const actions = [
     { icon: BsShareFill },
     { icon: HiEye },
@@ -118,7 +120,7 @@ function IndustryCategory() {
                 </tr>
               </thead>
               <tbody>
-                {reports?.map((data, index) => {
+                {subsidyReports?.subsidy_report?.result?.map((data, index) => {
                   return (
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>

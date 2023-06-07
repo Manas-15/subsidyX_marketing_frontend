@@ -20,19 +20,26 @@ const QuestionAfterEligible = ({ data }) => {
   const [inputValue, setInputValue] = useState("");
   const [modalShow, setModalShow] = useState(false);
   const [type, setType] = useState("");
+  const [reportID, setReportID] = useState(null);
 
   const subsidyData = useSelector((state) => state?.eligibleSubsidy);
   const questionData = subsidyData?.eligible_subsidy;
   const subsidiesList = subsidyData?.eligible_subsidy?.subsidies;
 
-  console.log(questionData);
+console.log(Object.keys(questionData?.question).length === 0);
+console.log(questionData?.question);
 
   useEffect(() => {
-    if (subsidiesList?.length === 0) {
+    if (Object.keys(questionData?.question).length === 0) {
       setModalShow(true);
-      setType("warn");
+      setType("no question");
+      setReportID(subsidyData?.eligible_subsidy?.report_id);
     }
-  }, [questionData?.question?.name]);
+    // if (subsidiesList?.length === 0) {
+    //   setModalShow(true);
+    //   setType("warn");
+    // }
+  }, [subsidiesList]);
 
   const handleRadioClick = (e) => {
     setCheckedValue(e.target.value);
@@ -95,7 +102,7 @@ const QuestionAfterEligible = ({ data }) => {
       {modalShow && (
         <CongratulationsModal
           type={type}
-          // action={eligibleSubsidy}
+          action={reportID}
           show={modalShow}
           setModalShow={setModalShow}
           onHide={() => setModalShow(false)}
