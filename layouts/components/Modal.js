@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 
 export const CongratulationsModal = (props) => {
-  console.log(props);
+  console.log(props.type);
   const subsidies = props?.action?.subsidies;
   const dispatch = useDispatch();
   const router = useRouter();
@@ -16,14 +16,24 @@ export const CongratulationsModal = (props) => {
   };
 
   const cancelModal = () => {
+    console.log("33333333333333333");
+
     props.setModalShow(false);
     dispatch(eligibleSubsidyAction.clearEligible());
   };
 
   const restartQuestion = () => {
+    console.log("222222222222222222222222222");
+
     props.setModalShow(false);
     router.push("/dashboard");
     dispatch(eligibleSubsidyAction.clearEligible());
+  };
+
+  const generateReport = () => {
+    console.log("111111111111111111111111");
+    dispatch(eligibleSubsidyAction.getReport(props?.action));
+    router.push("/report-management");
   };
   return (
     <>
@@ -37,7 +47,7 @@ export const CongratulationsModal = (props) => {
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">
             <div className="d-flex justify-content-center fw-bold text-white mt-5">
-              {props?.type === "warn" ? (
+              {props?.type === "warn" || props?.type === "no question" ? (
                 <h3> Warning!! </h3>
               ) : (
                 <h3> Congratulations!! </h3>
@@ -54,6 +64,10 @@ export const CongratulationsModal = (props) => {
                 <span className="text-white">
                   Currently, there is no scheme available according to your
                   answers.
+                </span>
+              ) : props?.type === "no question" ? (
+                <span className="text-white">
+                  Currently, there is no question available.
                 </span>
               ) : (
                 <span className="text-white">
@@ -79,10 +93,9 @@ export const CongratulationsModal = (props) => {
         </Modal.Header>
         <Modal.Body>
           <div style={{ paddingLeft: "69px", paddingRight: " 50px" }}>
-            {props?.type === "warn" ? (
+            {props?.type === "warn" || props?.type === "no question" ? (
               <h5 style={{ color: "#4682E3", visibility: "hidden" }}>
-                Please go back to the Questionnairesdxc
-                xvvvvvvvvvvvvvvv 
+                Please go back to the Questionnairesdxc xvvvvvvvvvvvvvvv
               </h5>
             ) : (
               <h5 style={{ color: "#4682E3" }}>
@@ -99,6 +112,14 @@ export const CongratulationsModal = (props) => {
                 width="100px"
                 bgColor="#FA6130"
                 onClick={() => restartQuestion()}
+              />
+            ) : props?.type === "no question" ? (
+              <CustomButton
+                name="Generate Report"
+                color="#FFFFFF"
+                width="200px"
+                bgColor="#FA6130"
+                onClick={() => generateReport()}
               />
             ) : (
               <>
