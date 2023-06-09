@@ -13,16 +13,49 @@ import {
 } from "@layouts/components/CustomButton";
 import reports from "../config/report.json";
 import Base from "@layouts/Baseof";
+import { eligibleSubsidyAction } from "../redux/Actions/eligibleSubsidyAction";
+import { useRouter } from "next/router";
 
 function IndustryCategory() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
   const [type, setType] = useState("");
   const [action, setAction] = useState(0);
+  const [capitalSubsidy, setCapitalSubsidy] = useState(0);
 
   console.log(reports);
 
   const subsidyReports = useSelector((state) => state?.eligibleSubsidy);
+  const district_taluka_name = useSelector((state) => state?.taluka);
+
+  const capitalSubsidyData =
+    subsidyReports?.eligible_subsidy?.subsidies?.filter(
+      (sub, idx) => sub?.id === 1
+    );
+  console.log(capitalSubsidyData?.[0]?.id === 1);
+  console.log(district_taluka_name?.selected_data?.category === "1");
+  useEffect(() => {
+    if (capitalSubsidyData?.[0]?.id === 1) {
+      if (district_taluka_name?.selected_data?.category === "1") {
+        const termLoanData = subsidyReports?.subsidy_report?.result?.filter(
+          (que, ind) => que?.question_id === 60
+        );
+
+        var percent = 25;
+        var userInputValue = parseInt(termLoanData?.[0]?.answer);
+        var capital_subsidy = (percent / 100) * userInputValue;
+        let amount = 0;
+
+        if (capital_subsidy >= 3500000) {
+          amount = 3500000;
+        } else {
+          amount = capital_subsidy;
+        }
+        setCapitalSubsidy(amount);
+      }
+    }
+  }, [subsidyReports]);
 
   const actions = [
     { icon: BsShareFill },
@@ -56,6 +89,10 @@ function IndustryCategory() {
   //       setAction(item?.id);
   //     }
   //   };
+  const restartSession = () => {
+    dispatch(eligibleSubsidyAction.clearEligible());
+    router.push("/dashboard");
+  };
 
   return (
     <Base
@@ -77,7 +114,7 @@ function IndustryCategory() {
         />
       )} */}
         <div className={styles.tablee}>
-          <div
+          {/* <div
             className={`d-flex justify-content-between align-items-center ${styles.tableHeader}`}
           >
             <div className="d-flex justify-content-evenly ">
@@ -96,25 +133,95 @@ function IndustryCategory() {
             </div>
             <div className="d-flex">
               <div className={styles.add_new_btn}>
-                {/* <CustomButton
+                <CustomButton
                   name="Add New Reports"
                   bgColor="#4682E3"
                   color="#FFFFFF"
                   onClick={addNewIndustryCategory}
-                /> */}
+                />
               </div>
 
               <ExportButton name="Export List" />
             </div>
-          </div>
+          </div> */}
           <div className={styles.tableBody}>
+            <div className="d-flex justify-content-between">
+              <div style={{ margin: "15px" }}>
+                {" "}
+                <p>
+                  <span style={{ fontWeight: "bold" }}> Subsidy name :</span>{" "}
+                  {subsidyReports?.eligible_subsidy?.subsidies?.[0]
+                    ?.subsidy_name !== ""
+                    ? subsidyReports?.eligible_subsidy?.subsidies?.[0]
+                        ?.subsidy_name
+                    : "N/A"}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}> Sub-scheme name :</span>{" "}
+                  {subsidyReports?.eligible_subsidy?.subsidies?.[0]?.scheme !==
+                  ""
+                    ? subsidyReports?.eligible_subsidy?.subsidies?.[0]?.scheme
+                    : "N/A"}
+                </p>
+              </div>
+              <div style={{ margin: "15px", visibility: "hidden" }}>
+                <CustomButton
+                  name="Restart Session"
+                  color="#FFFFFF"
+                  width="200px"
+                  bgColor="#FA6130"
+                  onClick={(e) => restartSession(e)}
+                  className="position-relative"
+                />
+              </div>
+            </div>
+            <div className="d-flex justify-content-between">
+              <div style={{ margin: "15px" }}>
+                {" "}
+                <p>
+                  <span style={{ fontWeight: "bold" }}> State name :</span>{" "}
+                  {subsidyReports?.selected_information?.stateID}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}> District name :</span>{" "}
+                  {district_taluka_name?.selected_data?.district}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Taluka name :</span>{" "}
+                  {district_taluka_name?.selected_data?.taluka}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Category :</span>{" "}
+                  {district_taluka_name?.selected_data?.category}
+                </p>
+                {capitalSubsidyData?.[0]?.id === 1 && district_taluka_name?.selected_data?.category ===
+                  "1" && (
+                  <p>
+                    <span style={{ fontWeight: "bold" }}>
+                      Eligible Capital Subsidy :
+                    </span>{" "}
+                    {capitalSubsidy}
+                  </p>
+                )}
+              </div>
+              <div style={{ margin: "15px" }}>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Category name :</span>{" "}
+                  {subsidyReports?.selected_information?.industryCategoryID}
+                </p>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>Sector name :</span>{" "}
+                  {subsidyReports?.selected_information?.industrySectorID}
+                </p>
+              </div>
+            </div>
             <table className="table table-hover">
               <thead>
                 <tr>
                   <th scope="col">SI No.</th>
-                  <th scope="col">Name</th>
+                  <th scope="col">Question</th>
                   <th scope="col">Options</th>
-                  <th scope="col">Answer</th>
+                  <th scope="col">User Input</th>
                   <th scope="col"></th>
                   {/* <th scope="col">Actions</th> */}
                 </tr>

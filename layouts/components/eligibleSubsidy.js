@@ -8,14 +8,19 @@ import { CongratulationsModal } from "../components/Modal";
 import { categoryAction } from "redux/Actions/categoryAction";
 import { sectorAction } from "redux/Actions/sectorAction";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
-import Loader from "./Loader";
+// import Loader from "./Loader";
 
 const EligibleSubsidy = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [type, setType] = useState("");
+  // const [isLoading, setIsLoading] = useState(false);
+  const [selectedInformation, setSelectedInformation] = useState({
+    stateID: "",
+    industryCategoryID: "",
+    industrySectorID: "",
+  });
   const [eligibleUserInfo, setEligibleUserInfo] = useState({
     mobileNumber: 9784596522,
     stateID: 0,
@@ -40,14 +45,23 @@ const EligibleSubsidy = ({ data }) => {
 
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
-    setEligibleUserInfo({ ...eligibleUserInfo, [name]: value });
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    // console.log(selectedOption?.value);
+    // console.log(selectedOption?.text);
 
+    setSelectedInformation({
+      ...selectedInformation,
+      [name]: selectedOption?.text,
+    });
+
+    setEligibleUserInfo({ ...eligibleUserInfo, [name]: value });
     if (name === "industryCategoryID") {
       dispatch(sectorAction.getSectorList(value));
     }
   };
+  console.log(selectedInformation);
 
-  const goToNext = async () => {
+  const goToNext = () => {
     const data = {
       user_info: {
         mobile_number: eligibleUserInfo?.mobileNumber,
@@ -56,7 +70,6 @@ const EligibleSubsidy = ({ data }) => {
         industry_sector_id: eligibleUserInfo?.industrySectorID,
       },
     };
-    console.log(data);
     if (
       eligibleUserInfo?.stateID !== 0 ||
       eligibleUserInfo?.industryCategoryID !== 0 ||
@@ -65,21 +78,37 @@ const EligibleSubsidy = ({ data }) => {
       // setIsLoading(true);
       dispatch(eligibleSubsidyAction.getEligible(data));
       dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
+      dispatch(
+        eligibleSubsidyAction.selectedInformationForEligibleSubsidy(
+          selectedInformation
+        )
+      );
     }
   };
   useEffect(() => {
-    if (eligibleSubsidy !== undefined && eligibleSubsidy !== null) {
-      // setIsLoading(false);
-      console.log("showwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+    if (
+      eligibleSubsidy !== undefined &&
+      eligibleSubsidy !== null &&
+      Object.keys(eligibleSubsidy).length !== 0
+    ) {
       setModalShow(true);
     }
+    if (
+      eligibleSubsidy?.status === 408 &&
+      eligibleSubsidy?.subsidies?.length === 0
+    ) {
+      setModalShow(true);
+      setType("warn");
+      // setReportID(subsidyData?.eligible_subsidy?.report_id);
+    }
   }, [eligibleSubsidy]);
+  console.log(eligibleSubsidy);
 
   return (
     <>
       {modalShow && (
         <CongratulationsModal
-          // type={type}
+          type={type}
           action={eligibleSubsidy}
           show={modalShow}
           setModalShow={setModalShow}

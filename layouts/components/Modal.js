@@ -9,6 +9,14 @@ export const CongratulationsModal = (props) => {
   const subsidies = props?.action?.subsidies;
   const dispatch = useDispatch();
   const router = useRouter();
+  const isCentral = subsidies?.filter(
+    (subsidy, ind) => subsidy.is_central === true
+  ).length;
+  const isState = subsidies?.filter(
+    (subsidy, ind) => subsidy.is_central === false
+  ).length;
+
+  console.log(subsidies);
 
   const submitModal = () => {
     props.setModalShow(false);
@@ -47,7 +55,9 @@ export const CongratulationsModal = (props) => {
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">
             <div className="d-flex justify-content-center fw-bold text-white mt-5">
-              {props?.type === "warn" || props?.type === "no question" ? (
+              {props?.type === "noQuestion" ? (
+                <h3> Success!! </h3>
+              ) : props?.type === "warn" ? (
                 <h3> Warning!! </h3>
               ) : (
                 <h3> Congratulations!! </h3>
@@ -62,30 +72,29 @@ export const CongratulationsModal = (props) => {
             >
               {props?.type === "warn" ? (
                 <span className="text-white">
-                  Currently, there is no scheme available according to your
-                  answers.
+                  Currently, Based on your input there is no scheme available!
                 </span>
-              ) : props?.type === "no question" ? (
+              ) : props?.type === "noQuestion" ? (
                 <span className="text-white">
-                  Currently, there is no question available.
+                  Based on your input there is 1 scheme available.
                 </span>
               ) : (
                 <span className="text-white">
-                  Based on information provided there are{" "}
-                  {
-                    subsidies?.filter(
-                      (subsidy, ind) => subsidy.is_central === true
-                    ).length
-                  }{" "}
-                  subsidies applicable to you <br />
-                  from Central Government and{" "}
-                  {
-                    subsidies?.filter(
-                      (subsidy, ind) => subsidy.is_central === false
-                    ).length
-                  }
-                  <br />
-                  Subsidies from Government of Gujurat.
+                  {isCentral > 0 ? (
+                    <>
+                      Based on information provided there are {isCentral}{" "}
+                      subsidies applicable to you <br />
+                      from Central Government and {isState}
+                      <br />
+                      Subsidies from Government of Gujurat.
+                    </>
+                  ) : (
+                    <>
+                      Based on information provided there are 1{/* {isState} */}
+                      <br />
+                      Subsidies applicable to you from Government of Gujurat.
+                    </>
+                  )}
                 </span>
               )}
             </div>
@@ -93,7 +102,7 @@ export const CongratulationsModal = (props) => {
         </Modal.Header>
         <Modal.Body>
           <div style={{ paddingLeft: "69px", paddingRight: " 50px" }}>
-            {props?.type === "warn" || props?.type === "no question" ? (
+            {props?.type === "warn" || props?.type === "noQuestion" ? (
               <h5 style={{ color: "#4682E3", visibility: "hidden" }}>
                 Please go back to the Questionnairesdxc xvvvvvvvvvvvvvvv
               </h5>
@@ -105,15 +114,7 @@ export const CongratulationsModal = (props) => {
           </div>
 
           <div className="d-flex justify-content-center mt-4">
-            {props?.type === "warn" ? (
-              <CustomButton
-                name="OK"
-                color="#FFFFFF"
-                width="100px"
-                bgColor="#FA6130"
-                onClick={() => restartQuestion()}
-              />
-            ) : props?.type === "no question" ? (
+            {props?.type === "warn" || props?.type === "noQuestion" ? (
               <CustomButton
                 name="Generate Report"
                 color="#FFFFFF"
@@ -130,14 +131,14 @@ export const CongratulationsModal = (props) => {
                   bgColor="#FA6130"
                   onClick={() => submitModal()}
                 />
-                <CustomButton
+                {/* <CustomButton
                   name="NO"
                   color="#000000"
                   width="100px"
                   bgColor="#FFFFFF"
                   border="1px solid #000000"
                   onClick={() => cancelModal()}
-                />
+                /> */}
               </>
             )}
           </div>

@@ -26,9 +26,9 @@ const Dashboard = ({ data }) => {
       <section className="section">
         <div className="container">
           <div className="section row pb-0">
-            {next ? (
+            {/* {next ? ( */}
               <EligibleSubsidy />
-            ) : (
+            {/* ) : (
               <div className="col-12 inner-section ">
                 <div className="d-flex justify-content-center mt-5 mb-5">
                   <h2 className="fw-bold text-dark">
@@ -78,7 +78,7 @@ const Dashboard = ({ data }) => {
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </section>

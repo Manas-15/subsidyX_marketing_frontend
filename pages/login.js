@@ -25,7 +25,8 @@ const Login = ({ data }) => {
 
   useEffect(() => {
     if (user?.user?.access_token !== undefined) {
-      router.push("/questions");
+      // router.push("/questions");
+      router.push("/dashboard");
     } else {
       router.push("/login");
     }
