@@ -6,6 +6,7 @@ export const eligibleSubsidyAction = {
   getEligible,
   clearEligible,
   selectedDataForEligibleSubsidy,
+  selectedInformationForEligibleSubsidy,
   getReport,
 };
 
@@ -56,6 +57,19 @@ function selectedDataForEligibleSubsidy(data) {
   function selectedDataForEligibleSubsidy(data) {
     return {
       type: eligibleSubsidyConstant.SELECTED_DATA_FOR_ELIGIBLE_SUBSIDY_SUCCESS,
+      data,
+    };
+  }
+}
+
+function selectedInformationForEligibleSubsidy(data) {
+  return (dispatch) => {
+    dispatch(selectedInformationForEligibleSubsidy(data));
+  };
+
+  function selectedInformationForEligibleSubsidy(data) {
+    return {
+      type: eligibleSubsidyConstant.SELECTED_INFORMATION_FOR_ELIGIBLE_SUBSIDY_SUCCESS,
       data,
     };
   }

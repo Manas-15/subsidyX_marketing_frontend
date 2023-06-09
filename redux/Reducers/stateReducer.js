@@ -7,7 +7,6 @@ export function state(state = {}, action) {
         ...state,
       };
     case stateConstant.GET_STATE_SUCCESS:
-      console.log(action);
       return {
         ...state,
         state: action?.data?.data,

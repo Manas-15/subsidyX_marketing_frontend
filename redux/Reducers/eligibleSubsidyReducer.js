@@ -14,11 +14,13 @@ export function eligibleSubsidy(state = {}, action) {
       return { ...state };
 
     case eligibleSubsidyConstant.CLEAR_ELIGIBLE_SUBSIDY_SUCCESS:
-      return { ...state, eligible_subsidy: null };
+      return { ...state, eligible_subsidy: {} };
 
     case eligibleSubsidyConstant.SELECTED_DATA_FOR_ELIGIBLE_SUBSIDY_SUCCESS:
-      console.log(action);
       return { ...state, selected_data: action?.data };
+
+    case eligibleSubsidyConstant.SELECTED_INFORMATION_FOR_ELIGIBLE_SUBSIDY_SUCCESS:
+      return { ...state, selected_information: action?.data };
 
     case eligibleSubsidyConstant.GET_SUBSIDY_REPORT_REQUEST:
       return {
