@@ -10,7 +10,7 @@ import { sectorAction } from "redux/Actions/sectorAction";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 // import Loader from "./Loader";
 
-const EligibleSubsidy = ({ data }) => {
+const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
@@ -59,7 +59,6 @@ const EligibleSubsidy = ({ data }) => {
       dispatch(sectorAction.getSectorList(value));
     }
   };
-  console.log(selectedInformation);
 
   const goToNext = () => {
     const data = {
@@ -102,7 +101,6 @@ const EligibleSubsidy = ({ data }) => {
       // setReportID(subsidyData?.eligible_subsidy?.report_id);
     }
   }, [eligibleSubsidy]);
-  console.log(eligibleSubsidy);
 
   return (
     <>
@@ -113,6 +111,8 @@ const EligibleSubsidy = ({ data }) => {
           show={modalShow}
           setModalShow={setModalShow}
           onHide={() => setModalShow(false)}
+          setNext={setNext}
+          setSelectedRadioButton={setSelectedRadioButton}
         />
       )}
       <div className="col-12 inner-section ">
@@ -120,7 +120,7 @@ const EligibleSubsidy = ({ data }) => {
 
         <div className="d-flex justify-content-center mt-5 mb-5">
           <h2 className="fw-bold text-dark">
-            Hey!! Do you have Udyam Aadhar Number or GST Number?
+            Please Select State, Industry Category and Industry Sector
           </h2>
         </div>
         <div style={{ margin: "auto" }}>
@@ -166,16 +166,16 @@ const EligibleSubsidy = ({ data }) => {
               ))}
             </select>
           </div>
-          <div className="mt-5 d-flex justify-content-center">
+          <span className="mt-5 d-flex justify-content-center">
             {/* <IoIosArrowDropleft
               style={{ fontSize: "50px", color: "#fa6130" }}
               onClick={(e) => goToNext(e)}
             /> */}
             <IoIosArrowDropright
-              style={{ fontSize: "50px", color: "#fa6130" }}
+              style={{ fontSize: "50px", color: "#fa6130", cursor: "pointer" }}
               onClick={(e) => goToNext(e)}
             />
-          </div>
+          </span>
         </div>
       </div>
     </>

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 
 export const CongratulationsModal = (props) => {
-  console.log(props.type);
+  console.log(props);
   const subsidies = props?.action?.subsidies;
   const dispatch = useDispatch();
   const router = useRouter();
@@ -31,9 +31,18 @@ export const CongratulationsModal = (props) => {
   };
 
   const restartQuestion = () => {
-    console.log("222222222222222222222222222");
-
     props.setModalShow(false);
+    router.push("/dashboard");
+    dispatch(eligibleSubsidyAction.clearEligible());
+  };
+
+  const handleBack = () => {
+    props.setModalShow(false);
+    if (props?.type === "success") {
+      props.setAadharNumber("");
+    }
+    props.setNext(false);
+    props.setSelectedRadioButton(0);
     router.push("/dashboard");
     dispatch(eligibleSubsidyAction.clearEligible());
   };
@@ -59,6 +68,8 @@ export const CongratulationsModal = (props) => {
                 <h3> Success!! </h3>
               ) : props?.type === "warn" ? (
                 <h3> Warning!! </h3>
+              ) : props?.type === "success" ? (
+                <h3> Success!! </h3>
               ) : (
                 <h3> Congratulations!! </h3>
               )}
@@ -77,6 +88,10 @@ export const CongratulationsModal = (props) => {
               ) : props?.type === "noQuestion" ? (
                 <span className="text-white">
                   Based on your input there is 1 scheme available.
+                </span>
+              ) : props?.type === "success" ? (
+                <span className="text-white">
+                  There is no data available in your GST Number
                 </span>
               ) : (
                 <span className="text-white">
@@ -102,7 +117,9 @@ export const CongratulationsModal = (props) => {
         </Modal.Header>
         <Modal.Body>
           <div style={{ paddingLeft: "69px", paddingRight: " 50px" }}>
-            {props?.type === "warn" || props?.type === "noQuestion" ? (
+            {props?.type === "warn" ||
+            props?.type === "noQuestion" ||
+            props?.type === "success" ? (
               <h5 style={{ color: "#4682E3", visibility: "hidden" }}>
                 Please go back to the Questionnairesdxc xvvvvvvvvvvvvvvv
               </h5>
@@ -122,6 +139,14 @@ export const CongratulationsModal = (props) => {
                 bgColor="#FA6130"
                 onClick={() => generateReport()}
               />
+            ) : props?.type === "success" ? (
+              <CustomButton
+                name="OK"
+                color="#FFFFFF"
+                width="200px"
+                bgColor="#FA6130"
+                onClick={() => handleBack()}
+              />
             ) : (
               <>
                 <CustomButton
@@ -131,14 +156,14 @@ export const CongratulationsModal = (props) => {
                   bgColor="#FA6130"
                   onClick={() => submitModal()}
                 />
-                {/* <CustomButton
+                <CustomButton
                   name="NO"
                   color="#000000"
                   width="100px"
                   bgColor="#FFFFFF"
                   border="1px solid #000000"
-                  onClick={() => cancelModal()}
-                /> */}
+                  onClick={() => handleBack()}
+                />
               </>
             )}
           </div>
