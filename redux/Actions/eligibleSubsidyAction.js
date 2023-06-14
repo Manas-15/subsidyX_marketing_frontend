@@ -7,6 +7,7 @@ export const eligibleSubsidyAction = {
   clearEligible,
   selectedDataForEligibleSubsidy,
   selectedInformationForEligibleSubsidy,
+  savedAadharNumber,
   getReport,
 };
 
@@ -70,6 +71,19 @@ function selectedInformationForEligibleSubsidy(data) {
   function selectedInformationForEligibleSubsidy(data) {
     return {
       type: eligibleSubsidyConstant.SELECTED_INFORMATION_FOR_ELIGIBLE_SUBSIDY_SUCCESS,
+      data,
+    };
+  }
+}
+
+function savedAadharNumber(data) {
+  return (dispatch) => {
+    dispatch(savedAadharNumber(data));
+  };
+
+  function savedAadharNumber(data) {
+    return {
+      type: eligibleSubsidyConstant.SAVED_AADHAR_NUMBER_SUCCESS,
       data,
     };
   }
