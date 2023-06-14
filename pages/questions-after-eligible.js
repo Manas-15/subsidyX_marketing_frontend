@@ -15,16 +15,17 @@ import { talukaManagementAction } from "../redux/Actions/talukaManagementAction"
 const QuestionAfterEligible = ({ data }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const multiselectRef = useRef();
 
   const [checkedValue, setCheckedValue] = useState("");
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState({
+    name: "",
+    value: "",
+  });
   const [inputValue, setInputValue] = useState("");
   const [modalShow, setModalShow] = useState(false);
   const [type, setType] = useState("");
   const [reportID, setReportID] = useState(null);
   const [next, setNext] = useState(false);
-  const [talukaCategoryName, setTalukaCategoryName] = useState("");
   const [districtData, setDistrictData] = useState({
     district: 0,
     taluka: 0,
@@ -50,6 +51,7 @@ const QuestionAfterEligible = ({ data }) => {
         )
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -63,6 +65,7 @@ const QuestionAfterEligible = ({ data }) => {
       setType("warn");
       setReportID(subsidyData?.eligible_subsidy?.report_id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subsidiesList]);
 
   const handleSelectChange = (e) => {
@@ -82,10 +85,10 @@ const QuestionAfterEligible = ({ data }) => {
     setCheckedValue(e.target.value);
   };
 
-  const restartSession = () => {
-    dispatch(eligibleSubsidyAction.clearEligible());
-    router.push("/dashboard");
-  };
+  // const restartSession = () => {
+  //   dispatch(eligibleSubsidyAction.clearEligible());
+  //   router.push("/dashboard");
+  // };
 
   const handleNext = () => {
     dispatch(talukaManagementAction.selectedData(allSelectedName));
@@ -93,30 +96,30 @@ const QuestionAfterEligible = ({ data }) => {
   };
 
   const goToNext = () => {
+    if (questionData?.question?.field_type_id === 3) {
+      setSelectedOptions({ name: "", value: "" });
+    }
     const user_info = subsidyData?.selected_data?.user_info;
     const datas = {
       user_info,
       response: {
         question_id: questionData?.question?.id,
-        option_id: selectedOptions?.[0]?.id ? selectedOptions?.[0]?.id : 0,
-        response: selectedOptions?.[0]?.option
-          ? selectedOptions?.[0]?.option
-          : inputValue !== ""
-          ? inputValue
-          : checkedValue !== ""
-          ? checkedValue
-          : "",
+        option_id:
+          selectedOptions?.value !== "" ? parseInt(selectedOptions?.name) : 0,
+        response:
+          selectedOptions?.value !== ""
+            ? selectedOptions?.value
+            : inputValue !== ""
+            ? inputValue
+            : checkedValue !== ""
+            ? checkedValue
+            : "",
         subscheme_id: questionData?.question?.subscheme_id,
         subsidy_id: questionData?.question?.subsidy_id,
       },
       report_id: questionData?.report_id,
     };
     dispatch(eligibleSubsidyAction.getEligible(datas));
-
-    if (questionData?.question?.field_type_id === 3) {
-      multiselectRef.current.resetSelectedValues();
-      setSelectedOptions([]);
-    }
     setInputValue("");
   };
 
@@ -124,12 +127,12 @@ const QuestionAfterEligible = ({ data }) => {
     setInputValue(e.target.value);
   };
 
-  const handleMultiValueSelect = (event) => {
-    setSelectedOptions(event);
-  };
-
-  const handleMultiValueRemove = (event) => {
-    setSelectedOptions(event);
+  const handleSelectAnswer = (e) => {
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    setSelectedOptions({
+      name: e.target.value,
+      value: selectedOption?.text,
+    });
   };
 
   const catData = [
@@ -139,7 +142,6 @@ const QuestionAfterEligible = ({ data }) => {
   ];
 
   const clickId = districtData?.taluka;
-  // console.log(districtData?.taluka, clickId);
 
   useEffect(() => {
     // Find the category that contains the clickId
@@ -157,7 +159,62 @@ const QuestionAfterEligible = ({ data }) => {
         category: categoryName,
       }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clickId]);
+
+  // const subsidies = [
+  //   {
+  //     id: 2,
+  //     is_central: false,
+  //     subsidy_id: 40,
+  //     subsidy_name: "Aatmanirbhar Gujarat Scheme for Assistance to MSMEs",
+  //     is_subscheme: true,
+  //     scheme: "Interest Subsidy",
+  //   },
+  //   {
+  //     id: 1,
+  //     is_central: false,
+  //     subsidy_id: 40,
+  //     subsidy_name: "Aatmanirbhar Gujarat Scheme for Assistance to MSMEs",
+  //     is_subscheme: true,
+  //     scheme: "Capital Subsidy (Applicable to Manufacturing Sector Only)",
+  //   },
+  //   {
+  //     id: 3,
+  //     is_central: false,
+  //     subsidy_id: 40,
+  //     subsidy_name: "Manas",
+  //     is_subscheme: true,
+  //     scheme: "Manas scheme",
+  //   },
+  // ];
+
+  // Group the subsidies by subsidy_name start
+  console.log(subsidiesList);
+  const groupedSubsidies = subsidiesList?.reduce((acc, subsidy) => {
+    if (!acc[subsidy.subsidy_name]) {
+      acc[subsidy.subsidy_name] = [];
+    }
+    acc[subsidy.subsidy_name].push(subsidy.scheme);
+    return acc;
+  }, {});
+  console.log(groupedSubsidies);
+  const subsidyItems = Object.entries(groupedSubsidies).map(
+    ([subsidyName, schemes]) => (
+      <div key={subsidyName}>
+        <p>{subsidyName}</p>
+        <ol>
+          {schemes.map((scheme, index) => (
+            <li key={index}>
+              <p style={{ fontSize: "15px" }}>{scheme}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    )
+  );
+
+  // Group the subsidies by subsidy_name End
 
   return (
     <Base
@@ -245,20 +302,22 @@ const QuestionAfterEligible = ({ data }) => {
                           </div>
                         </>
                       )}
+
                       {questionData?.question?.field_type_id === 3 && (
-                        <Multiselect
-                          showCheckbox
-                          placeholder="Please Select"
-                          options={questionData?.question?.options}
-                          ref={multiselectRef}
-                          // closeOnSelect="true"
-                          className="text-dark"
-                          onSelect={(event) => {
-                            handleMultiValueSelect(event);
-                          }}
-                          onRemove={(event) => handleMultiValueRemove(event)}
-                          displayValue="option"
-                        />
+                        <select
+                          className="form-control"
+                          onChange={(e) => handleSelectAnswer(e)}
+                          value={selectedOptions.name}
+                        >
+                          <option value="none">Please Select</option>
+                          {questionData?.question?.options?.map(
+                            (opt, index) => (
+                              <option key={index} value={opt.id}>
+                                {opt.option}
+                              </option>
+                            )
+                          )}
+                        </select>
                       )}
                     </div>
 
@@ -268,7 +327,11 @@ const QuestionAfterEligible = ({ data }) => {
                       onClick={(e) => goToPrev(e)}
                     /> */}
                       <IoIosArrowDropright
-                        style={{ fontSize: "50px", color: "#fa6130" }}
+                        style={{
+                          fontSize: "50px",
+                          color: "#fa6130",
+                          cursor: "pointer",
+                        }}
                         onClick={(e) => goToNext(e)}
                       />
                     </div>
@@ -276,7 +339,7 @@ const QuestionAfterEligible = ({ data }) => {
                 </div>
 
                 <div className="col-sm-4">
-                  <div className="d-flex justify-content-end">
+                  {/* <div className="d-flex justify-content-end">
                     <CustomButton
                       name="Restart Session"
                       color="#FFFFFF"
@@ -285,8 +348,8 @@ const QuestionAfterEligible = ({ data }) => {
                       onClick={(e) => restartSession(e)}
                       className="position-relative"
                     />
-                  </div>
-                  <div className="d-flex  mb-5 mt-3">
+                  </div> */}
+                  <div className="d-flex my-5">
                     <h4
                       style={{ textDecoration: "underline", fontWeight: "500" }}
                     >
@@ -295,9 +358,7 @@ const QuestionAfterEligible = ({ data }) => {
                   </div>
                   <div className="mt-5">
                     <div className="d-flex">
-                      <p style={{ marginLeft: "15px" }}>
-                        {subsidiesList?.[0]?.subsidy_name}
-                      </p>
+                      <p style={{ marginLeft: "15px" }}>{subsidyItems}</p>
                     </div>
                     {/* {subsidiesList?.map((sub, index) => {
                       return (
@@ -321,7 +382,7 @@ const QuestionAfterEligible = ({ data }) => {
 
           <div className="d-flex justify-content-center mt-5 mb-5">
             <h2 className="fw-bold text-dark">
-              Hey!! Do you have Udyam Aadhar Number or GST Number?
+              Select your District and Taluka
             </h2>
           </div>
           <div style={{ margin: "auto" }}>
@@ -372,7 +433,11 @@ const QuestionAfterEligible = ({ data }) => {
               onClick={(e) => goToNext(e)}
             /> */}
               <IoIosArrowDropright
-                style={{ fontSize: "50px", color: "#fa6130" }}
+                style={{
+                  fontSize: "50px",
+                  color: "#fa6130",
+                  cursor: "pointer",
+                }}
                 onClick={(e) => handleNext(e)}
               />
             </div>

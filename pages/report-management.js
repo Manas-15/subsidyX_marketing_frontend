@@ -1,5 +1,5 @@
 import styles from "../styles/Report.module.css";
-import { CiSearch } from "react-icons/ci";
+// import { CiSearch } from "react-icons/ci";
 import { HiEye } from "react-icons/hi";
 import { BsShareFill } from "react-icons/bs";
 import { MdModeEdit } from "react-icons/md";
@@ -11,12 +11,13 @@ import {
   ExportButton,
   FilterButton,
 } from "@layouts/components/CustomButton";
-import reports from "../config/report.json";
 import Base from "@layouts/Baseof";
-import { eligibleSubsidyAction } from "../redux/Actions/eligibleSubsidyAction";
+// import { eligibleSubsidyAction } from "../redux/Actions/eligibleSubsidyAction";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import { IoIosArrowDropleft } from "react-icons/io";
 
-function IndustryCategory() {
+function ReportManagement() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
@@ -24,7 +25,12 @@ function IndustryCategory() {
   const [action, setAction] = useState(0);
   const [capitalSubsidy, setCapitalSubsidy] = useState(0);
 
-  console.log(reports);
+  const date = new Date();
+  const formattedDate = date.toLocaleDateString("en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
 
   const subsidyReports = useSelector((state) => state?.eligibleSubsidy);
   const district_taluka_name = useSelector((state) => state?.taluka);
@@ -33,8 +39,7 @@ function IndustryCategory() {
     subsidyReports?.eligible_subsidy?.subsidies?.filter(
       (sub, idx) => sub?.id === 1
     );
-  console.log(capitalSubsidyData?.[0]?.id === 1);
-  console.log(district_taluka_name?.selected_data?.category === "1");
+
   useEffect(() => {
     if (capitalSubsidyData?.[0]?.id === 1) {
       if (district_taluka_name?.selected_data?.category === "1") {
@@ -55,6 +60,7 @@ function IndustryCategory() {
         setCapitalSubsidy(amount);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subsidyReports]);
 
   const actions = [
@@ -89,10 +95,10 @@ function IndustryCategory() {
   //       setAction(item?.id);
   //     }
   //   };
-  const restartSession = () => {
-    dispatch(eligibleSubsidyAction.clearEligible());
-    router.push("/dashboard");
-  };
+  // const restartSession = () => {
+  //   dispatch(eligibleSubsidyAction.clearEligible());
+  //   router.push("/dashboard");
+  // };
 
   return (
     <Base
@@ -113,160 +119,94 @@ function IndustryCategory() {
           onHide={() => setModalShow(false)}
         />
       )} */}
-        <div className={styles.tablee}>
-          {/* <div
-            className={`d-flex justify-content-between align-items-center ${styles.tableHeader}`}
-          >
-            <div className="d-flex justify-content-evenly ">
-              <div className={`mx-2 ${styles.search_box}`}>
-                <div className={styles.search_icon}>
-                  <CiSearch />
-                </div>
-                <input
-                  type="text"
-                  className={styles.search_bar}
-                  placeholder="Search Reports"
-                />
-              </div>
-
-              <FilterButton name="Filter" />
+        <div className={styles.report_tablee}>
+          <div>
+            <div className="d-flex justify-content-between mx-5 mt-3">
+              <h4>General Information</h4>
+              <Link href="/dashboard">Edit</Link>
             </div>
-            <div className="d-flex">
-              <div className={styles.add_new_btn}>
-                <CustomButton
-                  name="Add New Reports"
-                  bgColor="#4682E3"
-                  color="#FFFFFF"
-                  onClick={addNewIndustryCategory}
-                />
+            <div className="row mt-4 mx-5">
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>InquireID</h6>
+                <p>#{subsidyReports?.eligible_subsidy?.report_id}</p>
               </div>
-
-              <ExportButton name="Export List" />
-            </div>
-          </div> */}
-          <div className={styles.tableBody}>
-            <div className="d-flex justify-content-between">
-              <div style={{ margin: "15px" }}>
-                {" "}
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Category</h6>
                 <p>
-                  <span style={{ fontWeight: "bold" }}> Subsidy name :</span>{" "}
-                  {subsidyReports?.eligible_subsidy?.subsidies?.[0]
-                    ?.subsidy_name !== ""
-                    ? subsidyReports?.eligible_subsidy?.subsidies?.[0]
-                        ?.subsidy_name
-                    : "N/A"}
-                </p>
-                <p>
-                  <span style={{ fontWeight: "bold" }}> Sub-scheme name :</span>{" "}
-                  {subsidyReports?.eligible_subsidy?.subsidies?.[0]?.scheme !==
-                  ""
-                    ? subsidyReports?.eligible_subsidy?.subsidies?.[0]?.scheme
-                    : "N/A"}
-                </p>
-              </div>
-              <div style={{ margin: "15px", visibility: "hidden" }}>
-                <CustomButton
-                  name="Restart Session"
-                  color="#FFFFFF"
-                  width="200px"
-                  bgColor="#FA6130"
-                  onClick={(e) => restartSession(e)}
-                  className="position-relative"
-                />
-              </div>
-            </div>
-            <div className="d-flex justify-content-between">
-              <div style={{ margin: "15px" }}>
-                {" "}
-                <p>
-                  <span style={{ fontWeight: "bold" }}> State name :</span>{" "}
-                  {subsidyReports?.selected_information?.stateID}
-                </p>
-                <p>
-                  <span style={{ fontWeight: "bold" }}> District name :</span>{" "}
-                  {district_taluka_name?.selected_data?.district}
-                </p>
-                <p>
-                  <span style={{ fontWeight: "bold" }}>Taluka name :</span>{" "}
-                  {district_taluka_name?.selected_data?.taluka}
-                </p>
-                <p>
-                  <span style={{ fontWeight: "bold" }}>Category :</span>{" "}
-                  {district_taluka_name?.selected_data?.category}
-                </p>
-                {capitalSubsidyData?.[0]?.id === 1 && district_taluka_name?.selected_data?.category ===
-                  "1" && (
-                  <p>
-                    <span style={{ fontWeight: "bold" }}>
-                      Eligible Capital Subsidy :
-                    </span>{" "}
-                    {capitalSubsidy}
-                  </p>
-                )}
-              </div>
-              <div style={{ margin: "15px" }}>
-                <p>
-                  <span style={{ fontWeight: "bold" }}>Category name :</span>{" "}
                   {subsidyReports?.selected_information?.industryCategoryID}
                 </p>
-                <p>
-                  <span style={{ fontWeight: "bold" }}>Sector name :</span>{" "}
-                  {subsidyReports?.selected_information?.industrySectorID}
-                </p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Sector</h6>
+                <p>{subsidyReports?.selected_information?.industrySectorID}</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Created Date</h6>
+                <p>{formattedDate}</p>
               </div>
             </div>
-            <table className="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">SI No.</th>
-                  <th scope="col">Question</th>
-                  <th scope="col">Options</th>
-                  <th scope="col">User Input</th>
-                  <th scope="col"></th>
-                  {/* <th scope="col">Actions</th> */}
-                </tr>
-              </thead>
-              <tbody>
-                {subsidyReports?.subsidy_report?.result?.map((data, index) => {
-                  return (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{data?.question_name}</td>
-                      <td>
-                        {data?.options?.length > 0
-                          ? data?.options
-                              ?.map((opt, ind) => {
-                                return opt?.option;
-                              })
-                              .toString()
-                          : "N/A"}
-                      </td>
-                      <td>{data?.answer}</td>
-                      <td></td>
-                      {/* <td>
-                        <ul className="d-flex justify-content-between">
-                          {actions?.map(({ icon: Icon }, idx) => {
-                            return (
-                              <li
-                                key={idx}
-                                onClick={() => handleClick(data, idx)}
-                              >
-                                <Icon color="#FA6130" size="18px" />
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </td> */}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <div className="row mt-4 mx-5">
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>State</h6>
+                <p>{subsidyReports?.selected_information?.stateID}</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Taluka</h6>
+                <p>{district_taluka_name?.selected_data?.taluka}</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Company Name</h6>
+                <p>ABC</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Created By</h6>
+                <p>super admin</p>
+              </div>
+            </div>
           </div>
+        </div>
+        <div className={styles.report_tablee}>
+          <div className="py-3">
+            <div className="d-flex justify-content-between mx-5 ">
+              <h4>Information based on Service and Large Industry</h4>
+              <Link href="/dashboard">Edit</Link>
+            </div>
+            <div className="row mt-4 mx-5">
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Subsidy Amount</h6>
+                <p>&#8377;0.0</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Fixed Capital Investment</h6>
+                <p>&#8377;10,00,000.00</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Team Loan Amount</h6>
+                <p>&#8377;0.0</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Rate Of Interest</h6>
+                <p>&#8377;0.0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="d-flex justify-content-between mx-5 pb-5">
+          <IoIosArrowDropleft
+            style={{ fontSize: "50px", color: "#fa6130" }}
+            // onClick={(e) => goToNext(e)}
+          />
+          <CustomButton
+            name="Submit"
+            color="#FFFFFF"
+            width="100px"
+            bgColor="#FA6130"
+            // onClick={() => handleSubmit()}
+          />
         </div>
       </div>
     </Base>
   );
 }
 
-export default IndustryCategory;
+export default ReportManagement;

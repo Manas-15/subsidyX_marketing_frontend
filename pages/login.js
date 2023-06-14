@@ -26,11 +26,12 @@ const Login = ({ data }) => {
   useEffect(() => {
     if (user?.user?.access_token !== undefined) {
       // router.push("/questions");
-      router.push("/dashboard");
+      router.push("/all-report-list");
     } else {
       router.push("/login");
     }
-  }, [user?.user?.access_token, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.user?.access_token]);
 
   return (
     <Base

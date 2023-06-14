@@ -70,7 +70,11 @@ const QuestionPage = ({ data }) => {
                 </div>
                 <div className="mt-5 d-flex justify-content-center">
                   <IoIosArrowDropright
-                    style={{ fontSize: "50px", color: "#fa6130" }}
+                    style={{
+                      fontSize: "50px",
+                      color: "#fa6130",
+                      cursor: "pointer",
+                    }}
                     onClick={(e) => goToNext(e)}
                   />
                 </div>
