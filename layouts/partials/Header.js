@@ -21,16 +21,33 @@ const Header = () => {
     router.push("/login");
   };
 
+  console.log(router?.pathname === "/questions-after-eligible");
+
   return (
     <header className="subsid_home_header">
       <nav className="navbar navbar-expand-md top_nav">
         <div className="container">
-          <a href={base_url} className="navbar-brand">
-            <figure>
-              <img className="logo" src="/images/logo.png" alt="" />
-              <img src="/images/logo-text.png" alt="" />
-            </figure>
-          </a>
+          {router?.pathname !== "/dashboard" &&
+          router?.pathname !== "/questions-after-eligible" &&
+          router?.pathname !== "/report/confirm-report" &&
+          router?.pathname !== "/payment" ? (
+            <a href={base_url} className="navbar-brand">
+              <figure>
+                <img className="logo" src="/images/logo.png" alt="" />
+                <img src="/images/logo-text.png" alt="" />
+              </figure>
+            </a>
+          ) : (
+            <div style={{ visibility: "hidden" }}>
+              <a href={base_url} className="navbar-brand">
+                <figure>
+                  <img className="logo" src="/images/logo.png" alt="" />
+                  <img src="/images/logo-text.png" alt="" />
+                </figure>
+              </a>
+            </div>
+          )}
+
           <div className="nav_lst">
             <ul className="navbar-nav ml-auto">
               <li

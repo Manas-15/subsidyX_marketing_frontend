@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { alertActions } from "redux/Actions/alertAction";
 import { notification } from "antd";
+import Sidebar from "./components/Sidebar";
+import DashboardHeader from "./partials/DashboardHeader";
 
 const Base = ({
   title,
@@ -45,7 +47,6 @@ const Base = ({
 
   return (
     <>
-      {/* {console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")} */}
       <Head>
         {/* title */}
         <title>subsidyX</title>
@@ -98,15 +99,59 @@ const Base = ({
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       {alert?.message && manas(alert?.message)}
+      {/* <div className="base_layout">
+        <Sidebar />
+        <main className="mainBodyWidth ml-auto w-100">
+          <DashboardHeader />
+
+          <div>{children}</div>
+        </main>
+      </div> */}
+
       <main className="subsid_login_page">
-        <Header />
-
-        {children}
-
-        {(router?.pathname === "/" ||
-          router?.pathname === "/services" ||
-          router?.pathname === "/about" ||
-          router?.pathname === "/contact") && <Footer />}
+        {router?.pathname === "/" ||
+        router?.pathname === "/services" ||
+        router?.pathname === "/about" ||
+        router?.pathname === "/contact" ||
+        router?.pathname === "/login" ? (
+          <>
+            <Header />
+            {children}
+            {(router?.pathname === "/" ||
+              router?.pathname === "/services" ||
+              router?.pathname === "/about" ||
+              router?.pathname === "/contact") && <Footer />}
+          </>
+        ) : router?.pathname === "/report/all-report-list" ? (
+          <>
+            <div className="base_layout">
+              <Sidebar />
+              <main className="mainBodyWidth ml-auto w-100">
+                <DashboardHeader />
+                <div>{children}</div>
+              </main>
+            </div>
+          </>
+        ) : router?.pathname === "/report/view-report" ? (
+          <>
+            <div className="base_layout">
+              <Sidebar />
+              <main className="mainBodyWidth ml-auto w-100">
+                <Header />
+                <DashboardHeader />
+                <div>{children}</div>
+              </main>
+            </div>
+          </>
+        ) : (
+          <div className="base_layout">
+            <Sidebar />
+            <main className="mainBodyWidth ml-auto w-100">
+              <Header />
+              <div>{children}</div>
+            </main>
+          </div>
+        )}
       </main>
     </>
   );

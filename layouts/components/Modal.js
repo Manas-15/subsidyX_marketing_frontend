@@ -35,8 +35,7 @@ export const CongratulationsModal = (props) => {
     router.push("/dashboard");
     dispatch(eligibleSubsidyAction.clearEligible());
   };
-
-  const handleBack = () => {
+  const handleOK = () => {
     props.setModalShow(false);
     if (props?.type === "success") {
       props.setAadharNumber("");
@@ -47,10 +46,21 @@ export const CongratulationsModal = (props) => {
     dispatch(eligibleSubsidyAction.clearEligible());
   };
 
+  const handleNO = () => {
+    props.setModalShow(false);
+    if (props?.type === "success") {
+      props.setAadharNumber("");
+    }
+    props.setNext(true);
+    props.setSelectedRadioButton("2");
+    router.push("/dashboard");
+    dispatch(eligibleSubsidyAction.clearEligible());
+  };
+
   const generateReport = () => {
     console.log("111111111111111111111111");
     dispatch(eligibleSubsidyAction.getReport(props?.action));
-    router.push("/report-management");
+    router.push("/report/confirm-report");
   };
   return (
     <>
@@ -145,7 +155,7 @@ export const CongratulationsModal = (props) => {
                 color="#FFFFFF"
                 width="200px"
                 bgColor="#FA6130"
-                onClick={() => handleBack()}
+                onClick={() => handleOK()}
               />
             ) : (
               <>
@@ -162,7 +172,7 @@ export const CongratulationsModal = (props) => {
                   width="100px"
                   bgColor="#FFFFFF"
                   border="1px solid #000000"
-                  onClick={() => handleBack()}
+                  onClick={() => handleNO()}
                 />
               </>
             )}

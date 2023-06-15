@@ -33,7 +33,6 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
     (state) => state?.industryCategory?.category
   );
   const allSectors = useSelector((state) => state?.industrySector?.sector);
-
   const eligibleSubsidy = useSelector(
     (state) => state?.eligibleSubsidy?.eligible_subsidy
   );
@@ -46,7 +45,6 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
     const selectedOption = e.target.options[e.target.selectedIndex];
-    // console.log(selectedOption?.value);
     // console.log(selectedOption?.text);
 
     setSelectedInformation({
@@ -58,31 +56,54 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
     if (name === "industryCategoryID") {
       dispatch(sectorAction.getSectorList(value));
     }
-  };
 
-  const goToNext = () => {
-    const data = {
-      user_info: {
-        mobile_number: eligibleUserInfo?.mobileNumber,
-        state_id: eligibleUserInfo?.stateID,
-        industry_category_id: eligibleUserInfo?.industryCategoryID,
-        industry_sector_id: eligibleUserInfo?.industrySectorID,
-      },
-    };
-    if (
-      eligibleUserInfo?.stateID !== 0 ||
-      eligibleUserInfo?.industryCategoryID !== 0 ||
-      eligibleUserInfo?.industrySectorID !== 0
-    ) {
-      // setIsLoading(true);
+    if (name === "industrySectorID") {
+      const selectedData = {
+        stateID: selectedInformation?.stateID,
+        industryCategoryID: selectedInformation?.industryCategoryID,
+        industrySectorID: selectedOption?.text,
+      };
+
+      const data = {
+        user_info: {
+          mobile_number: eligibleUserInfo?.mobileNumber,
+          state_id: eligibleUserInfo?.stateID,
+          industry_category_id: eligibleUserInfo?.industryCategoryID,
+          industry_sector_id: value,
+        },
+      };
+
       dispatch(eligibleSubsidyAction.getEligible(data));
       dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
       dispatch(
         eligibleSubsidyAction.selectedInformationForEligibleSubsidy(
-          selectedInformation
+          selectedData
         )
       );
     }
+  };
+
+  const goToNext = () => {
+    // const data = {
+    //   user_info: {
+    //     mobile_number: eligibleUserInfo?.mobileNumber,
+    //     state_id: eligibleUserInfo?.stateID,
+    //     industry_category_id: eligibleUserInfo?.industryCategoryID,
+    //     industry_sector_id: eligibleUserInfo?.industrySectorID,
+    //   },
+    // };
+    // if (
+    //   eligibleUserInfo?.stateID !== 0 ||
+    //   eligibleUserInfo?.industryCategoryID !== 0 ||
+    //   eligibleUserInfo?.industrySectorID !== 0
+    // ) {
+    //   dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
+    //   dispatch(
+    //     eligibleSubsidyAction.selectedInformationForEligibleSubsidy(
+    //       selectedInformation
+    //     )
+    //   );
+    // }
   };
   useEffect(() => {
     if (

@@ -45,7 +45,7 @@ const Dashboard = ({ data }) => {
       setValidateAadhar(true);
     }
   };
-  console.log(validateAadhar);
+  console.log(next, selectedRadioButton === "2");
 
   return (
     <Base
@@ -160,10 +160,7 @@ const Dashboard = ({ data }) => {
                     />
                     <h3 className="fw-bold text-dark">NO</h3>
                   </div>
-                  <span
-                    className="mt-5 d-flex justify-content-center"
-                    
-                  >
+                  <span className="mt-5 d-flex justify-content-center">
                     <IoIosArrowDropright
                       style={{
                         fontSize: "50px",
