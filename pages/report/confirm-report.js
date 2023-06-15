@@ -1,4 +1,4 @@
-import styles from "../styles/Report.module.css";
+import styles from "../../styles/Report.module.css";
 // import { CiSearch } from "react-icons/ci";
 import { HiEye } from "react-icons/hi";
 import { BsShareFill } from "react-icons/bs";
@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { IoIosArrowDropleft } from "react-icons/io";
 
-function ReportManagement() {
+function ConfirmReport() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
@@ -100,6 +100,10 @@ function ReportManagement() {
   //   router.push("/dashboard");
   // };
 
+  const handleSubmit = () => {
+    router.push("/payment");
+  };
+
   return (
     <Base
       title={"title"}
@@ -119,6 +123,11 @@ function ReportManagement() {
           onHide={() => setModalShow(false)}
         />
       )} */}
+        <h4 className="mx-5 mt-4" style={{ fontWeight: "400" }}>
+          Based on the information provided by you we have gathered the
+          following data. kindly verify all the details carefully before
+          generation report.
+        </h4>
         <div className={styles.report_tablee}>
           <div>
             <div className="d-flex justify-content-between mx-5 mt-3">
@@ -201,7 +210,7 @@ function ReportManagement() {
             color="#FFFFFF"
             width="100px"
             bgColor="#FA6130"
-            // onClick={() => handleSubmit()}
+            onClick={() => handleSubmit()}
           />
         </div>
       </div>
@@ -209,4 +218,4 @@ function ReportManagement() {
   );
 }
 
-export default ReportManagement;
+export default ConfirmReport;

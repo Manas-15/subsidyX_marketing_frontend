@@ -13,6 +13,7 @@ import { districtManagementAction } from "../redux/Actions/districtManagementAct
 import { talukaManagementAction } from "../redux/Actions/talukaManagementAction";
 
 const QuestionAfterEligible = ({ data }) => {
+  console.log("ddddddddddddddddddddddddddddddddd");
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -34,6 +35,7 @@ const QuestionAfterEligible = ({ data }) => {
     district: "",
     taluka: "",
   });
+  const [subsidyItems, setSubsidyItems] = useState();
 
   const allDistricts = useSelector((state) => state?.district);
   const allTalukas = useSelector((state) => state?.taluka);
@@ -191,30 +193,34 @@ const QuestionAfterEligible = ({ data }) => {
 
   // Group the subsidies by subsidy_name start
   console.log(subsidiesList);
-  const groupedSubsidies = subsidiesList?.reduce((acc, subsidy) => {
-    if (!acc[subsidy.subsidy_name]) {
-      acc[subsidy.subsidy_name] = [];
-    }
-    acc[subsidy.subsidy_name].push(subsidy.scheme);
-    return acc;
-  }, {});
-  console.log(groupedSubsidies);
-  const subsidyItems = Object.entries(groupedSubsidies).map(
-    ([subsidyName, schemes]) => (
-      <div key={subsidyName}>
-        <p>{subsidyName}</p>
-        <ol>
-          {schemes.map((scheme, index) => (
-            <li key={index}>
-              <p style={{ fontSize: "15px" }}>{scheme}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    )
-  );
+  useEffect(() => {
+    if (subsidiesList !== undefined) {
+      const groupedSubsidies = subsidiesList?.reduce((acc, subsidy) => {
+        if (!acc[subsidy.subsidy_name]) {
+          acc[subsidy.subsidy_name] = [];
+        }
+        acc[subsidy.subsidy_name].push(subsidy.scheme);
+        return acc;
+      }, {});
 
-  // Group the subsidies by subsidy_name End
+      const data = Object.entries(groupedSubsidies).map(
+        ([subsidyName, schemes]) => (
+          <div key={subsidyName}>
+            <p>{subsidyName}</p>
+            <ol>
+              {schemes.map((scheme, index) => (
+                <li key={index}>
+                  <p style={{ fontSize: "15px" }}>{scheme}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )
+      );
+      setSubsidyItems(data);
+    }
+  }, [subsidiesList]);
+
 
   return (
     <Base
