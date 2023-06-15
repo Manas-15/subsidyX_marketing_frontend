@@ -4,6 +4,7 @@ import { reportManagementService } from "redux/Services/reportManagementService"
 
 export const reportManagementAction = {
   getAllReportBasedOnUser,
+  selectedCategory,
 };
 function getAllReportBasedOnUser() {
   return (dispatch) => {
@@ -34,6 +35,19 @@ function getAllReportBasedOnUser() {
     return {
       type: reportManagementConstants.GET_REPORTS_BASED_ON_USER_FAILURE,
       error,
+    };
+  }
+}
+
+function selectedCategory(data) {
+  return (dispatch) => {
+    dispatch(success(data));
+  };
+
+  function success(data) {
+    return {
+      type: reportManagementConstants.SELECTED_CATEGORY_SUCCESS,
+      data,
     };
   }
 }
