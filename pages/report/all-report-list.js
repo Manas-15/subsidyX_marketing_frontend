@@ -59,8 +59,10 @@ const AllReportLists = () => {
       setModalShow(true);
       setType("view");
       setAction(item);
-      //   router.push("/report/view-report");
+      console.log(item);
+      dispatch(reportManagementAction.getReportByID(item?.report_id));
       dispatch(reportManagementAction.selectedCategory("View Report"));
+      router.push("/report/view-report");
     } else {
       setModalShow(true);
       setType("delete");
@@ -77,16 +79,16 @@ const AllReportLists = () => {
       noindex={"noindex"}
       canonical={"canonical"}
     >
-      <div className={styles.tablee}>
-        {modalShow ? (
-          <ViewReport data={action} setModalShow={setModalShow} />
-        ) : (
-          <>
-            <div
-              className={`d-flex justify-content-between align-items-center ${styles.tableHeader}`}
-            >
-              <div className="d-flex justify-content-evenly ">
-                {/* <div className={`mx-2 ${styles.search_box}`}>
+      {/* {modalShow ? (
+        <ViewReport data={action} setModalShow={setModalShow} />
+      ) : ( */}
+      <>
+        <div className={styles.tablee}>
+          <div
+            className={`d-flex justify-content-between align-items-center ${styles.tableHeader}`}
+          >
+            <div className="d-flex justify-content-evenly ">
+              {/* <div className={`mx-2 ${styles.search_box}`}>
               <div className={styles.search_icon}>
                 <CiSearch />
               </div>
@@ -97,65 +99,71 @@ const AllReportLists = () => {
               />
             </div> */}
 
-                {/* <FilterButton name="Filter" /> */}
+              {/* <FilterButton name="Filter" /> */}
+            </div>
+            <div className="d-flex">
+              <div className={styles.add_new_btn}>
+                <CustomButton
+                  name="Add New Reports"
+                  bgColor="#4682E3"
+                  color="#FFFFFF"
+                  onClick={addNewReports}
+                />
               </div>
-              <div className="d-flex">
-                <div className={styles.add_new_btn}>
-                  <CustomButton
-                    name="Add New Reports"
-                    bgColor="#4682E3"
-                    color="#FFFFFF"
-                    onClick={addNewReports}
-                  />
-                </div>
 
-                {/* <ExportButton name="Export List" /> */}
-              </div>
+              {/* <ExportButton name="Export List" /> */}
             </div>
-            <div className={styles.tableBody}>
-              <table className="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">Report ID.</th>
-                    <th scope="col">Company Name</th>
-                    <th scope="col">Company Owner Name</th>
-                    <th scope="col">Created date</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {allReportLists?.allReports?.result?.map((data, index) => {
-                    return (
-                      <tr key={index}>
-                        <th scope="row">#{data?.report_id}</th>
-                        <td> - </td>
-                        <td> - </td>
-                        <td>{formattedDate}</td>
-                        <td> - </td>
-                        <td>
-                          <ul className="d-flex justify-content-between">
-                            {actions?.map(({ icon: Icon }, idx) => {
-                              return (
-                                <li
-                                  key={idx}
-                                  onClick={(e) => handleClick(e, data, idx)}
-                                >
-                                  <Icon color="#FA6130" size="18px" />
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
-      </div>
+          </div>
+          <div className={styles.tableBody}>
+            <table className="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Report ID.</th>
+                  <th scope="col">Company Name</th>
+                  <th scope="col">Company Owner Name</th>
+                  <th scope="col">Created date</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allReportLists?.allReports?.result?.map((data, index) => {
+                  return (
+                    <tr key={index}>
+                      <th scope="row">#{data?.report_id}</th>
+                      <td> - </td>
+                      <td> - </td>
+                      <td>{formattedDate}</td>
+                      <td> - </td>
+                      <td>
+                        <ul className="d-flex justify-content-between">
+                          {actions?.map(({ icon: Icon }, idx) => {
+                            return (
+                              <li
+                                key={idx}
+                                onClick={(e) => handleClick(e, data, idx)}
+                              >
+                                <Icon
+                                  style={{
+                                    fontSize: "18px",
+                                    color: "#fa6130",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </>
+      {/* )} */}
     </Base>
   );
 };

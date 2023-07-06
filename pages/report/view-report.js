@@ -20,11 +20,8 @@ import { IoIosArrowDropleft } from "react-icons/io";
 function ViewReport({ data, setModalShow }) {
   console.log(data);
   const router = useRouter();
-  const dispatch = useDispatch();
-  //   const [modalShow, setModalShow] = useState(false);
-  const [type, setType] = useState("");
-  const [action, setAction] = useState(0);
-  const [capitalSubsidy, setCapitalSubsidy] = useState(0);
+  // const router = useRouter();
+  // const dispatch = useDispatch();
 
   const date = new Date();
   const formattedDate = date.toLocaleDateString("en-US", {
@@ -35,6 +32,7 @@ function ViewReport({ data, setModalShow }) {
 
   const subsidyReports = useSelector((state) => state?.eligibleSubsidy);
   const district_taluka_name = useSelector((state) => state?.taluka);
+  const viewReport = useSelector((state) => state?.report?.get_report);
 
   const capitalSubsidyData =
     subsidyReports?.eligible_subsidy?.subsidies?.filter(
@@ -71,39 +69,13 @@ function ViewReport({ data, setModalShow }) {
     { icon: RiDeleteBin5Fill },
   ];
 
-  //   const addNewIndustryCategory = () => {
-  //     setModalShow(true);
-  //     setType("add");
-  //   };
-
-  //   useEffect(() => {
-  //     dispatch(industryCategoryActions?.getCategories());
-  //   }, [dispatch]);
-
-  //   const handleClick = (item, idx) => {
-  //     console.log(item, idx);
-  //     if (idx === 0) {
-  //       console.log("Shared");
-  //     } else if (idx === 1) {
-  //       console.log("viewed");
-  //     } else if (idx === 2) {
-  //       setModalShow(true);
-  //       setType("edit");
-  //       setAction(item);
-  //     } else {
-  //       setModalShow(true);
-  //       setType("delete");
-  //       setAction(item?.id);
-  //     }
-  //   };
-  // const restartSession = () => {
-  //   dispatch(eligibleSubsidyAction.clearEligible());
-  //   router.push("/dashboard");
-  // };
   const goBack = () => {
     setModalShow(false);
   };
 
+  const handlePayNow = () => {
+    router.push("/report/final-report");
+  };
   return (
     <>
       {/* {modalShow && (
@@ -115,77 +87,95 @@ function ViewReport({ data, setModalShow }) {
           onHide={() => setModalShow(false)}
         />
       )} */}
-      <div className={styles.report_tablee}>
-        <div>
-          <div className="d-flex justify-content-between mx-5 mt-3">
-            <h4>General Information</h4>
-            <p style={{ cursor: "pointer" }} onClick={() => goBack()}>
-              Back
-            </p>
-          </div>
-          <div className="row mt-4 mx-5">
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>InquireID</h6>
-              <p>#{data?.report_id}</p>
+      <Base
+        title={"title"}
+        description={"dgfdfsdfsffsfd"}
+        meta_title={"meta_title"}
+        image={"image"}
+        noindex={"noindex"}
+        canonical={"canonical"}
+      >
+        <div className={styles.report_tablee}>
+          <div>
+            <div className="d-flex justify-content-between mx-5 mt-3">
+              <h4>General Information</h4>
             </div>
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>Category</h6>
-              <p>{subsidyReports?.selected_information?.industryCategoryID}</p>
+            <div className="row mt-4 mx-5">
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>InquireID</h6>
+                <p>#{viewReport?.info?.report_id}</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Category</h6>
+                <p>{viewReport?.info?.industry_category_name}</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Sector</h6>
+                <p>{viewReport?.info?.industry_sector_name}</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Created Date</h6>
+                <p>{formattedDate}</p>
+              </div>
             </div>
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>Sector</h6>
-              <p>{subsidyReports?.selected_information?.industrySectorID}</p>
-            </div>
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>Created Date</h6>
-              <p>{formattedDate}</p>
-            </div>
-          </div>
-          <div className="row mt-4 mx-5">
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>State</h6>
-              <p>{subsidyReports?.selected_information?.stateID}</p>
-            </div>
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>Taluka</h6>
-              <p>{district_taluka_name?.selected_data?.taluka}</p>
-            </div>
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>Company Name</h6>
-              <p>ABC</p>
-            </div>
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>Created By</h6>
-              <p>super admin</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className={styles.report_tablee}>
-        <div className="py-3">
-          <div className="d-flex justify-content-between mx-5 ">
-            <h4>Information based on Service and Large Industry</h4>
-          </div>
-          <div className="row mt-4 mx-5">
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>Subsidy Amount</h6>
-              <p>&#8377;0.0</p>
-            </div>
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>Fixed Capital Investment</h6>
-              <p>&#8377;10,00,000.00</p>
-            </div>
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>Team Loan Amount</h6>
-              <p>&#8377;0.0</p>
-            </div>
-            <div className="col-sm-3 d-flex flex-column">
-              <h6>Rate Of Interest</h6>
-              <p>&#8377;0.0</p>
+            <div className="row mt-4 mx-5">
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>State</h6>
+                <p>{viewReport?.info?.state_name}</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Taluka</h6>
+                <p>{viewReport?.info?.taluka_name}</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Company Name</h6>
+                <p>ABC</p>
+              </div>
+              <div className="col-sm-3 d-flex flex-column">
+                <h6>Created By</h6>
+                <p>super admin</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <div className={styles.report_tablee}>
+          <div className="py-3">
+            <div className="d-flex justify-content-between mx-5 ">
+              <h4>Information based on Service and Large Industry</h4>
+            </div>
+            <div className="row mt-4 mx-5">
+              {viewReport?.result?.map((question, idx) => {
+                return (
+                  <div key={idx} className="col-sm-3 d-flex flex-column">
+                    <h6>
+                      {question?.question_display_name
+                        ? question?.question_display_name
+                        : question?.question_name}
+                    </h6>
+                    <p>{question?.answer}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {viewReport?.info?.is_paid === false && (
+          <div
+            className="d-flex justify-content-end mb-5"
+            style={{ marginRight: "20px" }}
+          >
+            <CustomButton
+              name="Pay Now"
+              color="#FFFFFF"
+              height="50px"
+              width="200px"
+              bgColor="#FA6130"
+              onClick={(e) => handlePayNow(e)}
+            />
+          </div>
+        )}
+      </Base>
     </>
   );
 }

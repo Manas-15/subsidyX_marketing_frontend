@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/Actions/userAction";
 
-const Login = ({ data }) => {
+const Signup = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [credential, setCredential] = useState({ email: "", password: "" });
@@ -18,20 +18,21 @@ const Login = ({ data }) => {
     setCredential({ ...credential, [name]: value });
   };
 
-  const handleLogin = (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
-    dispatch(userActions.login(credential));
+    // router.push("/otp");
+    // dispatch(userActions.login(credential));
   };
 
-  useEffect(() => {
-    if (user?.user?.access_token !== undefined) {
-      // router.push("/questions");
-      router.push("/report/all-report-list");
-    } else {
-      router.push("/login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.user?.access_token]);
+  //   useEffect(() => {
+  //     if (user?.user?.access_token !== undefined) {
+  //       // router.push("/questions");
+  //       router.push("/report/all-report-list");
+  //     } else {
+  //       router.push("/login");
+  //     }
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, [user?.user?.access_token]);
 
   return (
     <Base
@@ -46,41 +47,31 @@ const Login = ({ data }) => {
         <div className="container">
           <div className="section row pb-0">
             <div className="col-12 inner-section">
-              <Form onSubmit={(e) => handleLogin(e)}>
+              <Form onSubmit={(e) => handleSignup(e)}>
                 <div className="d-flex justify-content-center mt-5 mb-5">
                   <h2 className="fw-bold text-white">
-                    Great!! Enter your email and password to log in
+                    Great!! Enter your phone number to sign up
                   </h2>
                 </div>
                 <div style={{ margin: "auto", width: "300px" }}>
                   <div className="form-floating mb-3">
                     <input
-                      type="email"
+                      type="number"
                       name="email"
                       onChange={(e) => handleChange(e)}
                       className="form-control"
                       id="floatingInput"
-                      placeholder="Email"
+                      placeholder="Phone Number"
                     />
                   </div>
 
-                  <div className="form-floating">
-                    <input
-                      type="password"
-                      name="password"
-                      onChange={(e) => handleChange(e)}
-                      className="form-control"
-                      id="floatingPassword"
-                      placeholder="Password"
-                    />
-                  </div>
                   <div className="mt-5 d-flex justify-content-center">
                     <button
                       type="submit"
                       className="btn btn-primary log_btn"
-                      title="login"
+                      title="signup"
                     >
-                      LOG IN
+                      SIGN UP
                     </button>
                   </div>
                 </div>
@@ -94,4 +85,4 @@ const Login = ({ data }) => {
   );
 };
 
-export default Login;
+export default Signup;

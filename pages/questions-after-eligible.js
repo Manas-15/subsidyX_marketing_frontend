@@ -11,9 +11,11 @@ import { CustomButton } from "@layouts/components/CustomButton";
 import { CongratulationsModal } from "@layouts/components/Modal";
 import { districtManagementAction } from "../redux/Actions/districtManagementAction";
 import { talukaManagementAction } from "../redux/Actions/talukaManagementAction";
+import { reportManagementAction } from "redux/Actions/reportManagementAction";
+
+const catData = [{ 1: [11, 12, 13] }, { 2: [14, 15, 16] }, { 3: [17, 18, 1] }];
 
 const QuestionAfterEligible = ({ data }) => {
-  console.log("ddddddddddddddddddddddddddddddddd");
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -28,6 +30,10 @@ const QuestionAfterEligible = ({ data }) => {
   const [reportID, setReportID] = useState(null);
   const [next, setNext] = useState(false);
   const [districtData, setDistrictData] = useState({
+    district: 0,
+    taluka: 0,
+  });
+  const [districtTalukaID, setDistrictTalukaID] = useState({
     district: 0,
     taluka: 0,
   });
@@ -58,9 +64,15 @@ const QuestionAfterEligible = ({ data }) => {
 
   useEffect(() => {
     if (questionData?.status === 408) {
-      setModalShow(true);
+      // setModalShow(true);
       setType("noQuestion");
-      setReportID(subsidyData?.eligible_subsidy?.report_id);
+      dispatch(
+        reportManagementAction?.getReportByID(
+          subsidyData?.eligible_subsidy?.report_id
+        )
+      );
+      router.push("/report/confirm-report");
+      // setReportID(subsidyData?.eligible_subsidy?.report_id);
     }
     if (questionData?.status === 408 && subsidiesList?.length === 0) {
       setModalShow(true);
@@ -77,7 +89,8 @@ const QuestionAfterEligible = ({ data }) => {
     // console.log(selectedOption?.text);
     setAllSelectedName({ ...allSelectedName, [name]: selectedOption?.text });
 
-    setDistrictData({ ...districtData, [name]: value });
+    setDistrictTalukaID({ ...districtTalukaID, [name]: value });
+
     if (name === "district") {
       dispatch(talukaManagementAction?.getTalukas(value));
     }
@@ -93,7 +106,7 @@ const QuestionAfterEligible = ({ data }) => {
   // };
 
   const handleNext = () => {
-    dispatch(talukaManagementAction.selectedData(allSelectedName));
+    dispatch(talukaManagementAction.selectedData(districtTalukaID));
     setNext(true);
   };
 
@@ -118,6 +131,8 @@ const QuestionAfterEligible = ({ data }) => {
             : "",
         subscheme_id: questionData?.question?.subscheme_id,
         subsidy_id: questionData?.question?.subsidy_id,
+        taluka_id: parseInt(allTalukas?.selected_data?.taluka),
+        district_id: parseInt(allTalukas?.selected_data?.district),
       },
       report_id: questionData?.report_id,
     };
@@ -137,12 +152,6 @@ const QuestionAfterEligible = ({ data }) => {
     });
   };
 
-  const catData = [
-    { 1: [11, 12, 13] },
-    { 2: [14, 15, 16] },
-    { 3: [17, 18, 1] },
-  ];
-
   const clickId = districtData?.taluka;
 
   useEffect(() => {
@@ -154,8 +163,7 @@ const QuestionAfterEligible = ({ data }) => {
 
     if (matchedCategory) {
       const categoryName = Object.keys(matchedCategory)[0];
-      console.log(categoryName);
-      // setTalukaCategoryName(categoryName);
+
       setAllSelectedName((prevSelectedName) => ({
         ...prevSelectedName,
         category: categoryName,
@@ -164,36 +172,12 @@ const QuestionAfterEligible = ({ data }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clickId]);
 
-  // const subsidies = [
-  //   {
-  //     id: 2,
-  //     is_central: false,
-  //     subsidy_id: 40,
-  //     subsidy_name: "Aatmanirbhar Gujarat Scheme for Assistance to MSMEs",
-  //     is_subscheme: true,
-  //     scheme: "Interest Subsidy",
-  //   },
-  //   {
-  //     id: 1,
-  //     is_central: false,
-  //     subsidy_id: 40,
-  //     subsidy_name: "Aatmanirbhar Gujarat Scheme for Assistance to MSMEs",
-  //     is_subscheme: true,
-  //     scheme: "Capital Subsidy (Applicable to Manufacturing Sector Only)",
-  //   },
-  //   {
-  //     id: 3,
-  //     is_central: false,
-  //     subsidy_id: 40,
-  //     subsidy_name: "Manas",
-  //     is_subscheme: true,
-  //     scheme: "Manas scheme",
-  //   },
-  // ];
+ 
 
   // Group the subsidies by subsidy_name start
-  console.log(subsidiesList);
+
   useEffect(() => {
+    //groupby subsidies list using same subsidy name
     if (subsidiesList !== undefined) {
       const groupedSubsidies = subsidiesList?.reduce((acc, subsidy) => {
         if (!acc[subsidy.subsidy_name]) {
@@ -221,7 +205,6 @@ const QuestionAfterEligible = ({ data }) => {
     }
   }, [subsidiesList]);
 
-
   return (
     <Base
       title={"title"}
@@ -241,7 +224,7 @@ const QuestionAfterEligible = ({ data }) => {
         />
       )}
       {next ? (
-        <section className="section bg-inner">
+        <section className="section">
           <div className="container">
             <div className="section pb-0">
               <div className="row inner-section">
@@ -366,16 +349,6 @@ const QuestionAfterEligible = ({ data }) => {
                     <div className="d-flex">
                       <p style={{ marginLeft: "15px" }}>{subsidyItems}</p>
                     </div>
-                    {/* {subsidiesList?.map((sub, index) => {
-                      return (
-                        <div key={index} className="d-flex">
-                          {index + 1}{" "}
-                          <p style={{ marginLeft: "15px" }}>
-                            {sub?.subsidy_name}
-                          </p>
-                        </div>
-                      );
-                    })} */}
                   </div>
                 </div>
               </div>

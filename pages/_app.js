@@ -4,9 +4,27 @@ import "styles/globals.css";
 import { Provider } from "react-redux";
 import { store } from "redux/Store";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const App = ({ Component, pageProps }) => {
+  const router = useRouter();
   const [showChild, setShowChild] = useState(false);
+
+  useEffect(() => {
+    const pathName = router?.pathname
+      .toLowerCase()
+      .replace(/[^\w-]+/g, "")
+      .replace("_", " ")
+      .split(" ");
+    const item = pathName
+      .map((item) => {
+        return item.charAt(0).toUpperCase() + item.slice(1);
+      })
+      .join(" ");
+
+    console.log(item);
+    //  dispatch(sidebarActions.selectedCategory(item));
+  }, [router?.pathname]);
 
   useEffect(() => {
     setShowChild(true);

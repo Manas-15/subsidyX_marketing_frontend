@@ -1,9 +1,15 @@
 import Base from "@layouts/Baseof";
 import { CustomButton } from "@layouts/components/CustomButton";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
 const Payment = () => {
+  const router = useRouter();
+
+  const handlePayNow = () => {
+    router.push("/report/final-report");
+  };
   return (
     <>
       <Base
@@ -33,7 +39,7 @@ const Payment = () => {
               height="50px"
               width="200px"
               bgColor="#FA6130"
-              // onClick={(e) => restartSession(e)}
+              onClick={(e) => handlePayNow(e)}
             />
           </div>
           <div className="mt-5">
