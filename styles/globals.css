@@ -338,7 +338,7 @@ ul.social-icons li a:hover {
   min-height: 536px;
   padding-top: 20px;
   padding-bottom: 20px;
-  color: white;
+  color: black;
   /* text-align: justify; */
 }
 .bg-inner {
@@ -446,4 +446,11 @@ li.nav-item.active a {
   text-align: center;
   background: rgba(0, 0, 0, 0.05);
   border-radius: 4px;
+}
+
+.final_report_name {
+  font-size: 15px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  /* font-weight: 400; */
 }
