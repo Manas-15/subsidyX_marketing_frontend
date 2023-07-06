@@ -5,6 +5,7 @@ const initialState = {
   allReports: [],
   question_answer: [],
   selected_category: "Report Management",
+ 
 };
 
 export function report(state = initialState, action) {
@@ -25,6 +26,17 @@ export function report(state = initialState, action) {
         ...state,
         selected_category: action?.data,
       };
+
+    case reportManagementConstants.GET_REPORT_BY_REPORT_ID_REQUEST:
+      return { ...state, isSuccess: false };
+    case reportManagementConstants.GET_REPORT_BY_REPORT_ID_SUCCESS:
+      return {
+        ...state,
+        isSuccess: true,
+        get_report: action?.data?.data,
+      };
+    case reportManagementConstants.GET_REPORT_BY_REPORT_ID_FAILURE:
+      return { ...state, isSuccess: false };
 
     default:
       return state;

@@ -8,7 +8,6 @@ export const eligibleSubsidyAction = {
   selectedDataForEligibleSubsidy,
   selectedInformationForEligibleSubsidy,
   savedAadharNumber,
-  getReport,
 };
 
 function getEligible(data) {
@@ -89,29 +88,4 @@ function savedAadharNumber(data) {
   }
 }
 
-function getReport(id) {
-  return (dispatch) => {
-    dispatch(request(id));
-    eligibleSubsidyService.getReport(id).then(
-      (res) => {
-        dispatch(success(res));
-      },
-      (error) => {
-        dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
-      }
-    );
-  };
-  function request(data) {
-    return { type: eligibleSubsidyConstant.GET_SUBSIDY_REPORT_REQUEST, data };
-  }
-  function success(data) {
-    return { type: eligibleSubsidyConstant.GET_SUBSIDY_REPORT_SUCCESS, data };
-  }
-  function failure(error) {
-    return {
-      type: eligibleSubsidyConstant.GET_SUBSIDY_REPORT_FAILURE,
-      error,
-    };
-  }
-}
+

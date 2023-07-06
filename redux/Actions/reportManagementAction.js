@@ -5,6 +5,7 @@ import { reportManagementService } from "redux/Services/reportManagementService"
 export const reportManagementAction = {
   getAllReportBasedOnUser,
   selectedCategory,
+  getReportByID,
 };
 function getAllReportBasedOnUser() {
   return (dispatch) => {
@@ -48,6 +49,39 @@ function selectedCategory(data) {
     return {
       type: reportManagementConstants.SELECTED_CATEGORY_SUCCESS,
       data,
+    };
+  }
+}
+
+function getReportByID(id) {
+  return (dispatch) => {
+    dispatch(request(id));
+    reportManagementService.getReportByID(id).then(
+      (res) => {
+        console.log(res);
+        dispatch(success(res));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
+  };
+  function request() {
+    return {
+      type: reportManagementConstants.GET_REPORT_BY_REPORT_ID_REQUEST,
+    };
+  }
+  function success(data) {
+    return {
+      type: reportManagementConstants.GET_REPORT_BY_REPORT_ID_SUCCESS,
+      data,
+    };
+  }
+  function failure(error) {
+    return {
+      type: reportManagementConstants.GET_REPORT_BY_REPORT_ID_FAILURE,
+      error,
     };
   }
 }

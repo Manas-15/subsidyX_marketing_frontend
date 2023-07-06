@@ -25,18 +25,6 @@ export function eligibleSubsidy(state = {}, action) {
     case eligibleSubsidyConstant.SAVED_AADHAR_NUMBER_SUCCESS:
       return { ...state, saved_aadhar_number: action?.data };
 
-    case eligibleSubsidyConstant.GET_SUBSIDY_REPORT_REQUEST:
-      return {
-        ...state,
-      };
-    case eligibleSubsidyConstant.GET_SUBSIDY_REPORT_SUCCESS:
-      return {
-        ...state,
-        subsidy_report: action?.data?.data,
-      };
-    case eligibleSubsidyConstant.GET_SUBSIDY_REPORT_FAILURE:
-      return { ...state };
-
     default:
       return state;
   }

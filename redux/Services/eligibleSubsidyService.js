@@ -3,7 +3,6 @@ import api from "../api";
 
 export const eligibleSubsidyService = {
   getEligible,
-  getReport,
 };
 
 async function getEligible(data) {
@@ -12,8 +11,4 @@ async function getEligible(data) {
   });
 }
 
-async function getReport(id) {
-  return await api.get(`subsidy/fetch_answered_question ?report_id=${id}`, {
-    headers: authHeader(),
-  });
-}
+
