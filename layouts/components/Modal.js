@@ -3,6 +3,7 @@ import { CustomButton } from "./CustomButton";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
+import { reportManagementAction } from "redux/Actions/reportManagementAction";
 
 export const CongratulationsModal = (props) => {
   console.log(props);
@@ -16,7 +17,6 @@ export const CongratulationsModal = (props) => {
     (subsidy, ind) => subsidy.is_central === false
   ).length;
 
-  console.log(subsidies);
 
   const submitModal = () => {
     props.setModalShow(false);
@@ -24,17 +24,11 @@ export const CongratulationsModal = (props) => {
   };
 
   const cancelModal = () => {
-    console.log("33333333333333333");
-
     props.setModalShow(false);
     dispatch(eligibleSubsidyAction.clearEligible());
   };
 
-  const restartQuestion = () => {
-    props.setModalShow(false);
-    router.push("/dashboard");
-    dispatch(eligibleSubsidyAction.clearEligible());
-  };
+
   const handleOK = () => {
     props.setModalShow(false);
     if (props?.type === "success") {
@@ -56,11 +50,16 @@ export const CongratulationsModal = (props) => {
     router.push("/dashboard");
     dispatch(eligibleSubsidyAction.clearEligible());
   };
+    const handleCancel = () => {
+      props.setModalShow(false);
+      router.push("/dashboard");
+      dispatch(eligibleSubsidyAction.clearEligible());
+    };
 
   const generateReport = () => {
     console.log("111111111111111111111111");
-    dispatch(eligibleSubsidyAction.getReport(props?.action));
-    router.push("/report/confirm-report");
+    // dispatch(reportManagementAction?.getReportByID(props?.action));
+    // router.push("/report/confirm-report");
   };
   return (
     <>
@@ -142,13 +141,23 @@ export const CongratulationsModal = (props) => {
 
           <div className="d-flex justify-content-center mt-4">
             {props?.type === "warn" || props?.type === "noQuestion" ? (
-              <CustomButton
-                name="Generate Report"
-                color="#FFFFFF"
-                width="200px"
-                bgColor="#FA6130"
-                onClick={() => generateReport()}
-              />
+              <>
+                <CustomButton
+                  name="Generate Report"
+                  color="#FFFFFF"
+                  width="200px"
+                  bgColor="#FA6130"
+                  onClick={() => generateReport()}
+                />
+                <CustomButton
+                  name="Cancel"
+                  color="#000000"
+                  width="100px"
+                  bgColor="#FFFFFF"
+                  border="1px solid #000000"
+                  onClick={() => handleCancel()}
+                />
+              </>
             ) : props?.type === "success" ? (
               <CustomButton
                 name="OK"

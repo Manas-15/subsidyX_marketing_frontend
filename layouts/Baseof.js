@@ -113,7 +113,8 @@ const Base = ({
         router?.pathname === "/services" ||
         router?.pathname === "/about" ||
         router?.pathname === "/contact" ||
-        router?.pathname === "/login" ? (
+        router?.pathname === "/login" ||
+        router?.pathname === "/signup" ? (
           <>
             <Header />
             {children}

@@ -21,8 +21,6 @@ const Header = () => {
     router.push("/login");
   };
 
-  console.log(router?.pathname === "/questions-after-eligible");
-
   return (
     <header className="subsid_home_header">
       <nav className="navbar navbar-expand-md top_nav">
@@ -30,6 +28,8 @@ const Header = () => {
           {router?.pathname !== "/dashboard" &&
           router?.pathname !== "/questions-after-eligible" &&
           router?.pathname !== "/report/confirm-report" &&
+          router?.pathname !== "/report/view-report" &&
+          router?.pathname !== "/report/final-report" &&
           router?.pathname !== "/payment" ? (
             <a href={base_url} className="navbar-brand">
               <figure>

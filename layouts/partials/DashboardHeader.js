@@ -17,7 +17,7 @@ const DashboardHeader = () => {
         </div>
         <div className={styles.header_name_b}>
           Subsidy <IoIosArrowForward />
-          {allReportLists.selected_category}
+          <span onClick={()=>router}>{allReportLists.selected_category}</span>
         </div>
       </div>
     </>

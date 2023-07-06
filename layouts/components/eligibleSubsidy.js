@@ -57,53 +57,54 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
       dispatch(sectorAction.getSectorList(value));
     }
 
-    if (name === "industrySectorID") {
-      const selectedData = {
-        stateID: selectedInformation?.stateID,
-        industryCategoryID: selectedInformation?.industryCategoryID,
-        industrySectorID: selectedOption?.text,
-      };
+    // if (name === "industrySectorID") {
+    //   const selectedData = {
+    //     stateID: selectedInformation?.stateID,
+    //     industryCategoryID: selectedInformation?.industryCategoryID,
+    //     industrySectorID: selectedOption?.text,
+    //   };
 
-      const data = {
-        user_info: {
-          mobile_number: eligibleUserInfo?.mobileNumber,
-          state_id: eligibleUserInfo?.stateID,
-          industry_category_id: eligibleUserInfo?.industryCategoryID,
-          industry_sector_id: value,
-        },
-      };
+    //   const data = {
+    //     user_info: {
+    //       mobile_number: eligibleUserInfo?.mobileNumber,
+    //       state_id: eligibleUserInfo?.stateID,
+    //       industry_category_id: eligibleUserInfo?.industryCategoryID,
+    //       industry_sector_id: value,
+    //     },
+    //   };
 
+    //   dispatch(eligibleSubsidyAction.getEligible(data));
+    //   dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
+    //   dispatch(
+    //     eligibleSubsidyAction.selectedInformationForEligibleSubsidy(
+    //       selectedData
+    //     )
+    //   );
+    // }
+  };
+
+  const goToNext = () => {
+    const data = {
+      user_info: {
+        mobile_number: eligibleUserInfo?.mobileNumber,
+        state_id: parseInt(eligibleUserInfo?.stateID),
+        industry_category_id: parseInt(eligibleUserInfo?.industryCategoryID),
+        industry_sector_id: parseInt(eligibleUserInfo?.industrySectorID),
+      },
+    };
+    if (
+      eligibleUserInfo?.stateID !== 0 ||
+      eligibleUserInfo?.industryCategoryID !== 0 ||
+      eligibleUserInfo?.industrySectorID !== 0
+    ) {
       dispatch(eligibleSubsidyAction.getEligible(data));
       dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
       dispatch(
         eligibleSubsidyAction.selectedInformationForEligibleSubsidy(
-          selectedData
+          selectedInformation
         )
       );
     }
-  };
-
-  const goToNext = () => {
-    // const data = {
-    //   user_info: {
-    //     mobile_number: eligibleUserInfo?.mobileNumber,
-    //     state_id: eligibleUserInfo?.stateID,
-    //     industry_category_id: eligibleUserInfo?.industryCategoryID,
-    //     industry_sector_id: eligibleUserInfo?.industrySectorID,
-    //   },
-    // };
-    // if (
-    //   eligibleUserInfo?.stateID !== 0 ||
-    //   eligibleUserInfo?.industryCategoryID !== 0 ||
-    //   eligibleUserInfo?.industrySectorID !== 0
-    // ) {
-    //   dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
-    //   dispatch(
-    //     eligibleSubsidyAction.selectedInformationForEligibleSubsidy(
-    //       selectedInformation
-    //     )
-    //   );
-    // }
   };
   useEffect(() => {
     if (
@@ -111,12 +112,14 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
       eligibleSubsidy !== null &&
       Object.keys(eligibleSubsidy).length !== 0
     ) {
+      console.log("11111111111111");
       setModalShow(true);
     }
     if (
       eligibleSubsidy?.status === 408 &&
       eligibleSubsidy?.subsidies?.length === 0
     ) {
+      console.log("2222222222222222");
       setModalShow(true);
       setType("warn");
       // setReportID(subsidyData?.eligible_subsidy?.report_id);
@@ -128,6 +131,7 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
       {modalShow && (
         <CongratulationsModal
           type={type}
+          setType={setType}
           action={eligibleSubsidy}
           show={modalShow}
           setModalShow={setModalShow}
@@ -188,10 +192,7 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
             </select>
           </div>
           <span className="mt-5 d-flex justify-content-center">
-            {/* <IoIosArrowDropleft
-              style={{ fontSize: "50px", color: "#fa6130" }}
-              onClick={(e) => goToNext(e)}
-            /> */}
+            {/* <IoIosArrowDropleft /> */}
             <IoIosArrowDropright
               style={{ fontSize: "50px", color: "#fa6130", cursor: "pointer" }}
               onClick={(e) => goToNext(e)}

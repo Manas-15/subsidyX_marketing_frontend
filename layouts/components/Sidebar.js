@@ -7,6 +7,7 @@ import {
 import { TbReportAnalytics } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { userActions } from "redux/Actions/userAction";
 // import { sidebarActions } from "../../redux/Actions/sidebarAction";
 
 const sideBarItems = [
@@ -52,7 +53,11 @@ const Sidebar = () => {
       </button>
       <aside className="sidebar" data-collapse={isCollapsed}>
         <div className="sidebar_top">
-          <a href="#" className="navbar-brand">
+          <Link
+            href="/login"
+            className="navbar-brand"
+            onClick={() => dispatch(userActions.logout())}
+          >
             <figure>
               <img className="logo" src="/images/logo.png" alt="" />
               <img
@@ -61,7 +66,7 @@ const Sidebar = () => {
                 className="sidebar_logo_name"
               />
             </figure>
-          </a>
+          </Link>
         </div>
         <ul className="sidebar_list">
           {sideBarItems?.map(({ name, href, icon: Icon }, index) => {
