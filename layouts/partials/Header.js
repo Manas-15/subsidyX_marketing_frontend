@@ -6,6 +6,9 @@ import Image from "next/image";
 import config from "@config/config.json";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/Actions/userAction";
+import { Dropdown } from "react-bootstrap";
+import { AiOutlineLogout } from "react-icons/ai";
+
 const Header = () => {
   //router
   const dispatch = useDispatch();
@@ -15,6 +18,7 @@ const Header = () => {
   const [navOpen, setNavOpen] = useState(false);
 
   const user = useSelector((state) => state?.user);
+  const allReportLists = useSelector((state) => state?.report);
 
   const handleLogout = () => {
     dispatch(userActions.logout());
@@ -30,15 +34,26 @@ const Header = () => {
           router?.pathname !== "/report/confirm-report" &&
           router?.pathname !== "/report/view-report" &&
           router?.pathname !== "/report/final-report" &&
+          router?.pathname !== "/report/all-report-list" &&
           router?.pathname !== "/payment" ? (
             <a href={base_url} className="navbar-brand">
+              {console.log("1111111111111111111111111111111111111")}
               <figure>
                 <img className="logo" src="/images/logo.png" alt="" />
                 <img src="/images/logo-text.png" alt="" />
               </figure>
             </a>
           ) : (
-            <div style={{ visibility: "hidden" }}>
+            <div
+              style={{
+                visibility:
+                  allReportLists?.allReports?.result?.length > 0
+                    ? "hidden"
+                    : "visible",
+              }}
+            >
+              {console.log("22222222222222222222222222222")}
+
               <a href={base_url} className="navbar-brand">
                 <figure>
                   <img className="logo" src="/images/logo.png" alt="" />
@@ -86,7 +101,7 @@ const Header = () => {
                   Contact Us
                 </Link>
               </li>
-              <li className="nav-item ml-2">
+              <li className="nav-item ml-2 d-flex justify-content-center">
                 {user?.user?.access_token === undefined ? (
                   <button
                     type="button"
@@ -97,14 +112,29 @@ const Header = () => {
                     LOG IN
                   </button>
                 ) : (
-                  <button
-                    type="button"
-                    className="btn btn-primary log_btn"
-                    title="login"
-                    onClick={() => handleLogout()}
-                  >
-                    LOG OUT
-                  </button>
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      className="btn log_btn"
+                      id="dropdown-basic"
+                    >
+                      User name
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        href="#action1"
+                        onClick={() => handleLogout()}
+                      >
+                        <AiOutlineLogout
+                          style={{
+                            fontSize: "25px",
+                            // color: "#fa6130",
+                            cursor: "pointer",
+                          }}
+                        />{" "}
+                        LOG OUT
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 )}
               </li>
             </ul>

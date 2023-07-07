@@ -17,7 +17,6 @@ export const CongratulationsModal = (props) => {
     (subsidy, ind) => subsidy.is_central === false
   ).length;
 
-
   const submitModal = () => {
     props.setModalShow(false);
     router.push("/questions-after-eligible");
@@ -27,7 +26,6 @@ export const CongratulationsModal = (props) => {
     props.setModalShow(false);
     dispatch(eligibleSubsidyAction.clearEligible());
   };
-
 
   const handleOK = () => {
     props.setModalShow(false);
@@ -50,11 +48,11 @@ export const CongratulationsModal = (props) => {
     router.push("/dashboard");
     dispatch(eligibleSubsidyAction.clearEligible());
   };
-    const handleCancel = () => {
-      props.setModalShow(false);
-      router.push("/dashboard");
-      dispatch(eligibleSubsidyAction.clearEligible());
-    };
+  const handleCancel = () => {
+    props.setModalShow(false);
+    router.push("/dashboard");
+    dispatch(eligibleSubsidyAction.clearEligible());
+  };
 
   const generateReport = () => {
     console.log("111111111111111111111111");
@@ -104,19 +102,25 @@ export const CongratulationsModal = (props) => {
                 </span>
               ) : (
                 <span className="text-white">
-                  {isCentral > 0 ? (
+                  {isCentral > 0 && isState > 0 ? (
                     <>
                       Based on information provided there are {isCentral}{" "}
                       subsidies applicable to you <br />
                       from Central Government and {isState}
-                      <br />
-                      Subsidies from Government of Gujurat.
+                      subsidies applicable to you <br />
+                      from Government of Gujurat.
+                    </>
+                  ) : isCentral > 0 ? (
+                    <>
+                      Based on information provided there are {isCentral}{" "}
+                      subsidies applicable to you <br />
+                      from Central Government.
                     </>
                   ) : (
                     <>
-                      Based on information provided there are 1{/* {isState} */}
-                      <br />
-                      Subsidies applicable to you from Government of Gujurat.
+                      Based on information provided there are {isState}{" "}
+                      subsidies applicable to you <br />
+                      from Government of Gujurat.
                     </>
                   )}
                 </span>
