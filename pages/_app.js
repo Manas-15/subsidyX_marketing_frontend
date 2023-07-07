@@ -22,7 +22,7 @@ const App = ({ Component, pageProps }) => {
       })
       .join(" ");
 
-    console.log(item);
+    // console.log(item);
     //  dispatch(sidebarActions.selectedCategory(item));
   }, [router?.pathname]);
 

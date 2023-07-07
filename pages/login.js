@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/Actions/userAction";
+import Link from "next/link";
 
 const Login = ({ data }) => {
   const router = useRouter();
@@ -83,10 +84,17 @@ const Login = ({ data }) => {
                       LOG IN
                     </button>
                   </div>
+                  <div className="text-white d-flex justify-content-center mt-3">
+                    Don't have an account ? &nbsp;
+                    <Link href="/signup" className="text-primary">
+                      {" "}
+                      Sign Up{" "}
+                    </Link>
+                  </div>
                 </div>
               </Form>
             </div>
-            <div className="content col-12 md:col-6 lg:col-5"></div>
+            <div className="text-white"></div>
           </div>
         </div>
       </section>

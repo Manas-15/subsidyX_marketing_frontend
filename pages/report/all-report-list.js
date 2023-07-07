@@ -42,6 +42,12 @@ const AllReportLists = () => {
   const allReportLists = useSelector((state) => state?.report);
 
   useEffect(() => {
+    if (allReportLists?.allReports?.result?.length === 0) {
+      router.push("/dashboard");
+    }
+  }, [allReportLists]);
+
+  useEffect(() => {
     dispatch(reportManagementAction.getAllReportBasedOnUser());
   }, []);
 
@@ -123,6 +129,7 @@ const AllReportLists = () => {
                   <th scope="col">Company Owner Name</th>
                   <th scope="col">Created date</th>
                   <th scope="col">Category</th>
+                  <th scope="col">Paid</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -130,11 +137,12 @@ const AllReportLists = () => {
                 {allReportLists?.allReports?.result?.map((data, index) => {
                   return (
                     <tr key={index}>
-                      <th scope="row">#{data?.report_id}</th>
+                      <th scope="row">#{data?.id}</th>
                       <td> - </td>
                       <td> - </td>
                       <td>{formattedDate}</td>
                       <td> - </td>
+                      <td> {data?.is_paid.toString()} </td>
                       <td>
                         <ul className="d-flex justify-content-between">
                           {actions?.map(({ icon: Icon }, idx) => {

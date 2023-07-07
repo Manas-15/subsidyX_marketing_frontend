@@ -5,11 +5,18 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/Actions/userAction";
+import Link from "next/link";
 
 const Signup = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [credential, setCredential] = useState({ email: "", password: "" });
+  const [credential, setCredential] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    number: "",
+    password: "",
+  });
 
   const user = useSelector((state) => state?.user);
 
@@ -20,8 +27,23 @@ const Signup = ({ data }) => {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    // router.push("/otp");
-    // dispatch(userActions.login(credential));
+    const signupData = {
+      first_name: credential?.firstName,
+      last_name: credential?.lastName,
+      email: credential?.email,
+      phone_number: credential?.number,
+      password: credential?.password,
+    };
+    console.log(credential);
+    dispatch(userActions.signup(signupData));
+    router.push("/login");
+    setCredential({
+      firstName: "",
+      lastName: "",
+      email: "",
+      number: "",
+      password: "",
+    });
   };
 
   //   useEffect(() => {
@@ -50,18 +72,58 @@ const Signup = ({ data }) => {
               <Form onSubmit={(e) => handleSignup(e)}>
                 <div className="d-flex justify-content-center mt-5 mb-5">
                   <h2 className="fw-bold text-white">
-                    Great!! Enter your phone number to sign up
+                    Great!! Enter your details to sign up
                   </h2>
                 </div>
                 <div style={{ margin: "auto", width: "300px" }}>
                   <div className="form-floating mb-3">
                     <input
-                      type="number"
+                      type="text"
+                      name="firstName"
+                      onChange={(e) => handleChange(e)}
+                      className="form-control"
+                      id="floatingInput"
+                      placeholder="First Name"
+                    />
+                  </div>
+                  <div className="form-floating mb-3">
+                    <input
+                      type="text"
+                      name="lastName"
+                      onChange={(e) => handleChange(e)}
+                      className="form-control"
+                      id="floatingInput"
+                      placeholder="Last Name"
+                    />
+                  </div>
+                  <div className="form-floating mb-3">
+                    <input
+                      type="email"
                       name="email"
                       onChange={(e) => handleChange(e)}
                       className="form-control"
                       id="floatingInput"
+                      placeholder="Email"
+                    />
+                  </div>
+                  <div className="form-floating mb-3">
+                    <input
+                      type="number"
+                      name="number"
+                      onChange={(e) => handleChange(e)}
+                      className="form-control"
+                      id="floatingInput"
                       placeholder="Phone Number"
+                    />
+                  </div>
+                  <div className="form-floating mb-3">
+                    <input
+                      type="password"
+                      name="password"
+                      onChange={(e) => handleChange(e)}
+                      className="form-control"
+                      id="floatingInput"
+                      placeholder="Password"
                     />
                   </div>
 
@@ -73,6 +135,13 @@ const Signup = ({ data }) => {
                     >
                       SIGN UP
                     </button>
+                  </div>
+                  <div className="text-white d-flex justify-content-center mt-3">
+                    Already have an account ? &nbsp;
+                    <Link href="/login" className="text-primary">
+                      {" "}
+                      Log In{" "}
+                    </Link>
                   </div>
                 </div>
               </Form>
