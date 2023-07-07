@@ -8,7 +8,7 @@ export const reportManagementService = {
 
 async function getAllReportBasedOnUser() {
   //   let params = ID ? "?state_id=" + ID : "";
-  return await api.get(`/reports/reports?page=1&page_size=200`, {
+  return await api.get(`reports/?page=1&page_size=100`, {
     headers: authHeader(),
   });
 }
