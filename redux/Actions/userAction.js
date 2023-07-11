@@ -6,6 +6,7 @@ export const userActions = {
   signup,
   login,
   logout,
+  userReportCount,
 };
 
 function signup(data) {
@@ -14,8 +15,9 @@ function signup(data) {
     userService.signup(data).then(
       (res) => {
         dispatch(success(res));
-        console.log("SIGNupppppppppppppppppppppp", res);
-        console.log("SIGNupppppppppppppppppppppp", res?.status === 200);
+        console.log(res);
+        const result = JSON.stringify(res?.data?.token?.access_token);
+        localStorage.setItem("accessToken", result);
         dispatch(alertActions.success("User Signup successfully"));
       },
       (error) => {
@@ -44,7 +46,7 @@ function login(data) {
         dispatch(success(res));
         const result = JSON.stringify(res?.data?.access_token);
         localStorage.setItem("accessToken", result);
-        // alert("User loggedin successfully");
+
         dispatch(alertActions.success("User loggedin successfully"));
       },
       (error) => {
@@ -67,12 +69,20 @@ function login(data) {
 function logout() {
   return (dispatch) => {
     dispatch(logout());
-    // alert("User logged out successfully");
-
     dispatch(alertActions.success("User logged out successfully"));
   };
 
   function logout() {
     return { type: userConstants.LOGOUT };
+  }
+}
+
+function userReportCount(data) {
+  return (dispatch) => {
+    dispatch(success(data));
+  };
+
+  function success(data) {
+    return { type: userConstants.USER_REPORT_COUNT_SUCCESS, data };
   }
 }
