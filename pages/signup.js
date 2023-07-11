@@ -72,62 +72,83 @@ const Signup = ({ data }) => {
               <Form onSubmit={(e) => handleSignup(e)}>
                 <div className="d-flex justify-content-center mt-5 mb-5">
                   <h2 className="fw-bold text-white">
-                    Great!! Enter your details to sign up
+                    Please provide your Details
                   </h2>
                 </div>
-                <div style={{ margin: "auto", width: "300px" }}>
-                  <div className="form-floating mb-3">
-                    <input
-                      type="text"
-                      name="firstName"
-                      onChange={(e) => handleChange(e)}
-                      className="form-control"
-                      id="floatingInput"
-                      placeholder="First Name"
-                    />
+                <div style={{ margin: "auto", width: "500px" }}>
+                  <div className="row">
+                    <div className="form-floating mb-3 col-sm-6">
+                      <input
+                        type="text"
+                        name="firstName"
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        id="floatingInput"
+                        placeholder="First Name"
+                      />
+                    </div>
+                    <div className="form-floating mb-3  col-sm-6">
+                      <input
+                        type="text"
+                        name="lastName"
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        id="floatingInput"
+                        placeholder="Last Name"
+                      />
+                    </div>
                   </div>
-                  <div className="form-floating mb-3">
-                    <input
-                      type="text"
-                      name="lastName"
-                      onChange={(e) => handleChange(e)}
-                      className="form-control"
-                      id="floatingInput"
-                      placeholder="Last Name"
-                    />
+                  <div className="row">
+                    <div className="form-floating mb-3 col-sm-6">
+                      <input
+                        type="email"
+                        name="email"
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        id="floatingInput"
+                        placeholder="Email"
+                      />
+                    </div>
+                    <div className="form-floating mb-3 col-sm-6">
+                      <input
+                        type="number"
+                        name="number"
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        id="floatingInput"
+                        placeholder="Phone Number"
+                      />
+                    </div>
                   </div>
-                  <div className="form-floating mb-3">
-                    <input
-                      type="email"
-                      name="email"
-                      onChange={(e) => handleChange(e)}
-                      className="form-control"
-                      id="floatingInput"
-                      placeholder="Email"
-                    />
-                  </div>
-                  <div className="form-floating mb-3">
-                    <input
-                      type="number"
-                      name="number"
-                      onChange={(e) => handleChange(e)}
-                      className="form-control"
-                      id="floatingInput"
-                      placeholder="Phone Number"
-                    />
-                  </div>
-                  <div className="form-floating mb-3">
-                    <input
-                      type="password"
-                      name="password"
-                      onChange={(e) => handleChange(e)}
-                      className="form-control"
-                      id="floatingInput"
-                      placeholder="Password"
-                    />
+                  <div className="row">
+                    <div className="form-floating mb-3 col-sm-12">
+                      <input
+                        type="password"
+                        name="password"
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        id="floatingInput"
+                        placeholder="Password"
+                      />
+                    </div>
                   </div>
 
-                  <div className="mt-5 d-flex justify-content-center">
+                  <div className="my-3 d-flex justify-content-center">
+                    <input
+                      type="checkbox"
+                      onChange={(e) => console.log(e.target.checked)}
+                    />
+                    <Link
+                      href="https://www.lipsum.com/"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="text-white mx-2"
+                    >
+                      I agree with terms & conditions
+                    </Link>
+                  </div>
+
+                  <div className=" d-flex justify-content-center">
                     <button
                       type="submit"
                       className="btn btn-primary log_btn"

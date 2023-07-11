@@ -129,7 +129,7 @@ const AllReportLists = () => {
                   <th scope="col">Company Owner Name</th>
                   <th scope="col">Created date</th>
                   <th scope="col">Category</th>
-                  <th scope="col">Paid</th>
+
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -141,8 +141,7 @@ const AllReportLists = () => {
                       <td> - </td>
                       <td> - </td>
                       <td>{formattedDate}</td>
-                      <td> - </td>
-                      <td> {data?.is_paid.toString()} </td>
+                      <td> {data?.industry_category_name} </td>
                       <td>
                         <ul className="d-flex justify-content-between">
                           {actions?.map(({ icon: Icon }, idx) => {

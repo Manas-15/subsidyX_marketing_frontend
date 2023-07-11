@@ -29,6 +29,7 @@ const QuestionAfterEligible = ({ data }) => {
   const [type, setType] = useState("");
   const [reportID, setReportID] = useState(null);
   const [next, setNext] = useState(false);
+  const [isCompanyPage, setIsCompanyPage] = useState(true);
   const [districtData, setDistrictData] = useState({
     district: 0,
     taluka: 0,
@@ -100,11 +101,6 @@ const QuestionAfterEligible = ({ data }) => {
     setCheckedValue(e.target.value);
   };
 
-  // const restartSession = () => {
-  //   dispatch(eligibleSubsidyAction.clearEligible());
-  //   router.push("/dashboard");
-  // };
-
   const handleNext = () => {
     dispatch(talukaManagementAction.selectedData(districtTalukaID));
     setNext(true);
@@ -172,10 +168,7 @@ const QuestionAfterEligible = ({ data }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clickId]);
 
- 
-
   // Group the subsidies by subsidy_name start
-
   useEffect(() => {
     //groupby subsidies list using same subsidy name
     if (subsidiesList !== undefined) {
@@ -355,6 +348,73 @@ const QuestionAfterEligible = ({ data }) => {
             </div>
           </div>
         </section>
+      ) : isCompanyPage ? (
+        <div className="col-12 inner-section ">
+          {/* {isLoading && <Loader />} */}
+
+          <div className="d-flex justify-content-center mt-5 mb-5">
+            <h2 className="fw-bold text-dark">
+              Enter your Company Name and Owner Name
+            </h2>
+          </div>
+          <div style={{ margin: "auto" }}>
+            <div className="d-flex justify-content-center">
+              <select
+                className="form-control mb-3 w-25"
+                name="district"
+                onChange={(e) => handleSelectChange(e)}
+              >
+                <option value="none">Select District</option>
+                {allDistricts?.districtManagementData?.district?.map(
+                  (district, index) => (
+                    <option
+                      key={index}
+                      className="form-control"
+                      value={district?.id}
+                    >
+                      {district?.name}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+
+            <div className="d-flex justify-content-center mt-3">
+              <select
+                className="form-control mb-3 w-25 mx-3"
+                name="taluka"
+                onChange={(e) => handleSelectChange(e)}
+              >
+                <option value="none">Select Taluka</option>
+                {allTalukas?.talukaManagementData?.talukas?.map(
+                  (taluka, index) => (
+                    <option
+                      key={index}
+                      className="form-control"
+                      value={taluka?.id}
+                    >
+                      {taluka?.name}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+            <div className="mt-5 d-flex justify-content-center">
+              {/* <IoIosArrowDropleft
+              style={{ fontSize: "50px", color: "#fa6130" }}
+              onClick={(e) => goToNext(e)}
+            /> */}
+              <IoIosArrowDropright
+                style={{
+                  fontSize: "50px",
+                  color: "#fa6130",
+                  cursor: "pointer",
+                }}
+                onClick={(e) => handleNext(e)}
+              />
+            </div>
+          </div>
+        </div>
       ) : (
         <div className="col-12 inner-section ">
           {/* {isLoading && <Loader />} */}

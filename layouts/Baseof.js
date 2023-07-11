@@ -27,7 +27,7 @@ const Base = ({
   const alert = useSelector((state) => state.alert);
   const allReportLists = useSelector((state) => state?.report);
 
-  console.log(allReportLists?.allReports?.result?.length);
+  // console.log(allReportLists?.allReports?.result?.length);
 
   useEffect(() => {
     dispatch(alertActions.clear());
@@ -45,7 +45,7 @@ const Base = ({
   };
 
   const manas = (message) => {
-    console.log(message);
+    // console.log(message);
   };
 
   return (

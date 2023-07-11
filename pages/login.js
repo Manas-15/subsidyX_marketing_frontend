@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/Actions/userAction";
 import Link from "next/link";
+import { useMemo } from "react";
+import jwt from "jsonwebtoken";
 
 const Login = ({ data }) => {
   const router = useRouter();
@@ -24,15 +26,43 @@ const Login = ({ data }) => {
     dispatch(userActions.login(credential));
   };
 
+  const accessToken = useMemo(
+    () => user?.user?.access_token,
+    [user?.user?.access_token]
+  );
+
+  console.log(accessToken);
+
   useEffect(() => {
-    if (user?.user?.access_token !== undefined) {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMzI0NDM1LCJleHBpcmVzIjoxNjg5MTAzODUxLjg3OTgzN30.XtgdlgtHrksAAHzf61qdFfSLYCpKcd7_7MSv2v5AAm8";
+    function decodeAccessToken(token) {
+      if (token !== undefined) {
+        try {
+          const decodedToken = jwt.decode(token);
+          return decodedToken;
+        } catch (error) {
+          console.log("Error decoding access token:", error);
+          return null;
+        }
+      }
+    }
+    const decodedData = decodeAccessToken(token);
+    console.log(decodedData);
+    // if (decodedData) {
+    //   console.log("Decoded data:", decodedData);
+    // }
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (accessToken !== undefined) {
       // router.push("/questions");
       router.push("/report/all-report-list");
     } else {
       router.push("/login");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.user?.access_token]);
+  }, [accessToken]);
 
   return (
     <Base
