@@ -3,7 +3,7 @@ import Footer from "@layouts/partials/Footer";
 import Header from "@layouts/partials/Header";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { alertActions } from "redux/Actions/alertAction";
 import { notification } from "antd";
@@ -23,11 +23,13 @@ const Base = ({
   const { base_url } = config.site;
   const router = useRouter();
   const dispatch = useDispatch();
+  const [reportData, setReportData] = useState(0);
 
   const alert = useSelector((state) => state.alert);
   const allReportLists = useSelector((state) => state?.report);
+  const user = useSelector((state) => state?.user);
 
-  // console.log(allReportLists?.allReports?.result?.length);
+  console.log(user?.user_report_count);
 
   useEffect(() => {
     dispatch(alertActions.clear());
@@ -129,7 +131,8 @@ const Base = ({
         ) : router?.pathname === "/report/all-report-list" ? (
           <>
             <div className="base_layout">
-              {allReportLists?.allReports?.result?.length > 0 && <Sidebar />}
+              {user?.user_report_count > 0 && <Sidebar />}
+
               <main className="mainBodyWidth ml-auto w-100">
                 <Header />
                 <DashboardHeader />
@@ -150,7 +153,7 @@ const Base = ({
           </>
         ) : (
           <div className="base_layout">
-            {allReportLists?.allReports?.result?.length > 0 && <Sidebar />}
+            {user?.user_report_count > 0 && <Sidebar />}
 
             <main className="mainBodyWidth ml-auto w-100">
               <Header />

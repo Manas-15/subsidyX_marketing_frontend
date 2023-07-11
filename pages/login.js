@@ -31,33 +31,22 @@ const Login = ({ data }) => {
     [user?.user?.access_token]
   );
 
-  console.log(accessToken);
-
-  useEffect(() => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyMzI0NDM1LCJleHBpcmVzIjoxNjg5MTAzODUxLjg3OTgzN30.XtgdlgtHrksAAHzf61qdFfSLYCpKcd7_7MSv2v5AAm8";
-    function decodeAccessToken(token) {
-      if (token !== undefined) {
-        try {
-          const decodedToken = jwt.decode(token);
-          return decodedToken;
-        } catch (error) {
-          console.log("Error decoding access token:", error);
-          return null;
-        }
-      }
-    }
-    const decodedData = decodeAccessToken(token);
-    console.log(decodedData);
-    // if (decodedData) {
-    //   console.log("Decoded data:", decodedData);
-    // }
-  }, [accessToken]);
-
   useEffect(() => {
     if (accessToken !== undefined) {
-      // router.push("/questions");
-      router.push("/report/all-report-list");
+      try {
+        const decodedToken = jwt.decode(accessToken);
+        console.log(decodedToken);
+        if (decodedToken?.report_count > 0) {
+          dispatch(userActions?.userReportCount(decodedToken?.report_count));
+          router.push("/report/all-report-list");
+        } else {
+          dispatch(userActions?.userReportCount(decodedToken?.report_count));
+          router.push("/dashboard");
+        }
+      } catch (error) {
+        console.log("Error decoding access token:", error);
+        return null;
+      }
     } else {
       router.push("/login");
     }

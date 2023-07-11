@@ -6,10 +6,12 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/Actions/userAction";
 import Link from "next/link";
+import { useMemo } from "react";
 
 const Signup = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [userData, setUserData] = useState();
   const [credential, setCredential] = useState({
     firstName: "",
     lastName: "",
@@ -34,9 +36,7 @@ const Signup = ({ data }) => {
       phone_number: credential?.number,
       password: credential?.password,
     };
-    console.log(credential);
     dispatch(userActions.signup(signupData));
-    router.push("/login");
     setCredential({
       firstName: "",
       lastName: "",
@@ -46,15 +46,35 @@ const Signup = ({ data }) => {
     });
   };
 
-  //   useEffect(() => {
-  //     if (user?.user?.access_token !== undefined) {
-  //       // router.push("/questions");
-  //       router.push("/report/all-report-list");
-  //     } else {
-  //       router.push("/login");
-  //     }
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   }, [user?.user?.access_token]);
+  // const accessToken = useMemo(
+  //   () => user?.user?.access_token,
+  //   [user?.user?.access_token]
+  // );
+
+  useEffect(() => {
+    const accessToken = user?.user?.access_token;
+    console.log(accessToken);
+    if (accessToken !== undefined) {
+      router.push("/dashboard");
+      // try {
+      //   const decodedToken = jwt.decode(accessToken);
+      //   console.log(decodedToken);
+      //   if (decodedToken?.report_count > 0) {
+      //     dispatch(userActions?.userReportCount(decodedToken?.report_count));
+      //     router.push("/report/all-report-list");
+      //   } else {
+      //     dispatch(userActions?.userReportCount(decodedToken?.report_count));
+      //     router.push("/dashboard");
+      //   }
+      // } catch (error) {
+      //   console.log("Error decoding access token:", error);
+      //   return null;
+      // }
+    } else {
+      router.push("/signup");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.user?.access_token]);
 
   return (
     <Base
