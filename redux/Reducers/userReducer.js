@@ -27,8 +27,7 @@ export function user(state = {}, action) {
       return { loggingIn: false };
 
     case userConstants.USER_REPORT_COUNT_SUCCESS:
-      console.log(action?.data);
-      return { ...state, loggedIn: true, user_report_count: action?.data };
+      return { ...state, loggedIn: true, user_details: action?.data };
 
     default:
       return state;

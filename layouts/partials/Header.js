@@ -117,7 +117,7 @@ const Header = () => {
                       className="btn log_btn"
                       id="dropdown-basic"
                     >
-                      User name
+                      {user?.user_details?.first_name}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item

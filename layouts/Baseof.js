@@ -26,10 +26,8 @@ const Base = ({
   const [reportData, setReportData] = useState(0);
 
   const alert = useSelector((state) => state.alert);
-  const allReportLists = useSelector((state) => state?.report);
   const user = useSelector((state) => state?.user);
 
-  console.log(user?.user_report_count);
 
   useEffect(() => {
     dispatch(alertActions.clear());
@@ -131,7 +129,7 @@ const Base = ({
         ) : router?.pathname === "/report/all-report-list" ? (
           <>
             <div className="base_layout">
-              {user?.user_report_count > 0 && <Sidebar />}
+              {user?.user_details?.report_count > 0 && <Sidebar />}
 
               <main className="mainBodyWidth ml-auto w-100">
                 <Header />
@@ -153,7 +151,7 @@ const Base = ({
           </>
         ) : (
           <div className="base_layout">
-            {user?.user_report_count > 0 && <Sidebar />}
+            {user?.user_details?.report_count > 0 && <Sidebar />}
 
             <main className="mainBodyWidth ml-auto w-100">
               <Header />

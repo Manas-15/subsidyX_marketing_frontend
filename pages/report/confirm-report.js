@@ -12,7 +12,6 @@ import {
   FilterButton,
 } from "@layouts/components/CustomButton";
 import Base from "@layouts/Baseof";
-// import { eligibleSubsidyAction } from "../redux/Actions/eligibleSubsidyAction";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { IoIosArrowDropleft } from "react-icons/io";
@@ -42,56 +41,6 @@ function ConfirmReport() {
     subsidyReports?.eligible_subsidy?.subsidies?.filter(
       (sub, idx) => sub?.id === 2
     );
-
-  // useEffect(() => {
-  //   // Capital Subsidy
-  //   if (capitalSubsidyData?.[0]?.id === 1) {
-  //     const termLoanData = getReports?.get_report?.result?.filter(
-  //       (que, ind) => que?.question_id === 60
-  //     );
-  //     var userInputValue = parseInt(termLoanData?.[0]?.answer);
-
-  //     if (getReports?.get_report?.info?.taluka_category_id === 1) {
-  //       var percent = 25;
-  //       var capital_subsidy = (percent / 100) * userInputValue;
-  //       let amount = 0;
-
-  //       if (capital_subsidy >= 3500000) {
-  //         amount = 3500000;
-  //       } else {
-  //         amount = capital_subsidy;
-  //       }
-  //       setCapitalSubsidy(amount);
-  //     } else if (getReports?.get_report?.info?.taluka_category_id === 2) {
-  //       var percent = 20;
-  //       var capital_subsidy = (percent / 100) * userInputValue;
-  //       let amount = 0;
-
-  //       if (capital_subsidy >= 3000000) {
-  //         amount = 3000000;
-  //       } else {
-  //         amount = capital_subsidy;
-  //       }
-  //       setCapitalSubsidy(amount);
-  //     } else if (getReports?.get_report?.info?.taluka_category_id === 3) {
-  //       var percent = 10;
-  //       var capital_subsidy = (percent / 100) * userInputValue;
-  //       let amount = 0;
-
-  //       if (capital_subsidy >= 1000000) {
-  //         amount = 1000000;
-  //       } else {
-  //         amount = capital_subsidy;
-  //       }
-  //       setCapitalSubsidy(amount);
-  //     }
-  //   }
-
-  //   //Interest Subsidy
-  //   if (interestSubsidyData?.[0]?.id === 2) {
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [subsidyReports]);
 
   const handleSubmit = () => {
     dispatch(

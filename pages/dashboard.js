@@ -62,6 +62,7 @@ const Dashboard = ({ data }) => {
             {modalShow && selectedRadioButton === "1" && next && (
               <CongratulationsModal
                 type={type}
+                setType={setType}
                 // action={eligibleSubsidy}
                 show={modalShow}
                 setModalShow={setModalShow}

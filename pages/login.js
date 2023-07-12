@@ -37,10 +37,10 @@ const Login = ({ data }) => {
         const decodedToken = jwt.decode(accessToken);
         console.log(decodedToken);
         if (decodedToken?.report_count > 0) {
-          dispatch(userActions?.userReportCount(decodedToken?.report_count));
+          dispatch(userActions?.userReportCount(decodedToken));
           router.push("/report/all-report-list");
         } else {
-          dispatch(userActions?.userReportCount(decodedToken?.report_count));
+          dispatch(userActions?.userReportCount(decodedToken));
           router.push("/dashboard");
         }
       } catch (error) {

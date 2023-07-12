@@ -28,7 +28,6 @@ export const CongratulationsModal = (props) => {
   };
 
   const handleOK = () => {
-    props.setModalShow(false);
     if (props?.type === "success") {
       props.setAadharNumber("");
     }
@@ -36,10 +35,11 @@ export const CongratulationsModal = (props) => {
     props.setSelectedRadioButton(0);
     router.push("/dashboard");
     dispatch(eligibleSubsidyAction.clearEligible());
+    props.setType("");
+    props.setModalShow(false);
   };
 
   const handleNO = () => {
-    props.setModalShow(false);
     if (props?.type === "success") {
       props.setAadharNumber("");
     }
@@ -47,15 +47,20 @@ export const CongratulationsModal = (props) => {
     props.setSelectedRadioButton("2");
     router.push("/dashboard");
     dispatch(eligibleSubsidyAction.clearEligible());
+    props.setType("");
+    props.setModalShow(false);
   };
   const handleCancel = () => {
     props.setModalShow(false);
+    props.setType("");
     router.push("/dashboard");
     dispatch(eligibleSubsidyAction.clearEligible());
   };
 
   const generateReport = () => {
     console.log("111111111111111111111111");
+    props.setModalShow(false);
+    props.setType("");
     // dispatch(reportManagementAction?.getReportByID(props?.action));
     // router.push("/report/confirm-report");
   };
@@ -106,8 +111,7 @@ export const CongratulationsModal = (props) => {
                     <>
                       Based on information provided there are {isCentral}{" "}
                       subsidies applicable to you <br />
-                      from Central Government and {isState}
-                      subsidies applicable to you <br />
+                      from Central Government and {isState} subsidies <br />
                       from Government of Gujurat.
                     </>
                   ) : isCentral > 0 ? (

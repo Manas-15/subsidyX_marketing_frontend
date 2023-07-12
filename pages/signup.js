@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/Actions/userAction";
 import Link from "next/link";
 import { useMemo } from "react";
+import jwt from "jsonwebtoken";
 
 const Signup = ({ data }) => {
   const router = useRouter();
@@ -46,30 +47,28 @@ const Signup = ({ data }) => {
     });
   };
 
-  // const accessToken = useMemo(
-  //   () => user?.user?.access_token,
-  //   [user?.user?.access_token]
-  // );
+  const accessToken = useMemo(
+    () => user?.user?.access_token,
+    [user?.user?.access_token]
+  );
 
   useEffect(() => {
-    const accessToken = user?.user?.access_token;
     console.log(accessToken);
     if (accessToken !== undefined) {
-      router.push("/dashboard");
-      // try {
-      //   const decodedToken = jwt.decode(accessToken);
-      //   console.log(decodedToken);
-      //   if (decodedToken?.report_count > 0) {
-      //     dispatch(userActions?.userReportCount(decodedToken?.report_count));
-      //     router.push("/report/all-report-list");
-      //   } else {
-      //     dispatch(userActions?.userReportCount(decodedToken?.report_count));
-      //     router.push("/dashboard");
-      //   }
-      // } catch (error) {
-      //   console.log("Error decoding access token:", error);
-      //   return null;
-      // }
+      try {
+        const decodedToken = jwt.decode(accessToken);
+        console.log(decodedToken);
+        if (decodedToken?.report_count > 0) {
+          dispatch(userActions?.userReportCount(decodedToken));
+          router.push("/report/all-report-list");
+        } else {
+          dispatch(userActions?.userReportCount(decodedToken));
+          router.push("/dashboard");
+        }
+      } catch (error) {
+        console.log("Error decoding access token:", error);
+        return null;
+      }
     } else {
       router.push("/signup");
     }
@@ -103,7 +102,6 @@ const Signup = ({ data }) => {
                         name="firstName"
                         onChange={(e) => handleChange(e)}
                         className="form-control"
-                        id="floatingInput"
                         placeholder="First Name"
                       />
                     </div>
@@ -113,7 +111,6 @@ const Signup = ({ data }) => {
                         name="lastName"
                         onChange={(e) => handleChange(e)}
                         className="form-control"
-                        id="floatingInput"
                         placeholder="Last Name"
                       />
                     </div>
@@ -125,7 +122,6 @@ const Signup = ({ data }) => {
                         name="email"
                         onChange={(e) => handleChange(e)}
                         className="form-control"
-                        id="floatingInput"
                         placeholder="Email"
                       />
                     </div>
@@ -135,7 +131,6 @@ const Signup = ({ data }) => {
                         name="number"
                         onChange={(e) => handleChange(e)}
                         className="form-control"
-                        id="floatingInput"
                         placeholder="Phone Number"
                       />
                     </div>
@@ -147,7 +142,6 @@ const Signup = ({ data }) => {
                         name="password"
                         onChange={(e) => handleChange(e)}
                         className="form-control"
-                        id="floatingInput"
                         placeholder="Password"
                       />
                     </div>
