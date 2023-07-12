@@ -1,13 +1,14 @@
 .container {
-  background-color: #ffffff;
+  background: #d3d6dd;
+  /* position: relative; */
+  padding: 30px;
 }
 .tablee {
-  margin: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
   height: 501px;
   overflow-y: scroll;
-  left: 262px;
-  top: 93px;
-  background: #ebe6e6;
+  background: #ffffff;
   border-radius: 20px;
   border: 1px solid #ebe6e6;
 }
