@@ -39,8 +39,20 @@ const Header = () => {
             <a href={base_url} className="navbar-brand">
               {/* {console.log("1111111111111111111111111111111111111")} */}
               <figure>
-                <img className="logo" src="/images/logo.png" alt="" />
-                <img src="/images/logo-text.png" alt="" />
+                <Image
+                  src="/images/logo.png"
+                  height="200"
+                  width="60"
+                  alt="logo"
+                />
+                <Image
+                  src="/images/logo-text.png"
+                  height="100"
+                  width="200"
+                  alt="logo"
+                />
+                {/* <img className="logo" src="/images/logo.png" alt="" /> */}
+                {/* <img src="/images/logo-text.png" alt="" /> */}
               </figure>
             </a>
           ) : (

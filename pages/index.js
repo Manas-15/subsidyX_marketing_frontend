@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Slider from "layouts/components/Slider/slider";
 import Portfolio from "layouts/components/Slider/portfolio";
+import greatBenifitImg from "../public/images/great_benifits.png";
+import hugeBenifitImg from "../public/images/huge_benifits.png";
+import centralAndStateGif from "../public/images/central_and_state.gif";
 
 const Home = () => {
   const { title } = config.site;
@@ -217,7 +220,7 @@ const Home = () => {
               <div className="col-md-5">
                 <figure>
                   <Image
-                    src="/images/great_benifits.png"
+                    src={greatBenifitImg?.src}
                     width="351"
                     height="359"
                     alt="great benifits"
@@ -241,7 +244,7 @@ const Home = () => {
               <div className="col-md-5 ">
                 <figure>
                   <Image
-                    src="/images/huge_benifits.png"
+                    src={hugeBenifitImg?.src}
                     width="351"
                     height="359"
                     alt=""
@@ -290,9 +293,10 @@ const Home = () => {
                 </div>
               </div>
               <div className="col-md-5">
+                {console.log(centralAndStateGif)}
                 <figure>
                   <Image
-                    src="/images/central_and_state.gif"
+                    src={centralAndStateGif?.src}
                     width="400"
                     height="359"
                     alt=""

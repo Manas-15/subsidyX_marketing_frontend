@@ -15,12 +15,12 @@ const Footer = () => {
         <div className="row text-left">
           <div className="col-md-2">
             <figure>
-              <img
-                src="images/logo.png"
-                alt=""
-                height="100px"
-                width="100px"
-              ></img>
+              <Image
+                src="/images/logo.png"
+                height="100"
+                width="100"
+                alt="logo"
+              />
             </figure>
           </div>
           <div className="col-md-4">

@@ -4,7 +4,9 @@
 
 const nextConfig = {
   reactStrictMode: false,
-
+  images: {
+    domains: ["media.giphy.com"],
+  },
   async headers() {
     return [
       {

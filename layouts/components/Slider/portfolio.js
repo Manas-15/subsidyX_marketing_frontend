@@ -6,6 +6,9 @@ import { ImQuotesLeft } from "react-icons/im";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import Image from "next/image";
+// import logo1 from "../../..//public/images/c-logo.png";
+
 function Portfolio() {
   const portfolio = [
     {
@@ -41,6 +44,7 @@ function Portfolio() {
       companyLogo: "images/c-logo.png",
     },
   ];
+
   return (
     <div className="sec">
       <Swiper
@@ -66,16 +70,21 @@ function Portfolio() {
                   <div className="row">
                     <div className="col-md-4">
                       <figure>
-                        <img src={item.image} alt="" height="398" width="350" />
+                        <Image
+                          src={item.image}
+                          height="398"
+                          width="350"
+                          alt="logo"
+                        />
                       </figure>
                     </div>
                     <div className="col-md-8">
                       <figure className="pt-2">
-                        <img
+                        <Image
                           src={item.companyLogo}
-                          alt=""
                           height="100"
                           width="100"
+                          alt="logo"
                         />
                       </figure>
                       <div className="foot_sld_crd_content">

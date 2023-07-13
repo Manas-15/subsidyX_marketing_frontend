@@ -6,6 +6,9 @@ import Link from "next/link";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import Image from "next/image";
+import sliderGif from "../../../public/images/slider1.gif";
+
 function Slider() {
   const services = [
     {
@@ -13,9 +16,11 @@ function Slider() {
         "Get your benifit report with in few minutes and start planning for your business",
       heading: "Instant benifits report",
       sub_heading: "Instant benifits report",
-      image: "images/slider1.gif",
+      image: { sliderGif },
     },
   ];
+
+  console.log(services);
   return (
     <div className="benefit_sec w-100">
       {/* <Swiper
@@ -38,12 +43,12 @@ function Slider() {
             <div className="row incen_row_content w-100">
               <div className="col-md-5 text-center">
                 <figure>
-                  <img
-                    src={item.image}
-                    alt=""
-                    height="400px"
-                    width="400px"
-                  ></img>
+                  <Image
+                    src={item?.image?.sliderGif?.src}
+                    height="400"
+                    width="400"
+                    alt="slider gif"
+                  />
                 </figure>
               </div>
               <div className="col-md-7 text-center">
