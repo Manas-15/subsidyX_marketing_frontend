@@ -41,7 +41,7 @@ const Header = () => {
               <figure>
                 <Image
                   src="/images/logo.png"
-                  height="200"
+                  height="50"
                   width="60"
                   alt="logo"
                 />

@@ -18,7 +18,8 @@ const Dashboard = ({ data }) => {
   const [modalShow, setModalShow] = useState(false);
   const [type, setType] = useState("");
   const [validateAadhar, setValidateAadhar] = useState();
-
+  const { edit } = router?.query;
+  console.log(edit);
   const handleRadioClick = (e) => {
     setSelectedRadioButton(e.target.value);
   };
@@ -36,7 +37,6 @@ const Dashboard = ({ data }) => {
     let regex = new RegExp(
       /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/
     );
-
     const str = e.target.value;
     if (regex.test(str) == true) {
       setValidateAadhar(false);
@@ -45,7 +45,6 @@ const Dashboard = ({ data }) => {
       setValidateAadhar(true);
     }
   };
-  console.log(next, selectedRadioButton === "2");
 
   return (
     <Base
@@ -59,6 +58,7 @@ const Dashboard = ({ data }) => {
       <section className="section">
         <div className="container">
           <div className="section row pb-0">
+            {console.log(modalShow, selectedRadioButton === "1", next)}
             {modalShow && selectedRadioButton === "1" && next && (
               <CongratulationsModal
                 type={type}
@@ -119,6 +119,7 @@ const Dashboard = ({ data }) => {
               </>
             ) : next && selectedRadioButton === "2" ? (
               <EligibleSubsidy
+                edit={edit}
                 setNext={setNext}
                 setSelectedRadioButton={setSelectedRadioButton}
               />

@@ -69,6 +69,7 @@ const AllReportLists = () => {
       dispatch(reportManagementAction.selectedCategory("View Report"));
       router.push("/report/view-report");
     } else {
+      console.log("calling");
       setModalShow(true);
       setType("delete");
       setAction(item?.id);
@@ -123,26 +124,38 @@ const AllReportLists = () => {
             <div className={styles.tableBody}>
               <table className="table table-hover">
                 <thead>
-                  <tr>
-                    <th scope="col">Report ID.</th>
-                    <th scope="col">Company Name</th>
-                    <th scope="col">Company Owner Name</th>
-                    <th scope="col">Created date</th>
-                    <th colSpan="2">Category</th>
-                    <th scope="col">Actions</th>
+                  <tr className="text-center">
+                    <th className="p-4" scope="col">
+                      Report ID.
+                    </th>
+                    <th className="p-4" scope="col">
+                      Company Name
+                    </th>
+                    <th className="p-4" scope="col">
+                      Company Owner Name
+                    </th>
+                    <th className="p-4" scope="col">
+                      Created date
+                    </th>
+                    <th className="p-4" scope="col">
+                      Category
+                    </th>
+                    <th className="p-4" scope="col">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {allReportLists?.allReports?.result?.map((data, index) => {
                     return (
-                      <tr key={index}>
+                      <tr className="text-center" key={index}>
                         <th scope="row">#{data?.id}</th>
                         <td> - </td>
                         <td> - </td>
                         <td>{formattedDate}</td>
-                        <td colSpan="2"> {data?.industry_category_name} </td>
+                        <td scope="col"> {data?.industry_category_name} </td>
                         <td>
-                          <ul className="d-flex justify-content-between">
+                          <ul className="d-flex justify-content-center">
                             {actions?.map(({ icon: Icon }, idx) => {
                               return (
                                 <li
@@ -150,11 +163,9 @@ const AllReportLists = () => {
                                   onClick={(e) => handleClick(e, data, idx)}
                                 >
                                   <Icon
-                                    style={{
-                                      fontSize: "18px",
-                                      color: "#fa6130",
-                                      cursor: "pointer",
-                                    }}
+                                    color="#FA6130"
+                                    size="18px"
+                                    className="action_icon m-2"
                                   />
                                 </li>
                               );

@@ -18,13 +18,9 @@ export const CongratulationsModal = (props) => {
   ).length;
 
   const submitModal = () => {
+    console.log("Submit Modal");
     props.setModalShow(false);
     router.push("/questions-after-eligible");
-  };
-
-  const cancelModal = () => {
-    props.setModalShow(false);
-    dispatch(eligibleSubsidyAction.clearEligible());
   };
 
   const handleOK = () => {
@@ -40,6 +36,7 @@ export const CongratulationsModal = (props) => {
   };
 
   const handleNO = () => {
+    console.log("No button");
     if (props?.type === "success") {
       props.setAadharNumber("");
     }
@@ -58,7 +55,6 @@ export const CongratulationsModal = (props) => {
   };
 
   const generateReport = () => {
-    console.log("111111111111111111111111");
     props.setModalShow(false);
     props.setType("");
     // dispatch(reportManagementAction?.getReportByID(props?.action));

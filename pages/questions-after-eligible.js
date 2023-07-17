@@ -30,15 +30,11 @@ const QuestionAfterEligible = ({ data }) => {
   const [reportID, setReportID] = useState(null);
   const [next, setNext] = useState(false);
   const [isCompanyPage, setIsCompanyPage] = useState(true);
-  const [districtData, setDistrictData] = useState({
-    district: 0,
-    taluka: 0,
-  });
   const [districtTalukaID, setDistrictTalukaID] = useState({
     district: 0,
     taluka: 0,
   });
-  const [allSelectedName, setAllSelectedName] = useState({
+  const [districtTalukaName, setDistrictTalukaName] = useState({
     district: "",
     taluka: "",
   });
@@ -50,7 +46,7 @@ const QuestionAfterEligible = ({ data }) => {
   const questionData = subsidyData?.eligible_subsidy;
   const subsidiesList = subsidyData?.eligible_subsidy?.subsidies;
 
-  // console.log(Object.keys(questionData?.question).length === 0);
+  console.log(Object.keys(questionData?.question).length === true);
 
   useEffect(() => {
     if (subsidyData?.selected_data?.user_info?.state_id) {
@@ -64,7 +60,13 @@ const QuestionAfterEligible = ({ data }) => {
   }, []);
 
   useEffect(() => {
-    if (questionData?.status === 408) {
+    const questionCount =
+      Object.keys(questionData?.question) !== undefined ||
+      Object.keys(questionData?.question) !== null
+        ? Object.keys(questionData?.question)?.length
+        : null;
+    console.log(questionCount);
+    if (questionCount === 0) {
       // setModalShow(true);
       setType("noQuestion");
       dispatch(
@@ -72,13 +74,15 @@ const QuestionAfterEligible = ({ data }) => {
           subsidyData?.eligible_subsidy?.report_id
         )
       );
+      console.log("Go to confirm report screen");
       router.push("/report/confirm-report");
       // setReportID(subsidyData?.eligible_subsidy?.report_id);
     }
-    if (questionData?.status === 408 && subsidiesList?.length === 0) {
+    if (questionData?.status === 205 && subsidiesList?.length === 0) {
       setModalShow(true);
       setType("warn");
       setReportID(subsidyData?.eligible_subsidy?.report_id);
+      console.log("When subsidies is not available");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subsidiesList]);
@@ -88,9 +92,11 @@ const QuestionAfterEligible = ({ data }) => {
     const selectedOption = e.target.options[e.target.selectedIndex];
     // console.log(selectedOption?.value);
     // console.log(selectedOption?.text);
-    setAllSelectedName({ ...allSelectedName, [name]: selectedOption?.text });
-
-    setDistrictTalukaID({ ...districtTalukaID, [name]: value });
+    setDistrictTalukaName({
+      ...districtTalukaName,
+      [name]: selectedOption?.text,
+    });
+    setDistrictTalukaID({ ...districtTalukaID, [name]: parseInt(value) });
 
     if (name === "district") {
       dispatch(talukaManagementAction?.getTalukas(value));
@@ -106,6 +112,7 @@ const QuestionAfterEligible = ({ data }) => {
     setNext(true);
   };
 
+  //377
   const goToNext = () => {
     if (questionData?.question?.field_type_id === 3) {
       setSelectedOptions({ name: "", value: "" });
@@ -127,8 +134,8 @@ const QuestionAfterEligible = ({ data }) => {
             : "",
         subscheme_id: questionData?.question?.subscheme_id,
         subsidy_id: questionData?.question?.subsidy_id,
-        taluka_id: parseInt(allTalukas?.selected_data?.taluka),
-        district_id: parseInt(allTalukas?.selected_data?.district),
+        taluka_id: allTalukas?.selected_data?.taluka,
+        district_id: allTalukas?.selected_data?.district,
       },
       report_id: questionData?.report_id,
     };
@@ -148,7 +155,7 @@ const QuestionAfterEligible = ({ data }) => {
     });
   };
 
-  const clickId = districtData?.taluka;
+  const clickId = districtTalukaName?.taluka;
 
   useEffect(() => {
     // Find the category that contains the clickId
@@ -160,7 +167,7 @@ const QuestionAfterEligible = ({ data }) => {
     if (matchedCategory) {
       const categoryName = Object.keys(matchedCategory)[0];
 
-      setAllSelectedName((prevSelectedName) => ({
+      setDistrictTalukaName((prevSelectedName) => ({
         ...prevSelectedName,
         category: categoryName,
       }));
@@ -198,6 +205,7 @@ const QuestionAfterEligible = ({ data }) => {
     }
   }, [subsidiesList]);
 
+  console.log(questionData);
   return (
     <Base
       title={"title"}
@@ -348,74 +356,76 @@ const QuestionAfterEligible = ({ data }) => {
             </div>
           </div>
         </section>
-      ) : isCompanyPage ? (
-        <div className="col-12 inner-section ">
-          {/* {isLoading && <Loader />} */}
-
-          <div className="d-flex justify-content-center mt-5 mb-5">
-            <h2 className="fw-bold text-dark">
-              Enter your Company Name and Owner Name
-            </h2>
-          </div>
-          <div style={{ margin: "auto" }}>
-            <div className="d-flex justify-content-center">
-              <select
-                className="form-control mb-3 w-25"
-                name="district"
-                onChange={(e) => handleSelectChange(e)}
-              >
-                <option value="none">Select District</option>
-                {allDistricts?.districtManagementData?.district?.map(
-                  (district, index) => (
-                    <option
-                      key={index}
-                      className="form-control"
-                      value={district?.id}
-                    >
-                      {district?.name}
-                    </option>
-                  )
-                )}
-              </select>
-            </div>
-
-            <div className="d-flex justify-content-center mt-3">
-              <select
-                className="form-control mb-3 w-25 mx-3"
-                name="taluka"
-                onChange={(e) => handleSelectChange(e)}
-              >
-                <option value="none">Select Taluka</option>
-                {allTalukas?.talukaManagementData?.talukas?.map(
-                  (taluka, index) => (
-                    <option
-                      key={index}
-                      className="form-control"
-                      value={taluka?.id}
-                    >
-                      {taluka?.name}
-                    </option>
-                  )
-                )}
-              </select>
-            </div>
-            <div className="mt-5 d-flex justify-content-center">
-              {/* <IoIosArrowDropleft
-              style={{ fontSize: "50px", color: "#fa6130" }}
-              onClick={(e) => goToNext(e)}
-            /> */}
-              <IoIosArrowDropright
-                style={{
-                  fontSize: "50px",
-                  color: "#fa6130",
-                  cursor: "pointer",
-                }}
-                onClick={(e) => handleNext(e)}
-              />
-            </div>
-          </div>
-        </div>
       ) : (
+        // isCompanyPage ? (
+        //   <div className="col-12 inner-section ">
+        //     {/* {isLoading && <Loader />} */}
+
+        //     <div className="d-flex justify-content-center mt-5 mb-5">
+        //       <h2 className="fw-bold text-dark">
+        //         Enter your Company Name and Owner Name
+        //       </h2>
+        //     </div>
+        //     <div style={{ margin: "auto" }}>
+        //       <div className="d-flex justify-content-center">
+        //         <select
+        //           className="form-control mb-3 w-25"
+        //           name="district"
+        //           onChange={(e) => handleSelectChange(e)}
+        //         >
+        //           <option value="none">Select District</option>
+        //           {allDistricts?.districtManagementData?.district?.map(
+        //             (district, index) => (
+        //               <option
+        //                 key={index}
+        //                 className="form-control"
+        //                 value={district?.id}
+        //               >
+        //                 {district?.name}
+        //               </option>
+        //             )
+        //           )}
+        //         </select>
+        //       </div>
+
+        //       <div className="d-flex justify-content-center mt-3">
+        //         <select
+        //           className="form-control mb-3 w-25 mx-3"
+        //           name="taluka"
+        //           onChange={(e) => handleSelectChange(e)}
+        //         >
+        //           <option value="none">Select Taluka</option>
+        //           {allTalukas?.talukaManagementData?.talukas?.map(
+        //             (taluka, index) => (
+        //               <option
+        //                 key={index}
+        //                 className="form-control"
+        //                 value={taluka?.id}
+        //               >
+        //                 {taluka?.name}
+        //               </option>
+        //             )
+        //           )}
+        //         </select>
+        //       </div>
+        //       <div className="mt-5 d-flex justify-content-center">
+        //         {/* <IoIosArrowDropleft
+        //         style={{ fontSize: "50px", color: "#fa6130" }}
+        //         onClick={(e) => goToNext(e)}
+        //       /> */}
+        //         <IoIosArrowDropright
+        //           style={{
+        //             fontSize: "50px",
+        //             color: "#fa6130",
+        //             cursor: "pointer",
+        //           }}
+        //           onClick={(e) => handleNext(e)}
+        //         />
+        //       </div>
+        //     </div>
+        //   </div>
+        // ) :
+
         <div className="col-12 inner-section ">
           {/* {isLoading && <Loader />} */}
 

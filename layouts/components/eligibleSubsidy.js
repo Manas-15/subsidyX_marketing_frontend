@@ -10,11 +10,12 @@ import { sectorAction } from "redux/Actions/sectorAction";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 // import Loader from "./Loader";
 
-const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
+const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
   const [type, setType] = useState("");
+  const [subsidyType, setSubsidyType] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
   const [selectedInformation, setSelectedInformation] = useState({
     stateID: "",
@@ -36,23 +37,39 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
   const eligibleSubsidy = useSelector(
     (state) => state?.eligibleSubsidy?.eligible_subsidy
   );
+  const selectedData = useSelector(
+    (state) => state?.eligibleSubsidy?.selected_data?.user_info
+  );
 
   useEffect(() => {
     dispatch(stateAction.getStateList());
     dispatch(categoryAction.getCategoryList());
   }, []);
 
+  console.log(edit);
+
+  useEffect(() => {
+    if (edit === "editEligibleSubsidy") {
+      setEligibleUserInfo({
+        mobileNumber: selectedData?.mobile_number,
+        stateID: selectedData?.state_id,
+        industryCategoryID: selectedData?.industry_category_id,
+        industrySectorID: selectedData?.industry_sector_id,
+      });
+    }
+  }, [edit]);
+
   const handleSelectChange = (e) => {
+    setSubsidyType("fetchEligibleSubsidy");
     const { name, value } = e.target;
     const selectedOption = e.target.options[e.target.selectedIndex];
     // console.log(selectedOption?.text);
-
     setSelectedInformation({
       ...selectedInformation,
       [name]: selectedOption?.text,
     });
 
-    setEligibleUserInfo({ ...eligibleUserInfo, [name]: value });
+    setEligibleUserInfo({ ...eligibleUserInfo, [name]: parseInt(value) });
     if (name === "industryCategoryID") {
       dispatch(sectorAction.getSectorList(value));
     }
@@ -83,6 +100,8 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
     // }
   };
 
+  console.log(selectedInformation, eligibleUserInfo);
+
   const goToNext = () => {
     const data = {
       user_info: {
@@ -104,10 +123,13 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
           selectedInformation
         )
       );
+      setModalShow(true);
     }
   };
   useEffect(() => {
+    console.log(eligibleSubsidy);
     if (
+      subsidyType === "fetchEligibleSubsidy" &&
       eligibleSubsidy !== undefined &&
       eligibleSubsidy !== null &&
       Object.keys(eligibleSubsidy).length !== 0
@@ -125,7 +147,7 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
       // setReportID(subsidyData?.eligible_subsidy?.report_id);
     }
   }, [eligibleSubsidy]);
-
+  console.log(modalShow);
   return (
     <>
       {modalShow && (
@@ -153,6 +175,7 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
             <select
               className="form-control mb-3 w-25"
               name="stateID"
+              value={eligibleUserInfo?.stateID}
               onChange={(e) => handleSelectChange(e)}
             >
               <option value="none">Select State</option>
@@ -168,6 +191,7 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
             <select
               className="form-control mb-3 w-25 mx-3"
               name="industryCategoryID"
+              value={eligibleUserInfo?.industryCategoryID}
               onChange={(e) => handleSelectChange(e)}
             >
               <option value="none">Select Industry Category</option>
@@ -181,6 +205,7 @@ const EligibleSubsidy = ({ setNext, setSelectedRadioButton }) => {
             <select
               className="form-control mb-3 w-25"
               name="industrySectorID"
+              value={eligibleUserInfo?.industrySectorID}
               onChange={(e) => handleSelectChange(e)}
             >
               <option value="none">Select Industry Sector</option>

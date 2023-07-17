@@ -70,7 +70,15 @@ function ConfirmReport() {
           <div>
             <div className="d-flex justify-content-between mx-5 mt-3">
               <h4>General Information</h4>
-              <Link href="/dashboard">Edit</Link>
+              <Link
+                href={{
+                  pathname: "/dashboard",
+                  query: { edit: "editEligibleSubsidy" },
+                }}
+                passHref
+              >
+                Edit
+              </Link>
             </div>
             <div className="row mt-4 mx-5">
               <div className="col-sm-3 d-flex flex-column">
@@ -110,27 +118,30 @@ function ConfirmReport() {
             </div>
           </div>
         </div>
-        <div className={styles.report_tablee}>
-          <div className="py-3">
-            <div className="d-flex justify-content-between mx-5 ">
-              <h4>Information based on Service and Large Industry</h4>
-            </div>
-            <div className="row mt-4 mx-5">
-              {viewReport?.result?.map((question, idx) => {
-                return (
-                  <div key={idx} className="col-sm-3 d-flex flex-column">
-                    <h6>
-                      {question?.question_display_name
-                        ? question?.question_display_name
-                        : question?.question_name}
-                    </h6>
-                    <p>{question?.answer}</p>
-                  </div>
-                );
-              })}
+
+        {viewReport?.result !== undefined && (
+          <div className={styles.report_tablee}>
+            <div className="py-3">
+              <div className="d-flex justify-content-between mx-5 ">
+                <h4>Information based on Service and Large Industry</h4>
+              </div>
+              <div className="row mt-4 mx-5">
+                {viewReport?.result?.map((question, idx) => {
+                  return (
+                    <div key={idx} className="col-sm-3 d-flex flex-column">
+                      <h6>
+                        {question?.question_display_name
+                          ? question?.question_display_name
+                          : question?.question_name}
+                      </h6>
+                      <p>{question?.answer}</p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="d-flex justify-content-between mx-5 pb-5">
           <IoIosArrowDropleft
