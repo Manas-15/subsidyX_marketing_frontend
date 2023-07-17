@@ -12,7 +12,6 @@ import jwt from "jsonwebtoken";
 const Signup = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [userData, setUserData] = useState();
   const [credential, setCredential] = useState({
     firstName: "",
     lastName: "",
@@ -53,17 +52,16 @@ const Signup = ({ data }) => {
   );
 
   useEffect(() => {
-    console.log(accessToken);
     if (accessToken !== undefined) {
       try {
         const decodedToken = jwt.decode(accessToken);
-        console.log(decodedToken);
+
         if (decodedToken?.report_count > 0) {
           dispatch(userActions?.userReportCount(decodedToken));
           router.push("/report/all-report-list");
         } else {
           dispatch(userActions?.userReportCount(decodedToken));
-          router.push("/dashboard");
+          router.push("/login2");
         }
       } catch (error) {
         console.log("Error decoding access token:", error);
@@ -168,12 +166,12 @@ const Signup = ({ data }) => {
                       className="btn btn-primary log_btn"
                       title="signup"
                     >
-                      SIGN UP
+                      SUBMIT
                     </button>
                   </div>
                   <div className="text-white d-flex justify-content-center mt-3">
                     Already have an account ? &nbsp;
-                    <Link href="/login" className="text-primary">
+                    <Link href="/login2" className="text-primary">
                       {" "}
                       Log In{" "}
                     </Link>
@@ -181,7 +179,6 @@ const Signup = ({ data }) => {
                 </div>
               </Form>
             </div>
-            <div className="content col-12 md:col-6 lg:col-5"></div>
           </div>
         </div>
       </section>

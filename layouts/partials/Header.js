@@ -37,7 +37,6 @@ const Header = () => {
           router?.pathname !== "/report/all-report-list" &&
           router?.pathname !== "/payment" ? (
             <a href={base_url} className="navbar-brand">
-              {/* {console.log("1111111111111111111111111111111111111")} */}
               <figure>
                 <Image
                   src="/images/logo.png"
@@ -51,8 +50,6 @@ const Header = () => {
                   width="200"
                   alt="logo"
                 />
-                {/* <img className="logo" src="/images/logo.png" alt="" /> */}
-                {/* <img src="/images/logo-text.png" alt="" /> */}
               </figure>
             </a>
           ) : (
@@ -64,8 +61,6 @@ const Header = () => {
                     : "visible",
               }}
             >
-              {/* {console.log("22222222222222222222222222222")} */}
-
               <a href={base_url} className="navbar-brand">
                 <figure>
                   <img className="logo" src="/images/logo.png" alt="" />
