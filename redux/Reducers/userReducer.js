@@ -23,8 +23,28 @@ export function user(state = {}, action) {
         loggedIn: true,
         user: action?.data?.data?.token,
       };
+
     case userConstants.USER_SIGNUP_FAILURE:
       return { loggingIn: false };
+
+    case userConstants.USER_OTP_SAVED_SUCCESS:
+      return {
+        ...state,
+        user: action?.data?.data?.token,
+        user_otp: action?.data,
+      };
+
+    case userConstants.USER_VALIDATE_OTP_REQUEST:
+      return {
+        ...state,
+      };
+    case userConstants.USER_VALIDATE_OTP_SUCCESS:
+      return {
+        ...state,
+        user: action?.data?.data,
+      };
+    case userConstants.USER_VALIDATE_OTP_FAILURE:
+      return { ...state };
 
     case userConstants.USER_REPORT_COUNT_SUCCESS:
       return { ...state, loggedIn: true, user_details: action?.data };

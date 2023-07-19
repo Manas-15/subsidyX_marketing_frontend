@@ -7,6 +7,9 @@ export const userActions = {
   login,
   logout,
   userReportCount,
+  generateOTP,
+  saveOTP,
+  validateOtp,
 };
 
 function signup(data) {
@@ -38,6 +41,70 @@ function signup(data) {
   }
 }
 
+function generateOTP(credential) {
+  return (dispatch) => {
+    dispatch(request(credential));
+    userService.generateOTP(credential).then(
+      (res) => {
+        dispatch(success(res));
+        dispatch(userActions?.saveOTP(res?.data));
+        dispatch(alertActions.success("OTP sent successfully"));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
+  };
+  function request(data) {
+    return { type: userConstants.USER_GENERATE_OTP_REQUEST, data };
+  }
+  function success(data) {
+    return { type: userConstants.USER_GENERATE_OTP_SUCCESS, data };
+  }
+  function failure(error) {
+    return { type: userConstants.USER_GENERATE_OTP_FAILURE, error };
+  }
+}
+
+function saveOTP(data) {
+  return (dispatch) => {
+    dispatch(success(data));
+  };
+
+  function success(data) {
+    return { type: userConstants.USER_OTP_SAVED_SUCCESS, data };
+  }
+}
+
+function validateOtp(data) {
+  return (dispatch) => {
+    dispatch(request(data));
+    userService.validateOtp(data).then(
+      (res) => {
+        dispatch(success(res));
+        console.log(res);
+        const result = JSON.stringify(res?.data?.access_token);
+        localStorage.setItem("accessToken", result);
+        dispatch(alertActions.success("User loggedin successfully"));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
+  };
+  function request(data) {
+    return { type: userConstants.USER_VALIDATE_OTP_REQUEST, data };
+  }
+  function success(data) {
+    return { type: userConstants.USER_VALIDATE_OTP_SUCCESS, data };
+  }
+  function failure(error) {
+    return { type: userConstants.USER_VALIDATE_OTP_FAILURE, error };
+  }
+}
+
 function login(data) {
   return (dispatch) => {
     dispatch(request({ data }));
@@ -46,7 +113,6 @@ function login(data) {
         dispatch(success(res));
         const result = JSON.stringify(res?.data?.access_token);
         localStorage.setItem("accessToken", result);
-
         dispatch(alertActions.success("User loggedin successfully"));
       },
       (error) => {

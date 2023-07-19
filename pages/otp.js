@@ -1,7 +1,7 @@
 import Base from "@layouts/Baseof";
 import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/Actions/userAction";
@@ -12,37 +12,48 @@ const Otp = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [code, setCode] = useState("");
-
   const user = useSelector((state) => state?.user);
+
+  const accessToken = useMemo(
+    () => user?.user?.access_token,
+    [user?.user?.access_token]
+  );
+
+  useEffect(() => {
+    if (accessToken !== undefined) {
+      try {
+        const decodedToken = jwt.decode(accessToken);
+        if (decodedToken?.report_count > 0) {
+          dispatch(userActions?.userReportCount(decodedToken));
+          router.push("/report/all-report-list");
+        } else {
+          dispatch(userActions?.userReportCount(decodedToken));
+          router.push("/dashboard");
+        }
+      } catch (error) {
+        console.log("Error decoding access token:", error);
+        return null;
+      }
+    } else {
+      router.push("/login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accessToken]);
 
   const handleChange = (code) => setCode(code);
 
   function goToNext(e) {
     e.preventDefault();
-    router.push("/report/all-report-list");
-
-    // {
-    //   (() => {
-    //     if (code.length === 6) {
-    //       return dispatch(
-    //         employeeActions.validateOtp({
-    //           userId: user.user_id,
-    //           otp: code,
-    //           validOtp: user.otp,
-    //         })
-    //       );
-    //     } else if (code.length === 6 ) {
-    //       return dispatch(
-    //         employeeActions.validateOtp({
-    //           userId: user.user_id,
-    //           otp: code,
-    //           validOtp: user.otp,
-    //         })
-    //       );
-    //     }
-    //     return null;
-    //   })();
-    // }
+    // router.push("/report/all-report-list");
+    const data = {
+      phone_number: "9777814998",
+      otp: code,
+    };
+    if (code?.length === 6) {
+      dispatch(userActions.validateOtp(data));
+    } else {
+      console.log("error");
+    }
   }
 
   return (
@@ -59,12 +70,15 @@ const Otp = ({ data }) => {
           <div className="section row pb-0">
             <div className="col-12 inner-section">
               {/* <Form> */}
-              <div className="d-flex justify-content-center mt-5 mb-5">
+              <div className="d-flex justify-content-center mt-5 ">
                 <h2 className="fw-bold text-white">
                   Enter OTP sent on your phone
                 </h2>
               </div>
-              <div className="d-flex justify-content-center mt-5 mb-4">
+              <div className="d-flex justify-content-center mt-3 mb-3">
+                <h2 className="fw-bold text-white">{user?.user_otp?.otp}</h2>
+              </div>
+              <div className="d-flex justify-content-center mt-3 mb-4">
                 <div className="form-floating mb-3">
                   <form name="form">
                     <div className="d-inline-block mb-4">

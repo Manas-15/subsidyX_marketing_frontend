@@ -13,7 +13,7 @@ import { GiRotaryPhone } from "react-icons/gi";
 const PhoneNumberLogin = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [credential, setCredential] = useState({ number: "" });
+  const [credential, setCredential] = useState({ phone_number: "" });
   const [phoneError, setPhoneError] = useState(false);
   const user = useSelector((state) => state?.user);
 
@@ -32,39 +32,21 @@ const PhoneNumberLogin = ({ data }) => {
     dispatch(userActions.login(credential));
   };
 
-  const accessToken = useMemo(
-    () => user?.user?.access_token,
-    [user?.user?.access_token]
-  );
-
-  // useEffect(() => {
-  //   if (accessToken !== undefined) {
-  //     try {
-  //       const decodedToken = jwt.decode(accessToken);
-  //       if (decodedToken?.report_count > 0) {
-  //         dispatch(userActions?.userReportCount(decodedToken));
-  //         router.push("/report/all-report-list");
-  //       } else {
-  //         dispatch(userActions?.userReportCount(decodedToken));
-  //         router.push("/dashboard");
-  //       }
-  //     } catch (error) {
-  //       console.log("Error decoding access token:", error);
-  //       return null;
-  //     }
-  //   } else {
-  //     router.push("/login2");
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [accessToken]);
+  useEffect(() => {
+    if (user?.user_otp !== undefined) {
+      router.push("/otp");
+    } else {
+      router.push("/login2");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.user_otp]);
 
   const goToNext = () => {
     if (credential?.number === "") {
       setPhoneError(true);
     } else {
       setPhoneError(false);
-      console.log(credential);
-      router.push("/otp");
+      dispatch(userActions.generateOTP(credential));
     }
   };
 
@@ -103,7 +85,7 @@ const PhoneNumberLogin = ({ data }) => {
                       /> */}
                       <input
                         type="number"
-                        name="number"
+                        name="phone_number"
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         id="floatingInput"
