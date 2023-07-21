@@ -34,6 +34,13 @@ export function user(state = {}, action) {
         user_otp: action?.data,
       };
 
+    case userConstants.USER_OTP_REMOVED_SUCCESS:
+      return {
+        ...state,
+        user: action?.data?.data?.token,
+        user_otp: "",
+      };
+
     case userConstants.USER_VALIDATE_OTP_REQUEST:
       return {
         ...state,

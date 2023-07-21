@@ -8,10 +8,10 @@ import Multiselect from "multiselect-react-dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { eligibleSubsidyAction } from "../redux/Actions/eligibleSubsidyAction";
 import { CustomButton } from "@layouts/components/CustomButton";
-import { CongratulationsModal } from "@layouts/components/Modal";
 import { districtManagementAction } from "../redux/Actions/districtManagementAction";
 import { talukaManagementAction } from "../redux/Actions/talukaManagementAction";
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
+import CongratulationsModal from "@layouts/components/Modal";
 
 const catData = [{ 1: [11, 12, 13] }, { 2: [14, 15, 16] }, { 3: [17, 18, 1] }];
 
@@ -46,7 +46,7 @@ const QuestionAfterEligible = ({ data }) => {
   const questionData = subsidyData?.eligible_subsidy;
   const subsidiesList = subsidyData?.eligible_subsidy?.subsidies;
 
-  console.log(Object.keys(questionData?.question).length === true);
+  // console.log(Object.keys(questionData?.question).length === true);
 
   useEffect(() => {
     if (subsidyData?.selected_data?.user_info?.state_id) {

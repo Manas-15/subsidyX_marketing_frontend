@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import { IoIosArrowDropright, IoIosArrowDropleft } from "react-icons/io";
 import { stateAction } from "redux/Actions/stateAction";
 import { useDispatch, useSelector } from "react-redux";
-import { CongratulationsModal } from "../components/Modal";
 import { categoryAction } from "redux/Actions/categoryAction";
 import { sectorAction } from "redux/Actions/sectorAction";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
+import CongratulationsModal from "./Modal";
 // import Loader from "./Loader";
 
 const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
@@ -32,7 +32,7 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
   });
 
   const allStates = useSelector((state) => state?.state?.state?.states);
-  console.log(allStates);
+
   const allCategories = useSelector(
     (state) => state?.industryCategory?.category
   );
@@ -175,7 +175,7 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
               onChange={(e) => handleSelectChange(e)}
             >
               <option value="none">Select State</option>
-              {console.log(allStates)}
+
               {allStates?.map((state, index) => (
                 <option key={index} className="form-control" value={state?.id}>
                   {state?.name}

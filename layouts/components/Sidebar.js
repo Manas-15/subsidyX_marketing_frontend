@@ -21,7 +21,7 @@ const sideBarItems = [
 const Sidebar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toogleSidebar = () => {
     setIsCollapsed((prevState) => !prevState);

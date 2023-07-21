@@ -2,7 +2,6 @@ import Base from "@layouts/Baseof";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
 import { IoIosArrowDropright } from "react-icons/io";
 
 const Account = ({ data }) => {
@@ -15,7 +14,7 @@ const Account = ({ data }) => {
 
   const goToNext = () => {
     if (selectedRadioButton === 1) {
-      router.push("/login2");
+      router.push("/login");
     } else if (selectedRadioButton === 2) {
       router.push("/signup");
     }

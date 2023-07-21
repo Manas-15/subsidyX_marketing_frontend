@@ -12,7 +12,6 @@ function getAllReportBasedOnUser() {
     dispatch(request());
     reportManagementService.getAllReportBasedOnUser().then(
       (res) => {
-        console.log(res);
         dispatch(success(res));
       },
       (error) => {
@@ -58,7 +57,6 @@ function getReportByID(id) {
     dispatch(request(id));
     reportManagementService.getReportByID(id).then(
       (res) => {
-        console.log(res);
         dispatch(success(res));
       },
       (error) => {

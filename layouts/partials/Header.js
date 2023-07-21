@@ -22,7 +22,8 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(userActions.logout());
-    router.push("/login2");
+    dispatch(userActions.clearOTP());
+    router.push("/account");
   };
 
   return (

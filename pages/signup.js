@@ -171,7 +171,7 @@ const Signup = ({ data }) => {
                   </div>
                   <div className="text-white d-flex justify-content-center mt-3">
                     Already have an account ? &nbsp;
-                    <Link href="/login2" className="text-primary">
+                    <Link href="/login" className="text-primary">
                       {" "}
                       Log In{" "}
                     </Link>

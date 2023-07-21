@@ -5,10 +5,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { IoIosArrowDropright } from "react-icons/io";
 import EligibleSubsidy from "@layouts/components/eligibleSubsidy";
-import { CongratulationsModal } from "@layouts/components/Modal";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 import { useDispatch } from "react-redux";
-
+import CongratulationsModal from "@layouts/components/Modal";
 const Dashboard = ({ data }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -58,7 +57,6 @@ const Dashboard = ({ data }) => {
       <section className="section">
         <div className="container">
           <div className="section row pb-0">
-          
             {modalShow && selectedRadioButton === "1" && next && (
               <CongratulationsModal
                 type={type}

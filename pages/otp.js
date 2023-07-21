@@ -1,5 +1,4 @@
 import Base from "@layouts/Baseof";
-import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
@@ -14,8 +13,6 @@ const Otp = ({ data }) => {
   const dispatch = useDispatch();
   const [code, setCode] = useState("");
   const user = useSelector((state) => state?.user);
-
-  console.log(user?.user_otp?.phone);
 
   const accessToken = useMemo(
     () => user?.user?.access_token,
@@ -60,6 +57,12 @@ const Otp = ({ data }) => {
     }
   }
 
+  const regenerateOTP = () => {
+    const credential = { phone_number: user?.user_otp?.phone };
+    dispatch(userActions.generateOTP(credential));
+    setCode("");
+  };
+
   return (
     <Base
       title={"title"}
@@ -82,7 +85,7 @@ const Otp = ({ data }) => {
               <div className="d-flex justify-content-center mt-3 mb-3">
                 <h2 className="fw-bold text-white">{user?.user_otp?.otp}</h2>
               </div>
-              <div className="d-flex justify-content-center mt-3 mb-4">
+              <div className="d-flex justify-content-center mt-3 mb-3">
                 <div className="form-floating mb-3">
                   <form name="form">
                     <div className="d-inline-block mb-4">
@@ -111,31 +114,18 @@ const Otp = ({ data }) => {
                           outline: "none",
                         }}
                       />
-                      {/* <OtpInput
-                        value={code}
-                        onChange={handleChange}
-                        numInputs={6}
-                        separator={<span style={{ width: "8px" }}></span>}
-                        isInputNum={true}
-                        shouldAutoFocus={true}
-                        inputStyle={{
-                          border: "1px solid #ddd",
-                          borderRadius: "8px",
-                          width: "54px",
-                          height: "54px",
-                          fontSize: "20px",
-                          color: "#000",
-                          fontWeight: "400",
-                          caretColor: "blue",
+                      <span
+                        className="text-white d-flex justify-content-end mt-3"
+                        style={{
+                          cursor: "pointer",
                         }}
-                        focusStyle={{
-                          border: "1px solid #CFD3DB",
-                          outline: "none",
-                        }}
-                      /> */}
+                        onClick={() => regenerateOTP()}
+                      >
+                        Re-generate OTP
+                      </span>
                     </div>
-                    <div className="row text-center offset-md-4">
-                      <div className="col-md-6">
+                    {/* <div className="row text-center offset-md-4">
+                      <div className="col-md-6 text-white">
                         <button
                           type="button"
                           className="btn btn-custom btn-block"
@@ -144,21 +134,11 @@ const Otp = ({ data }) => {
                           Validate
                         </button>
                       </div>
-                    </div>
+                    </div> */}
                   </form>
                 </div>
-
-                {/* <div className="mt-5 d-flex justify-content-center">
-                  <button
-                    type="submit"
-                    className="btn btn-primary log_btn"
-                    title="signup"
-                  >
-                    SIGN UP
-                  </button>
-                </div> */}
               </div>
-              <span className="mt-4 d-flex justify-content-center">
+              <span className="mt-3 d-flex justify-content-center">
                 <IoIosArrowDropright
                   style={{
                     fontSize: "50px",

@@ -10,6 +10,7 @@ export const userActions = {
   generateOTP,
   saveOTP,
   validateOtp,
+  clearOTP,
 };
 
 function signup(data) {
@@ -47,6 +48,7 @@ function generateOTP(credential) {
     userService.generateOTP(credential).then(
       (res) => {
         dispatch(success(res));
+        console.log(res);
         dispatch(userActions?.saveOTP(res?.data));
         dispatch(alertActions.success("OTP sent successfully"));
       },
@@ -76,6 +78,15 @@ function saveOTP(data) {
     return { type: userConstants.USER_OTP_SAVED_SUCCESS, data };
   }
 }
+function clearOTP(data) {
+  return (dispatch) => {
+    dispatch(success(data));
+  };
+
+  function success() {
+    return { type: userConstants.USER_OTP_REMOVED_SUCCESS };
+  }
+}
 
 function validateOtp(data) {
   return (dispatch) => {
@@ -84,9 +95,15 @@ function validateOtp(data) {
       (res) => {
         dispatch(success(res));
         console.log(res);
-        const result = JSON.stringify(res?.data?.access_token);
-        localStorage.setItem("accessToken", result);
-        dispatch(alertActions.success("User loggedin successfully"));
+        if (res?.data?.detail) {
+          dispatch(
+            alertActions.error(res?.data?.detail?.error_msg?.toString())
+          );
+        } else {
+          const result = JSON.stringify(res?.data?.access_token);
+          localStorage.setItem("accessToken", result);
+          dispatch(alertActions.success("User loggedin successfully"));
+        }
       },
       (error) => {
         dispatch(failure(error.toString()));
