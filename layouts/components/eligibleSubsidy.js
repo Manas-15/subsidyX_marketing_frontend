@@ -17,6 +17,8 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
   const [type, setType] = useState("");
   const [subsidyType, setSubsidyType] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
+  const [pageSize, setPageSize] = useState(20);
+  const [page, setPage] = useState(1);
   const [selectedInformation, setSelectedInformation] = useState({
     stateID: "",
     industryCategoryID: "",
@@ -29,7 +31,8 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
     industrySectorID: 0,
   });
 
-  const allStates = useSelector((state) => state?.state?.state);
+  const allStates = useSelector((state) => state?.state?.state?.states);
+  console.log(allStates);
   const allCategories = useSelector(
     (state) => state?.industryCategory?.category
   );
@@ -42,11 +45,9 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
   );
 
   useEffect(() => {
-    dispatch(stateAction.getStateList());
+    dispatch(stateAction.getStateList({ pagination: { page, pageSize } }));
     dispatch(categoryAction.getCategoryList());
   }, []);
-
-  console.log(edit);
 
   useEffect(() => {
     if (edit === "editEligibleSubsidy") {
@@ -100,8 +101,6 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
     // }
   };
 
-  console.log(selectedInformation, eligibleUserInfo);
-
   const goToNext = () => {
     const data = {
       user_info: {
@@ -127,27 +126,24 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
     }
   };
   useEffect(() => {
-    console.log(eligibleSubsidy);
     if (
       subsidyType === "fetchEligibleSubsidy" &&
       eligibleSubsidy !== undefined &&
       eligibleSubsidy !== null &&
       Object.keys(eligibleSubsidy).length !== 0
     ) {
-      console.log("11111111111111");
       setModalShow(true);
     }
     if (
       eligibleSubsidy?.status === 408 &&
       eligibleSubsidy?.subsidies?.length === 0
     ) {
-      console.log("2222222222222222");
       setModalShow(true);
       setType("warn");
       // setReportID(subsidyData?.eligible_subsidy?.report_id);
     }
   }, [eligibleSubsidy]);
-  console.log(modalShow);
+
   return (
     <>
       {modalShow && (
@@ -179,6 +175,7 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
               onChange={(e) => handleSelectChange(e)}
             >
               <option value="none">Select State</option>
+              {console.log(allStates)}
               {allStates?.map((state, index) => (
                 <option key={index} className="form-control" value={state?.id}>
                   {state?.name}

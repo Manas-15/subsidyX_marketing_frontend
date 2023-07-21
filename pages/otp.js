@@ -7,12 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/Actions/userAction";
 import OtpInput from "react-otp-input";
 import { IoIosArrowDropright } from "react-icons/io";
+import jwt from "jsonwebtoken";
 
 const Otp = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [code, setCode] = useState("");
   const user = useSelector((state) => state?.user);
+
+  console.log(user?.user_otp?.phone);
 
   const accessToken = useMemo(
     () => user?.user?.access_token,
@@ -23,6 +26,7 @@ const Otp = ({ data }) => {
     if (accessToken !== undefined) {
       try {
         const decodedToken = jwt.decode(accessToken);
+        console.log(decodedToken);
         if (decodedToken?.report_count > 0) {
           dispatch(userActions?.userReportCount(decodedToken));
           router.push("/report/all-report-list");
@@ -35,7 +39,7 @@ const Otp = ({ data }) => {
         return null;
       }
     } else {
-      router.push("/login");
+      router.push("/otp");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
@@ -46,7 +50,7 @@ const Otp = ({ data }) => {
     e.preventDefault();
     // router.push("/report/all-report-list");
     const data = {
-      phone_number: "9777814998",
+      phone_number: user?.user_otp?.phone,
       otp: code,
     };
     if (code?.length === 6) {

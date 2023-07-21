@@ -7,10 +7,10 @@ export const stateAction = {
   getStateList,
 };
 
-function getStateList() {
+function getStateList(pageData) {
   return (dispatch) => {
-    dispatch(request());
-    stateService.getStateList().then(
+    dispatch(request(pageData));
+    stateService.getStateList(pageData).then(
       (res) => {
         dispatch(success(res));
       },
@@ -30,5 +30,3 @@ function getStateList() {
     return { type: stateConstant.GET_STATE_FAILURE, error };
   }
 }
-
-

@@ -9,6 +9,7 @@ import { useMemo } from "react";
 import jwt from "jsonwebtoken";
 import { IoIosArrowDropright } from "react-icons/io";
 import { GiRotaryPhone } from "react-icons/gi";
+import Link from "next/link";
 
 const PhoneNumberLogin = ({ data }) => {
   const router = useRouter();
@@ -60,6 +61,9 @@ const PhoneNumberLogin = ({ data }) => {
       canonical={"canonical"}
     >
       <section className="section bg-inner">
+        <Link href="/page2">
+          <a className="nav-link">Go to Page 2</a>
+        </Link>
         <div className="container">
           <div className="section row pb-0">
             <div className="col-12 inner-section">

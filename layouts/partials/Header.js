@@ -22,7 +22,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(userActions.logout());
-    router.push("/login");
+    router.push("/login2");
   };
 
   return (
@@ -114,7 +114,7 @@ const Header = () => {
                     type="button"
                     className="btn btn-primary log_btn"
                     title="login"
-                    onClick={() => router.push("/login")}
+                    onClick={() => router.push("/account")}
                   >
                     LOG IN
                   </button>
@@ -127,10 +127,7 @@ const Header = () => {
                       {user?.user_details?.first_name}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      <Dropdown.Item
-                        href="#action1"
-                        onClick={() => handleLogout()}
-                      >
+                      <Dropdown.Item href="#" onClick={() => handleLogout()}>
                         <AiOutlineLogout
                           style={{
                             fontSize: "25px",

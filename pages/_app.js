@@ -26,6 +26,21 @@ const App = ({ Component, pageProps }) => {
     //  dispatch(sidebarActions.selectedCategory(item));
   }, [router?.pathname]);
 
+  const handleRouteChange = () => {
+    const links = document.querySelectorAll(".nav-link");
+    links.forEach((link) => {
+      link.classList.remove("loaded");
+    });
+  };
+
+  useEffect(() => {
+    router.events.on("routeChangeStart", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, []);
+
   useEffect(() => {
     setShowChild(true);
   }, []);
