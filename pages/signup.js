@@ -12,6 +12,11 @@ import jwt from "jsonwebtoken";
 const Signup = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [numberError, setNumberError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const [credential, setCredential] = useState({
     firstName: "",
     lastName: "",
@@ -24,19 +29,65 @@ const Signup = ({ data }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "firstName") {
+      if (value === "") {
+        setFirstNameError(true);
+      } else {
+        setFirstNameError(false);
+      }
+    } else if (name === "lastName") {
+      if (value === "") {
+        setLastNameError(true);
+      } else {
+        setLastNameError(false);
+      }
+    } else if (name === "email") {
+      if (value === "") {
+        setEmailError(true);
+      } else {
+        setEmailError(false);
+      }
+    } else if (name === "number") {
+      if (value === "") {
+        setNumberError(true);
+      } else {
+        setNumberError(false);
+      }
+    } else {
+      if (value === "") {
+        setPasswordError(true);
+      } else {
+        setPasswordError(false);
+      }
+    }
     setCredential({ ...credential, [name]: value });
   };
 
   const handleSignup = (e) => {
     e.preventDefault();
-    const signupData = {
-      first_name: credential?.firstName,
-      last_name: credential?.lastName,
-      email: credential?.email,
-      phone_number: credential?.number,
-      password: credential?.password,
-    };
-    dispatch(userActions.signup(signupData));
+    if (
+      credential?.firstName === "" ||
+      credential?.lastName === "" ||
+      credential?.email === "" ||
+      credential?.number === "" ||
+      credential?.password === ""
+    ) {
+      setFirstNameError(true);
+      setLastNameError(true);
+      setEmailError(true);
+      setNumberError(true);
+      setPasswordError(true);
+    } else {
+      const signupData = {
+        first_name: credential?.firstName,
+        last_name: credential?.lastName,
+        email: credential?.email,
+        phone_number: credential?.number,
+        password: credential?.password,
+      };
+      dispatch(userActions.signup(signupData));
+    }
+
     setCredential({
       firstName: "",
       lastName: "",
@@ -55,14 +106,13 @@ const Signup = ({ data }) => {
     if (accessToken !== undefined) {
       try {
         const decodedToken = jwt.decode(accessToken);
-
-        if (decodedToken?.report_count > 0) {
-          dispatch(userActions?.userReportCount(decodedToken));
-          router.push("/report/all-report-list");
-        } else {
-          dispatch(userActions?.userReportCount(decodedToken));
-          router.push("/login2");
-        }
+        // if (decodedToken?.report_count > 0) {
+        //   dispatch(userActions?.userReportCount(decodedToken));
+        //   router.push("/report/all-report-list");
+        // } else {
+        dispatch(userActions?.userReportCount(decodedToken));
+        router.push("/login");
+        // }
       } catch (error) {
         console.log("Error decoding access token:", error);
         return null;
@@ -102,6 +152,11 @@ const Signup = ({ data }) => {
                         className="form-control"
                         placeholder="First Name"
                       />
+                      {firstNameError && (
+                        <span style={{ color: "red", fontSize: "15px" }}>
+                          Please enter first name
+                        </span>
+                      )}
                     </div>
                     <div className="form-floating mb-3  col-sm-6">
                       <input
@@ -111,6 +166,11 @@ const Signup = ({ data }) => {
                         className="form-control"
                         placeholder="Last Name"
                       />
+                      {lastNameError && (
+                        <span style={{ color: "red", fontSize: "15px" }}>
+                          Please enter last name
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="row">
@@ -122,6 +182,11 @@ const Signup = ({ data }) => {
                         className="form-control"
                         placeholder="Email"
                       />
+                      {emailError && (
+                        <span style={{ color: "red", fontSize: "15px" }}>
+                          Please enter your email
+                        </span>
+                      )}
                     </div>
                     <div className="form-floating mb-3 col-sm-6">
                       <input
@@ -131,6 +196,11 @@ const Signup = ({ data }) => {
                         className="form-control"
                         placeholder="Phone Number"
                       />
+                      {numberError && (
+                        <span style={{ color: "red", fontSize: "15px" }}>
+                          Please enter phone number
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="row">
@@ -142,6 +212,11 @@ const Signup = ({ data }) => {
                         className="form-control"
                         placeholder="Password"
                       />
+                      {passwordError && (
+                        <span style={{ color: "red", fontSize: "15px" }}>
+                          Please enter password
+                        </span>
+                      )}
                     </div>
                   </div>
 

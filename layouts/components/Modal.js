@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
 
-const CongratulationsModal = (props) => {
+export const CongratulationsModal = (props) => {
   console.log(props);
   const subsidies = props?.action?.subsidies;
   const dispatch = useDispatch();
@@ -195,4 +195,69 @@ const CongratulationsModal = (props) => {
   );
 };
 
-export default CongratulationsModal;
+export const ReportManagementModal = (props) => {
+  const dispatch = useDispatch();
+  console.log(props);
+
+  const deleteReport = () => {
+    console.log(props.action);
+    dispatch(reportManagementAction.deleteReport(props.action));
+    props.setModalShow(false);
+    props.setType("");
+    props.setAction({});
+  };
+
+  const cancelReport = () => {
+    props.setModalShow(false);
+    props.setType("");
+    props.setAction({});
+  };
+
+  return (
+    <>
+      <div className={styles.modalWrapper}>
+        <div
+          className={styles.modalContainer}
+          style={{
+            backgroundImage: `url(
+            "../../images/popupbg.png"
+          )`,
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "fixed",
+            backgroundSize: "100% 100%",
+            color: "#FFFFFF",
+          }}
+        >
+          <div className={styles.h2}>Delete Report</div>
+          <div className={styles.p}>
+            Do you want to delete this report , this can't be undone, report
+            will removed from list.
+          </div>
+
+          <div className={styles.modalFooter}>
+            <>
+              <>
+                <CustomButton
+                  name="DELETE"
+                  color="#FFFFFF"
+                  width="100px"
+                  bgColor="#FA6130"
+                  onClick={() => deleteReport()}
+                />
+                <CustomButton
+                  name="CANCEL"
+                  color="#000000"
+                  width="100px"
+                  bgColor="#FFFFFF"
+                  border="1px solid #000000"
+                  onClick={() => cancelReport()}
+                />
+              </>
+            </>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </>
+  );
+};

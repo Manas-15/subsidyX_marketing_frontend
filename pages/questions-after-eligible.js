@@ -11,7 +11,7 @@ import { CustomButton } from "@layouts/components/CustomButton";
 import { districtManagementAction } from "../redux/Actions/districtManagementAction";
 import { talukaManagementAction } from "../redux/Actions/talukaManagementAction";
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
-import CongratulationsModal from "@layouts/components/Modal";
+import { CongratulationsModal } from "@layouts/components/Modal";
 
 const catData = [{ 1: [11, 12, 13] }, { 2: [14, 15, 16] }, { 3: [17, 18, 1] }];
 
@@ -229,7 +229,7 @@ const QuestionAfterEligible = ({ data }) => {
           <div className="container">
             <div className="section pb-0">
               <div className="row inner-section">
-                <div className="col-sm-8">
+                <div className="col-sm-12">
                   <div className="d-flex justify-content-center m-5">
                     <h3 className="fw-bold">
                       {questionData?.question?.name
@@ -328,8 +328,8 @@ const QuestionAfterEligible = ({ data }) => {
                   </div>
                 </div>
 
-                <div className="col-sm-4">
-                  {/* <div className="d-flex justify-content-end">
+                {/* <div className="col-sm-4">
+                  <div className="d-flex justify-content-end">
                     <CustomButton
                       name="Restart Session"
                       color="#FFFFFF"
@@ -338,7 +338,7 @@ const QuestionAfterEligible = ({ data }) => {
                       onClick={(e) => restartSession(e)}
                       className="position-relative"
                     />
-                  </div> */}
+                  </div>
                   <div className="d-flex my-5">
                     <h4
                       style={{ textDecoration: "underline", fontWeight: "500" }}
@@ -351,7 +351,7 @@ const QuestionAfterEligible = ({ data }) => {
                       <p style={{ marginLeft: "15px" }}>{subsidyItems}</p>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

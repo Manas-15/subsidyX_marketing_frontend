@@ -6,6 +6,7 @@ export const reportManagementAction = {
   getAllReportBasedOnUser,
   selectedCategory,
   getReportByID,
+  deleteReport,
 };
 function getAllReportBasedOnUser() {
   return (dispatch) => {
@@ -79,6 +80,39 @@ function getReportByID(id) {
   function failure(error) {
     return {
       type: reportManagementConstants.GET_REPORT_BY_REPORT_ID_FAILURE,
+      error,
+    };
+  }
+}
+
+function deleteReport(id) {
+  return (dispatch) => {
+    dispatch(request(id));
+    reportManagementService.deleteReport(id).then(
+      (res) => {
+        dispatch(success(res));
+        dispatch(reportManagementAction.getAllReportBasedOnUser());
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
+  };
+  function request() {
+    return {
+      type: reportManagementConstants.DELETE_REPORT_REQUEST,
+    };
+  }
+  function success(data) {
+    return {
+      type: reportManagementConstants.DELETE_REPORT_SUCCESS,
+      data,
+    };
+  }
+  function failure(error) {
+    return {
+      type: reportManagementConstants.DELETE_REPORT_FAILURE,
       error,
     };
   }

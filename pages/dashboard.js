@@ -7,7 +7,9 @@ import { IoIosArrowDropright } from "react-icons/io";
 import EligibleSubsidy from "@layouts/components/eligibleSubsidy";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 import { useDispatch } from "react-redux";
-import CongratulationsModal from "@layouts/components/Modal";
+import { CongratulationsModal } from "@layouts/components/Modal";
+
+
 const Dashboard = ({ data }) => {
   const dispatch = useDispatch();
   const router = useRouter();

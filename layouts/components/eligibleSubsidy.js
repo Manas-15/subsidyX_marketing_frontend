@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { categoryAction } from "redux/Actions/categoryAction";
 import { sectorAction } from "redux/Actions/sectorAction";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
-import CongratulationsModal from "./Modal";
+import { CongratulationsModal } from "./Modal";
 // import Loader from "./Loader";
 
 const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {

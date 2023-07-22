@@ -171,6 +171,13 @@ function FinalReport({ data, setModalShow }) {
     setModalShow(false);
   };
 
+  const datas = [
+    { name: "data 1", id: 1 },
+    { name: "data 2", id: 2 },
+    { name: "data 3", id: 2 },
+    { name: "data 4", id: 2 },
+  ];
+
   return (
     <>
       <Base
@@ -262,13 +269,13 @@ function FinalReport({ data, setModalShow }) {
                   Central Government Subsidies
                 </span>
               </div>
-              <div class="container p-4">
-                <div class="row gx-2">
-                  {Object.entries(
-                    centralSubsidiesList !== undefined && centralSubsidiesList
-                  ).map(([subsidyName, subsidyData]) => (
-                    <div key={subsidyName} className="col mb-4">
-                      {console.log(subsidyData)}
+
+              {Object.entries(
+                centralSubsidiesList !== undefined && centralSubsidiesList
+              ).map(([subsidyName, subsidyData]) => (
+                <div key={subsidyName} class="container">
+                  <div class="row gx-2">
+                    <div className="col mt-4">
                       <div
                         className="col p-3"
                         style={{
@@ -331,7 +338,7 @@ function FinalReport({ data, setModalShow }) {
                           </div>
                           <div className="col-sm-4 d-flex flex-column">
                             <span
-                              className="final_report_name mx-3"
+                              className="final_report_name mx-4"
                               style={{ fontWeight: "bold" }}
                             >
                               &#8377;{" "}
@@ -343,9 +350,9 @@ function FinalReport({ data, setModalShow }) {
                         </div>
                       </div>
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         )}
@@ -429,12 +436,13 @@ function FinalReport({ data, setModalShow }) {
                   Gujurat State Government Subsidies
                 </span>
               </div>
-              <div class="container p-4">
-                <div class="row gx-2">
-                  {Object.entries(
-                    stateSubsidiesList !== undefined && stateSubsidiesList
-                  ).map(([subsidyName, subsidyData]) => (
-                    <div key={subsidyName} className="col mb-4">
+
+              {Object.entries(
+                stateSubsidiesList !== undefined && stateSubsidiesList
+              ).map(([subsidyName, subsidyData]) => (
+                <div key={subsidyName} class="container p-4">
+                  <div class="row gx-2">
+                    <div className="col mb-4">
                       <div
                         className="col p-3"
                         style={{
@@ -497,7 +505,7 @@ function FinalReport({ data, setModalShow }) {
                           </div>
                           <div className="col-sm-4 d-flex flex-column">
                             <span
-                              className="final_report_name mx-3"
+                              className="final_report_name mx-4"
                               style={{ fontWeight: "bold" }}
                             >
                               &#8377;{" "}
@@ -509,8 +517,8 @@ function FinalReport({ data, setModalShow }) {
                         </div>
                       </div>
                     </div>
-                  ))}
-                  {/* <div class="col mb-4">
+
+                    {/* <div class="col mb-4">
                     <div
                       className="col p-3"
                       style={{
@@ -555,8 +563,9 @@ function FinalReport({ data, setModalShow }) {
                       </div>
                     </div>
                   </div> */}
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         )}

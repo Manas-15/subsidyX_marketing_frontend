@@ -36,7 +36,6 @@ const PhoneNumberLogin = ({ data }) => {
     dispatch(userActions.clearOTP());
   }, []);
 
-  console.log();
   useEffect(() => {
     if (user?.user_otp?.detail?.error_msg === "User does not exist") {
       router.push("/signup");
@@ -49,7 +48,7 @@ const PhoneNumberLogin = ({ data }) => {
   }, [user?.user_otp]);
 
   const goToNext = () => {
-    if (credential?.number === "") {
+    if (credential?.phone_number === "") {
       setPhoneError(true);
     } else {
       setPhoneError(false);
@@ -71,7 +70,7 @@ const PhoneNumberLogin = ({ data }) => {
           <div className="section row pb-0">
             <div className="col-12 inner-section">
               <div>
-                <Form onSubmit={(e) => handleLogin(e)}>
+                <Form>
                   <div className="d-flex justify-content-center mt-5 mb-5">
                     <h2 className="fw-bold text-white">
                       Great!! Enter your phone number to log in
@@ -91,8 +90,9 @@ const PhoneNumberLogin = ({ data }) => {
                         }}
                       /> */}
                       <input
-                        type="number"
+                        type="text"
                         name="phone_number"
+                        maxLength={10}
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         id="floatingInput"
