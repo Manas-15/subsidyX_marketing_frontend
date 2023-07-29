@@ -60,13 +60,13 @@ function ConfirmReport() {
       noindex={"noindex"}
       canonical={"canonical"}
     >
-      <div className={styles.container}>
+      <div className={`${styles.container}`}>
         <h4 className="mx-5 mt-4" style={{ fontWeight: "400" }}>
           Based on the information provided by you we have gathered the
           following data. kindly verify all the details carefully before
           generation report.
         </h4>
-        <div className={styles.report_tablee}>
+        <div className={`mb-4 ${styles.report_tablee}`}>
           <div>
             <div className="d-flex justify-content-between mx-5 mt-3">
               <h4>General Information</h4>
@@ -120,7 +120,7 @@ function ConfirmReport() {
         </div>
 
         {viewReport?.result !== undefined && (
-          <div className={styles.report_tablee}>
+          <div className={`mb-4 ${styles.report_tablee}`}>
             <div className="py-3">
               <div className="d-flex justify-content-between mx-5 ">
                 <h4>Information based on Service and Large Industry</h4>

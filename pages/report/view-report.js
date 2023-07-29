@@ -95,86 +95,95 @@ function ViewReport({ data, setModalShow }) {
         noindex={"noindex"}
         canonical={"canonical"}
       >
-        <div className={styles.report_tablee}>
-          <div>
-            <div className="d-flex justify-content-between mx-5 mt-3">
-              <h4>General Information</h4>
+        <div
+          style={{
+            backgroundColor: "#F0EAFF",
+            padding: "30px",
+            height: "650px",
+            overflowY: "auto",
+          }}
+        >
+          <div className={styles.report_tablee}>
+            <div>
+              <div className="d-flex justify-content-between mx-5 mt-3">
+                <h4>General Information</h4>
+              </div>
+              <div className="row mt-4 mx-5">
+                <div className="col-sm-3 d-flex flex-column">
+                  <h6>InquireID</h6>
+                  <p>#{viewReport?.info?.report_id}</p>
+                </div>
+                <div className="col-sm-3 d-flex flex-column">
+                  <h6>Category</h6>
+                  <p>{viewReport?.info?.industry_category_name}</p>
+                </div>
+                <div className="col-sm-3 d-flex flex-column">
+                  <h6>Sector</h6>
+                  <p>{viewReport?.info?.industry_sector_name}</p>
+                </div>
+                <div className="col-sm-3 d-flex flex-column">
+                  <h6>Created Date</h6>
+                  <p>{formattedDate}</p>
+                </div>
+              </div>
+              <div className="row mt-4 mx-5">
+                <div className="col-sm-3 d-flex flex-column">
+                  <h6>State</h6>
+                  <p>{viewReport?.info?.state_name}</p>
+                </div>
+                <div className="col-sm-3 d-flex flex-column">
+                  <h6>Taluka</h6>
+                  <p>{viewReport?.info?.taluka_name}</p>
+                </div>
+                <div className="col-sm-3 d-flex flex-column">
+                  <h6>Company Name</h6>
+                  <p>ABC</p>
+                </div>
+                <div className="col-sm-3 d-flex flex-column">
+                  <h6>Created By</h6>
+                  <p>super admin</p>
+                </div>
+              </div>
             </div>
-            <div className="row mt-4 mx-5">
-              <div className="col-sm-3 d-flex flex-column">
-                <h6>InquireID</h6>
-                <p>#{viewReport?.info?.report_id}</p>
+          </div>
+          <div className={`mt-4 mb-3 ${styles.report_tablee}`}>
+            <div className="py-3">
+              <div className="d-flex justify-content-between mx-5 ">
+                <h4>User Inputs</h4>
               </div>
-              <div className="col-sm-3 d-flex flex-column">
-                <h6>Category</h6>
-                <p>{viewReport?.info?.industry_category_name}</p>
-              </div>
-              <div className="col-sm-3 d-flex flex-column">
-                <h6>Sector</h6>
-                <p>{viewReport?.info?.industry_sector_name}</p>
-              </div>
-              <div className="col-sm-3 d-flex flex-column">
-                <h6>Created Date</h6>
-                <p>{formattedDate}</p>
-              </div>
-            </div>
-            <div className="row mt-4 mx-5">
-              <div className="col-sm-3 d-flex flex-column">
-                <h6>State</h6>
-                <p>{viewReport?.info?.state_name}</p>
-              </div>
-              <div className="col-sm-3 d-flex flex-column">
-                <h6>Taluka</h6>
-                <p>{viewReport?.info?.taluka_name}</p>
-              </div>
-              <div className="col-sm-3 d-flex flex-column">
-                <h6>Company Name</h6>
-                <p>ABC</p>
-              </div>
-              <div className="col-sm-3 d-flex flex-column">
-                <h6>Created By</h6>
-                <p>super admin</p>
+              <div className="row mt-4 mx-5">
+                {viewReport?.result?.map((question, idx) => {
+                  return (
+                    <div key={idx} className="col-sm-3 d-flex flex-column">
+                      <h6>
+                        {question?.question_display_name
+                          ? question?.question_display_name
+                          : question?.question_name}
+                      </h6>
+                      <p>{question?.answer}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
-        </div>
-        <div className={styles.report_tablee}>
-          <div className="py-3">
-            <div className="d-flex justify-content-between mx-5 ">
-              <h4>Information based on Service and Large Industry</h4>
-            </div>
-            <div className="row mt-4 mx-5">
-              {viewReport?.result?.map((question, idx) => {
-                return (
-                  <div key={idx} className="col-sm-3 d-flex flex-column">
-                    <h6>
-                      {question?.question_display_name
-                        ? question?.question_display_name
-                        : question?.question_name}
-                    </h6>
-                    <p>{question?.answer}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
 
-        {viewReport?.info?.is_paid === false && (
-          <div
-            className="d-flex justify-content-end mb-5"
-            style={{ marginRight: "20px" }}
-          >
-            <CustomButton
-              name="Pay Now"
-              color="#FFFFFF"
-              height="50px"
-              width="200px"
-              bgColor="#FA6130"
-              onClick={(e) => handlePayNow(e)}
-            />
-          </div>
-        )}
+          {viewReport?.info?.is_paid === false && (
+            <div
+              className="d-flex justify-content-end mb-5"
+              style={{ marginRight: "20px" }}
+            >
+              <CustomButton
+                name="Pay Now"
+                color="#FFFFFF"
+                height="50px"
+                width="200px"
+                bgColor="#FA6130"
+                onClick={(e) => handlePayNow(e)}
+              />
+            </div>
+          )}
+        </div>
       </Base>
     </>
   );

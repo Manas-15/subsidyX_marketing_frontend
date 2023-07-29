@@ -5,7 +5,6 @@ const initialState = {
   allReports: [],
   question_answer: [],
   selected_category: "Report Management",
- 
 };
 
 export function report(state = initialState, action) {
@@ -36,6 +35,17 @@ export function report(state = initialState, action) {
         get_report: action?.data?.data,
       };
     case reportManagementConstants.GET_REPORT_BY_REPORT_ID_FAILURE:
+      return { ...state, isSuccess: false };
+
+    case reportManagementConstants.GENERATE_PDF_BASED_ON_REPORT_ID_REQUEST:
+      return { ...state, isSuccess: false };
+    case reportManagementConstants.GENERATE_PDF_BASED_ON_REPORT_ID_SUCCESS:
+      return {
+        ...state,
+        isSuccess: true,
+        generate_pdf: action?.data?.data,
+      };
+    case reportManagementConstants.GENERATE_PDF_BASED_ON_REPORT_ID_FAILURE:
       return { ...state, isSuccess: false };
 
     default:

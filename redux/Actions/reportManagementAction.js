@@ -7,6 +7,7 @@ export const reportManagementAction = {
   selectedCategory,
   getReportByID,
   deleteReport,
+  downloadPDF,
 };
 function getAllReportBasedOnUser() {
   return (dispatch) => {
@@ -113,6 +114,38 @@ function deleteReport(id) {
   function failure(error) {
     return {
       type: reportManagementConstants.DELETE_REPORT_FAILURE,
+      error,
+    };
+  }
+}
+
+function downloadPDF(id) {
+  return (dispatch) => {
+    dispatch(request(id));
+    reportManagementService.downloadPDF(id).then(
+      (res) => {
+        dispatch(success(res));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
+  };
+  function request() {
+    return {
+      type: reportManagementConstants.GENERATE_PDF_BASED_ON_REPORT_ID_REQUEST,
+    };
+  }
+  function success(data) {
+    return {
+      type: reportManagementConstants.GENERATE_PDF_BASED_ON_REPORT_ID_SUCCESS,
+      data,
+    };
+  }
+  function failure(error) {
+    return {
+      type: reportManagementConstants.GENERATE_PDF_BASED_ON_REPORT_ID_FAILURE,
       error,
     };
   }

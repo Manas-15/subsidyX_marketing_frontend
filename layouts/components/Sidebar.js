@@ -8,11 +8,12 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { userActions } from "redux/Actions/userAction";
+import Image from "next/image";
 // import { sidebarActions } from "../../redux/Actions/sidebarAction";
 
 const sideBarItems = [
   {
-    name: "Report management",
+    name: "Report Management",
     href: "/report/all-report-list",
     icon: TbReportAnalytics,
   },
@@ -58,14 +59,22 @@ const Sidebar = () => {
             className="navbar-brand"
             onClick={() => dispatch(userActions.logout())}
           >
-            <figure>
+            <Image src="/images/logo.png" height="50" width="50" alt="logo" />
+            <Image
+              src="/images/logo-text.png"
+              height="35"
+              width="133"
+              alt="logo name"
+              className="sidebar_logo_name"
+            />
+            {/* <figure>
               <img className="logo" src="/images/logo.png" alt="" />
               <img
                 src="/images/logo-text.png"
                 alt=""
                 className="sidebar_logo_name"
               />
-            </figure>
+            </figure> */}
           </Link>
         </div>
         <ul className="sidebar_list">

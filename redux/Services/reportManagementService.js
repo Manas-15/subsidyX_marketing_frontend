@@ -5,6 +5,7 @@ export const reportManagementService = {
   getAllReportBasedOnUser,
   getReportByID,
   deleteReport,
+  downloadPDF,
 };
 
 async function getAllReportBasedOnUser() {
@@ -24,6 +25,12 @@ async function getReportByID(id) {
 async function deleteReport(id) {
   console.log(id);
   return await api.delete(`reports/?report_id=${id}`, {
+    headers: authHeader(),
+  });
+}
+
+async function downloadPDF(id) {
+  return await api.get(`reports/generate_pdf/${id}`, {
     headers: authHeader(),
   });
 }
