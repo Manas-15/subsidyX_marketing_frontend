@@ -17,6 +17,7 @@ import Base from "@layouts/Baseof";
 import { useRouter } from "next/router";
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
 import Link from "next/link";
+import { DotLoading } from "@layouts/components/Loader";
 
 function FinalReport({ data, setModalShow }) {
   console.log(data);
@@ -25,6 +26,7 @@ function FinalReport({ data, setModalShow }) {
 
   const [stateSubsidiesList, setStateSubsidiesList] = useState();
   const [centralSubsidiesList, setCentralSubsidiesList] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const date = new Date();
   const formattedDate = date.toLocaleDateString("en-US", {
@@ -103,7 +105,13 @@ function FinalReport({ data, setModalShow }) {
     }
   }, []);
 
-  const downloadPDF = () => {};
+  useEffect(() => {
+    if (generatePdf?.report_link === undefined) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [generatePdf]);
 
   return (
     <>
@@ -127,22 +135,33 @@ function FinalReport({ data, setModalShow }) {
             <div>
               <div className="d-flex justify-content-between mx-5 mt-3">
                 <h4>General Information</h4>
-                {generatePdf?.report_link !== undefined && (
-                  <Link
-                    href={generatePdf?.report_link}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    className="text-primary"
-                  >
-                    <CustomButton
-                      name="Download PDF"
-                      color="#FFFFFF"
-                      height="50px"
-                      width="200px"
-                      bgColor="#FA6130"
-                      // onClick={(e) => handlePayNow(e)}
-                    />
-                    {/* <BiSolidFilePdf
+
+                {isLoading ? (
+                  <DotLoading
+                    name="Loading ..."
+                    type="button"
+                    bgColor="#FA6130"
+                    color="#FFFFFF"
+                    height="45px"
+                    width="180px"
+                  />
+                ) : (
+                  <>
+                    {generatePdf?.report_link !== undefined && (
+                      <Link
+                        href={generatePdf?.report_link}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        className="text-primary"
+                      >
+                        <CustomButton
+                          name="Download PDF"
+                          color="#FFFFFF"
+                          height="45px"
+                          width="180px"
+                          bgColor="#FA6130"
+                        />
+                        {/* <BiSolidFilePdf
                     style={{
                       fontSize: "30px",
                       color: "#fa6130",
@@ -150,7 +169,9 @@ function FinalReport({ data, setModalShow }) {
                     }}
                     onClick={(e) => downloadPDF(e)}
                   /> */}
-                  </Link>
+                      </Link>
+                    )}
+                  </>
                 )}
               </div>
               <div className="row mt-4 mx-5">

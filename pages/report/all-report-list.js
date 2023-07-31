@@ -19,6 +19,8 @@ import { IoIosArrowDropleft } from "react-icons/io";
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
 import ViewReport from "./view-report";
 import { ReportManagementModal } from "@layouts/components/Modal";
+import Pagination from "../../layouts/components/Pagination";
+import { Button, Form, InputGroup } from "react-bootstrap";
 
 const actions = [
   // { icon: BsShareFill },
@@ -39,6 +41,10 @@ const AllReportLists = () => {
   const [modalShow, setModalShow] = useState(false);
   const [type, setType] = useState("");
   const [action, setAction] = useState({});
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [sortHeader, setSortHeader] = useState("name");
 
   const allReportLists = useSelector((state) => state?.report);
 
@@ -49,8 +55,12 @@ const AllReportLists = () => {
   }, [allReportLists]);
 
   useEffect(() => {
-    dispatch(reportManagementAction.getAllReportBasedOnUser());
-  }, []);
+    dispatch(
+      reportManagementAction.getAllReportBasedOnUser({
+        pagination: { page, pageSize },
+      })
+    );
+  }, [page, pageSize]);
 
   const addNewReports = () => {
     router.push("/dashboard");
@@ -72,7 +82,6 @@ const AllReportLists = () => {
       setAction(item?.id);
     }
   };
-
   return (
     <Base
       title={"title"}
@@ -97,16 +106,43 @@ const AllReportLists = () => {
             className={`d-flex justify-content-between align-items-center ${styles.tableHeader}`}
           >
             <div className="d-flex justify-content-evenly ">
-              {/* <div className={`mx-2 ${styles.search_box}`}>
-              <div className={styles.search_icon}>
-                <CiSearch />
+              <div className={`mx-2 ${styles.search_box}`}>
+                <Form.Group className="mb-3" controlId="search">
+                  <InputGroup>
+                    <Button
+                      disabled
+                      style={{
+                        color: "black",
+                        background: "white",
+                        borderColor: "white",
+                        borderTopLeftRadius: "10px",
+                        borderBottomLeftRadius: "10px",
+                        border: "2px solid rgba(0,0,0,0.2)",
+                        borderRight: "none",
+                      }}
+                    >
+                      {<CiSearch />}
+                    </Button>
+                    <Form.Control
+                      autoComplete="off"
+                      style={{
+                        padding: "0.5rem",
+                        border: "2px solid rgba(0,0,0,0.2)",
+                        borderTopRightRadius: "10px",
+                        borderBottomRightRadius: "10px",
+                        borderTopLeftRadius: "0px",
+                        borderBottomLeftRadius: "0px",
+                        borderLeft: "none",
+                      }}
+                      placeholder="Search..."
+                      type={"text"}
+                      name="search"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                  </InputGroup>
+                </Form.Group>
               </div>
-              <input
-                type="text"
-                className={styles.search_bar}
-                placeholder="Search Reports"
-              />
-            </div> */}
 
               {/* <FilterButton name="Filter" /> */}
             </div>
@@ -148,40 +184,55 @@ const AllReportLists = () => {
                   </th>
                 </tr>
               </thead>
+              {console.log(allReportLists?.allReports?.result)}
               <tbody>
-                {allReportLists?.allReports?.result?.map((data, index) => {
-                  return (
-                    <tr className="text-center" key={index}>
-                      <th scope="row">#{data?.id}</th>
-                      <td> - </td>
-                      <td> - </td>
-                      <td>{formattedDate}</td>
-                      <td scope="col"> {data?.industry_category_name} </td>
-                      <td>
-                        <ul className="d-flex justify-content-center">
-                          {actions?.map(({ icon: Icon }, idx) => {
-                            return (
-                              <li
-                                key={idx}
-                                onClick={(e) => handleClick(e, data, idx)}
-                              >
-                                <Icon
-                                  color="#FA6130"
-                                  size="18px"
-                                  className="action_icon m-2"
-                                />
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {allReportLists?.allReports?.result
+                  ?.filter((x) =>
+                    x?.industry_category_name
+                      ?.toLowerCase()
+                      .includes(search.toLowerCase())
+                  )
+                  .map((data, index) => {
+                    return (
+                      <tr className="text-center" key={index}>
+                        <th scope="row">#{data?.id}</th>
+                        <td> - </td>
+                        <td> - </td>
+                        <td>{formattedDate}</td>
+                        <td scope="col"> {data?.industry_category_name} </td>
+                        <td>
+                          <ul className="d-flex justify-content-center">
+                            {actions?.map(({ icon: Icon }, idx) => {
+                              return (
+                                <li
+                                  key={idx}
+                                  onClick={(e) => handleClick(e, data, idx)}
+                                >
+                                  <Icon
+                                    color="#FA6130"
+                                    size="18px"
+                                    className="action_icon m-2"
+                                  />
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>
         </div>
+        <Pagination
+          pageSizeOptions={[5, 10, 20, 50]}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          page={page}
+          setPage={setPage}
+          totalItems={allReportLists?.allReports?.total_items}
+        />
       </div>
     </Base>
   );

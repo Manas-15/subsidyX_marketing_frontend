@@ -5,10 +5,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/Actions/userAction";
-import { useMemo } from "react";
-import jwt from "jsonwebtoken";
 import { IoIosArrowDropright } from "react-icons/io";
-import { GiRotaryPhone } from "react-icons/gi";
+// import { GiRotaryPhone } from "react-icons/gi";
+import { Loader } from "@layouts/components/Loader";
 
 const PhoneNumberLogin = ({ data }) => {
   const router = useRouter();
@@ -16,6 +15,7 @@ const PhoneNumberLogin = ({ data }) => {
   const [credential, setCredential] = useState({ phone_number: "" });
   const [phoneError, setPhoneError] = useState(false);
   const user = useSelector((state) => state?.user);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,11 +27,6 @@ const PhoneNumberLogin = ({ data }) => {
     setCredential({ ...credential, [name]: value });
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    dispatch(userActions.login(credential));
-  };
-
   useEffect(() => {
     dispatch(userActions.clearOTP());
   }, []);
@@ -40,6 +35,7 @@ const PhoneNumberLogin = ({ data }) => {
     if (user?.user_otp?.detail?.error_msg === "User does not exist") {
       router.push("/signup");
     } else if (user?.user_otp !== undefined && user?.user_otp !== "") {
+      setLoading(false);
       router.push("/otp");
     } else {
       router.push("/login");
@@ -52,7 +48,9 @@ const PhoneNumberLogin = ({ data }) => {
       setPhoneError(true);
     } else {
       setPhoneError(false);
+      setLoading(true);
       dispatch(userActions.generateOTP(credential));
+      // router.push("/otp");
     }
   };
 
@@ -74,6 +72,7 @@ const PhoneNumberLogin = ({ data }) => {
         }}
       >
         <div className="container">
+          {loading && <Loader />}
           <div className="section row pb-0">
             <div className="col-12 inner-section">
               <div>

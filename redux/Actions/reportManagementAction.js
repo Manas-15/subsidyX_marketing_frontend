@@ -9,10 +9,10 @@ export const reportManagementAction = {
   deleteReport,
   downloadPDF,
 };
-function getAllReportBasedOnUser() {
+function getAllReportBasedOnUser(pageData) {
   return (dispatch) => {
-    dispatch(request());
-    reportManagementService.getAllReportBasedOnUser().then(
+    dispatch(request(pageData));
+    reportManagementService.getAllReportBasedOnUser(pageData).then(
       (res) => {
         dispatch(success(res));
       },

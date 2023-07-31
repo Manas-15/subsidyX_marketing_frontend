@@ -8,11 +8,16 @@ export const reportManagementService = {
   downloadPDF,
 };
 
-async function getAllReportBasedOnUser() {
+async function getAllReportBasedOnUser(pageData) {
   //   let params = ID ? "?state_id=" + ID : "";
-  return await api.get(`reports/?page=1&page_size=100`, {
-    headers: authHeader(),
-  });
+  return await api.get(
+    `reports/?page=${pageData?.pagination?.page || 1}&page_size=${
+      pageData?.pagination?.pageSize || 3000
+    }`,
+    {
+      headers: authHeader(),
+    }
+  );
 }
 
 async function getReportByID(id) {

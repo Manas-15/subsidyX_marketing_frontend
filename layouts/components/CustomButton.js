@@ -83,3 +83,37 @@ export const FilterButton = ({ name }) => {
     </>
   );
 };
+
+export const PaginationDropdown = ({
+  pageSize,
+  setPageSize,
+  pageSizeOptions,
+}) => {
+  return (
+    <>
+      <Dropdown>
+        <Dropdown.Toggle
+          variant="light"
+          id="dropdown-basic"
+          className={styles.custom_toggle}
+        >
+          {pageSize}
+          {"  "}
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu className={styles.custom_menu}>
+          {pageSizeOptions?.map((p) => (
+            <Dropdown.Item
+              key={p}
+              onClick={() => {
+                setPageSize(p);
+              }}
+            >
+              {p}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+    </>
+  );
+};

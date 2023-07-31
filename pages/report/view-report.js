@@ -146,31 +146,33 @@ function ViewReport({ data, setModalShow }) {
               </div>
             </div>
           </div>
-          <div className={`mt-4 mb-3 ${styles.report_tablee}`}>
-            <div className="py-3">
-              <div className="d-flex justify-content-between mx-5 ">
-                <h4>User Inputs</h4>
-              </div>
-              <div className="row mt-4 mx-5">
-                {viewReport?.result?.map((question, idx) => {
-                  return (
-                    <div key={idx} className="col-sm-3 d-flex flex-column">
-                      <h6>
-                        {question?.question_display_name
-                          ? question?.question_display_name
-                          : question?.question_name}
-                      </h6>
-                      <p>{question?.answer}</p>
-                    </div>
-                  );
-                })}
+          {viewReport?.result?.length > 0 && (
+            <div className={`mt-4 mb-3 ${styles.report_tablee}`}>
+              <div className="py-3">
+                <div className="d-flex justify-content-between mx-5 ">
+                  <h4>User Inputs</h4>
+                </div>
+                <div className="row mt-4 mx-5">
+                  {viewReport?.result?.map((question, idx) => {
+                    return (
+                      <div key={idx} className="col-sm-3 d-flex flex-column">
+                        <h6>
+                          {question?.question_display_name
+                            ? question?.question_display_name
+                            : question?.question_name}
+                        </h6>
+                        <p>{question?.answer}</p>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {viewReport?.info?.is_paid === false && (
             <div
-              className="d-flex justify-content-end mb-5"
+              className="d-flex justify-content-end mt-4 mb-5"
               style={{ marginRight: "20px" }}
             >
               <CustomButton

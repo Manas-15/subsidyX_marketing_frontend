@@ -48,8 +48,16 @@ function generateOTP(credential) {
     userService.generateOTP(credential).then(
       (res) => {
         dispatch(success(res));
-        dispatch(userActions?.saveOTP(res?.data));
-        dispatch(alertActions.success("OTP sent successfully"));
+        if (res?.data?.detail?.error_msg !== undefined) {
+          dispatch(userActions?.saveOTP(res?.data));
+          dispatch(
+            alertActions.error(res?.data?.detail?.error_msg?.toString())
+          );
+        } else {
+          console.log(res?.data);
+          dispatch(userActions?.saveOTP(res?.data));
+          dispatch(alertActions.success("OTP sent successfully"));
+        }
       },
       (error) => {
         dispatch(failure(error.toString()));

@@ -9,7 +9,6 @@ import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 import { useDispatch } from "react-redux";
 import { CongratulationsModal } from "@layouts/components/Modal";
 
-
 const Dashboard = ({ data }) => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -20,7 +19,6 @@ const Dashboard = ({ data }) => {
   const [type, setType] = useState("");
   const [validateAadhar, setValidateAadhar] = useState();
   const { edit } = router?.query;
-  console.log(edit);
   const handleRadioClick = (e) => {
     setSelectedRadioButton(e.target.value);
   };

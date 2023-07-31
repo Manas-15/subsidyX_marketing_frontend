@@ -18,6 +18,9 @@ const catData = [{ 1: [11, 12, 13] }, { 2: [14, 15, 16] }, { 3: [17, 18, 1] }];
 const QuestionAfterEligible = ({ data }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const subsidyData = useSelector((state) => state?.eligibleSubsidy);
+  const subsidiesList = subsidyData?.eligible_subsidy?.subsidies;
+  const question = subsidyData?.eligible_subsidy;
 
   const [checkedValue, setCheckedValue] = useState("");
   const [selectedOptions, setSelectedOptions] = useState({
@@ -39,14 +42,15 @@ const QuestionAfterEligible = ({ data }) => {
     taluka: "",
   });
   const [subsidyItems, setSubsidyItems] = useState();
+  const [questionData, setQuestionData] = useState();
 
   const allDistricts = useSelector((state) => state?.district);
   const allTalukas = useSelector((state) => state?.taluka);
-  const subsidyData = useSelector((state) => state?.eligibleSubsidy);
-  const questionData = subsidyData?.eligible_subsidy;
-  const subsidiesList = subsidyData?.eligible_subsidy?.subsidies;
+  const [prevQueCount, setPrevQueCount] = useState(0);
 
   // console.log(Object.keys(questionData?.question).length === true);
+
+  console.log(questionData);
 
   useEffect(() => {
     if (subsidyData?.selected_data?.user_info?.state_id) {
@@ -60,12 +64,23 @@ const QuestionAfterEligible = ({ data }) => {
   }, []);
 
   useEffect(() => {
-    const questionCount =
-      Object.keys(questionData?.question) !== undefined ||
-      Object.keys(questionData?.question) !== null
-        ? Object.keys(questionData?.question)?.length
-        : null;
-    console.log(questionCount);
+    setQuestionData(question?.question);
+  }, [question]);
+
+  useEffect(() => {
+    let questionCount = null;
+    if (question?.question !== undefined && question?.question !== null) {
+      questionCount = Object.keys(question.question).length;
+    }
+
+    if (
+      question?.previous_question !== undefined &&
+      question?.previous_question !== null
+    ) {
+      const queCount = Object.keys(question?.previous_question).length;
+      setPrevQueCount(queCount);
+    }
+
     if (questionCount === 0) {
       // setModalShow(true);
       setType("noQuestion");
@@ -112,33 +127,39 @@ const QuestionAfterEligible = ({ data }) => {
     setNext(true);
   };
 
-  //377
+  const goToPrev = () => {
+    if (prevQueCount > 0) {
+      setQuestionData(question?.previous_question);
+    }
+  };
+
   const goToNext = () => {
-    if (questionData?.question?.field_type_id === 3) {
+    if (questionData?.field_type_id === 3) {
       setSelectedOptions({ name: "", value: "" });
     }
     const user_info = subsidyData?.selected_data?.user_info;
     const datas = {
       user_info,
       response: {
-        question_id: questionData?.question?.id,
+        question_id: questionData?.id,
         option_id:
-          selectedOptions?.value !== "" ? parseInt(selectedOptions?.name) : 0,
+          selectedOptions?.value !== "" ? parseInt(selectedOptions?.value) : 0,
         response:
-          selectedOptions?.value !== ""
-            ? selectedOptions?.value
+          selectedOptions?.name !== ""
+            ? selectedOptions?.name
             : inputValue !== ""
             ? inputValue
             : checkedValue !== ""
             ? checkedValue
             : "",
-        subscheme_id: questionData?.question?.subscheme_id,
-        subsidy_id: questionData?.question?.subsidy_id,
+        subscheme_id: questionData?.subscheme_id,
+        subsidy_id: questionData?.subsidy_id,
         taluka_id: allTalukas?.selected_data?.taluka,
         district_id: allTalukas?.selected_data?.district,
       },
-      report_id: questionData?.report_id,
+      report_id: question?.report_id,
     };
+    // console.log(datas);
     dispatch(eligibleSubsidyAction.getEligible(datas));
     setInputValue("");
   };
@@ -146,12 +167,26 @@ const QuestionAfterEligible = ({ data }) => {
   const handleChange = (e) => {
     setInputValue(e.target.value);
   };
+  useEffect(() => {
+    if (questionData?.field_type_id === 1) {
+      setInputValue(questionData?.user_response);
+    } else if (questionData?.field_type_id === 2) {
+      console.log("22222222");
+    } else {
+      setSelectedOptions({
+        name: questionData?.user_response,
+        value: questionData?.user_response_id,
+      });
+    }
+  }, [questionData?.user_response]);
+
+  // console.log(selectedOptions);
 
   const handleSelectAnswer = (e) => {
     const selectedOption = e.target.options[e.target.selectedIndex];
     setSelectedOptions({
-      name: e.target.value,
-      value: selectedOption?.text,
+      name: selectedOption?.text,
+      value: parseInt(e.target.value),
     });
   };
 
@@ -232,14 +267,14 @@ const QuestionAfterEligible = ({ data }) => {
                 <div className="col-sm-12">
                   <div className="d-flex justify-content-center m-5">
                     <h3 className="fw-bold">
-                      {questionData?.question?.name
-                        ? questionData?.question?.name
+                      {questionData?.name
+                        ? questionData?.name
                         : "No question available"}
                     </h3>
                   </div>
                   <div style={{ margin: "auto", width: "300px" }}>
                     <div className="d-flex justify-content-center flex-column">
-                      {questionData?.question?.field_type_id === 1 && (
+                      {questionData?.field_type_id === 1 && (
                         <Form>
                           <Form.Group
                             className="mb-3"
@@ -257,7 +292,7 @@ const QuestionAfterEligible = ({ data }) => {
                         </Form>
                       )}
 
-                      {questionData?.question?.field_type_id === 2 && (
+                      {questionData?.field_type_id === 2 && (
                         <>
                           <div className="d-flex justify-content-center">
                             <input
@@ -293,29 +328,32 @@ const QuestionAfterEligible = ({ data }) => {
                         </>
                       )}
 
-                      {questionData?.question?.field_type_id === 3 && (
+                      {questionData?.field_type_id === 3 && (
                         <select
                           className="form-control"
                           onChange={(e) => handleSelectAnswer(e)}
-                          value={selectedOptions.name}
+                          value={selectedOptions.value}
                         >
                           <option value="none">Please Select</option>
-                          {questionData?.question?.options?.map(
-                            (opt, index) => (
-                              <option key={index} value={opt.id}>
-                                {opt.option}
-                              </option>
-                            )
-                          )}
+                          {questionData?.options?.map((opt, index) => (
+                            <option key={index} value={opt.id}>
+                              {opt.option}
+                            </option>
+                          ))}
                         </select>
                       )}
                     </div>
+                    {console.log(prevQueCount)}
 
                     <div className="mt-4 d-flex justify-content-center">
-                      {/* <IoIosArrowDropleft
-                      style={{ fontSize: "50px", color: "#fa6130" }}
-                      onClick={(e) => goToPrev(e)}
-                    /> */}
+                      {prevQueCount !== 0 && (
+                        <IoIosArrowDropleft
+                          style={{ fontSize: "50px", color: "#fa6130" }}
+                          onClick={(e) => goToPrev(e)}
+                          disabled={true}
+                        />
+                      )}
+
                       <IoIosArrowDropright
                         style={{
                           fontSize: "50px",

@@ -15,7 +15,7 @@ const sideBarItems = [
   {
     name: "Report Management",
     href: "/report/all-report-list",
-    icon: TbReportAnalytics,
+    icon: "/images/report (1).png",
   },
 ];
 
@@ -83,7 +83,7 @@ const Sidebar = () => {
               <li className="sidebar_item" key={index}>
                 <Link className="sidebar_link" href={href}>
                   <span className="sidebar_icon">
-                    <Icon size="30px" color="#fa6130" />
+                    <Image src={Icon} alt="My Image" width={20} height={20} />
                   </span>
                   <span className="sidebar_name ">{name}</span>
                 </Link>

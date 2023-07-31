@@ -132,7 +132,14 @@ const Signup = ({ data }) => {
       noindex={"noindex"}
       canonical={"canonical"}
     >
-      <section className="section bg-inner">
+      <section
+        className="section bg-inner"
+        style={{
+          backgroundColor: "#262555",
+          height: "100vh",
+          overflow: "hidden",
+        }}
+      >
         <div className="container">
           <div className="section row pb-0">
             <div className="col-12 inner-section">
