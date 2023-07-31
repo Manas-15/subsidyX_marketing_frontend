@@ -118,8 +118,12 @@ a:focus {
   background-color: #fa6130 !important;
 }
 a:hover {
-  background-color: #fa6130;
+  background-color: #3d3c5d;
   color: #ffffff;
+}
+.navbar-brand {
+  margin-right: 0 !important;
+  padding-right: 1rem !important;
 }
 .sidebar_icon {
   font-size: 1.2rem;
@@ -164,6 +168,11 @@ a:hover {
   padding: 50px 20px;
   color: #fff;
 }
+.cmn_h3_heading {
+  font-family: "Poppins";
+  font-size: 1.2rem;
+  text-align: left;
+}
 .cmn_h2_heading {
   font-family: "Poppins";
   font-size: 34px;
@@ -193,7 +202,7 @@ a:hover {
   padding: 3px 15px;
   font-size: 22px;
   font-weight: 600;
-  background: #fa6130;
+  background: #21204c;
   border: 2px solid #fa6130;
 }
 .btn.lo_ck_btn {
