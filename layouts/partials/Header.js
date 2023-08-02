@@ -126,20 +126,20 @@ const Header = () => {
                       className="btn log_btn"
                       id="dropdown-basic"
                     >
-                      {/* <Image
-                        src="/images/user.png"
-                        height="50"
-                        width="50"
+                      <Image
+                        src="/images/user1.png"
+                        height="25"
+                        width="28"
                         alt="logo"
-                      /> */}
-                      <FaRegUserCircle
+                      />
+                      {/* <FaRegUserCircle
                         style={{
                           fontSize: "25px",
 
                           cursor: "pointer",
                           marginRight: "10px",
                         }}
-                      />
+                      /> */}
                       {user?.user_details?.first_name}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Spin } from "antd";
+import Image from "next/image";
 
 export const Loader = () => (
   // <div className="example">
@@ -24,7 +25,8 @@ export const Loader = () => (
         transform: 'translate("-50%","-50%")',
       }}
     >
-      <Spin
+      <Image src="/images/loader.gif" height="90" width="90" alt="logo" />
+      {/* <Spin
         size="large"
         tip="Loading..."
         style={{
@@ -34,7 +36,7 @@ export const Loader = () => (
           borderWidth: "12px",
         }}
         animation="border"
-      />
+      /> */}
       {/* <Spinner
         size="lg"
         style={{
