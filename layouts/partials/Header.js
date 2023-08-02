@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/Actions/userAction";
 import { Dropdown } from "react-bootstrap";
 import { AiOutlineLogout } from "react-icons/ai";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const Header = () => {
   //router
@@ -125,6 +126,20 @@ const Header = () => {
                       className="btn log_btn"
                       id="dropdown-basic"
                     >
+                      {/* <Image
+                        src="/images/user.png"
+                        height="50"
+                        width="50"
+                        alt="logo"
+                      /> */}
+                      <FaRegUserCircle
+                        style={{
+                          fontSize: "25px",
+
+                          cursor: "pointer",
+                          marginRight: "10px",
+                        }}
+                      />
                       {user?.user_details?.first_name}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>

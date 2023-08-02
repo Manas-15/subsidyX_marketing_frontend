@@ -7,7 +7,7 @@ body {
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
   height: 100%;
-  /* background: #262555 !important; */
+  background: #f0eaff !important;
 }
 a {
   color: inherit;
@@ -29,6 +29,9 @@ td {
   font-size: 14px;
   line-height: 21px;
   color: #04032b;
+}
+.generate_pdf:hover a {
+  background-color: unset !important;
 }
 
 /* For sidebar Start */

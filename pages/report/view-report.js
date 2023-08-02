@@ -23,12 +23,20 @@ function ViewReport({ data, setModalShow }) {
   // const router = useRouter();
   // const dispatch = useDispatch();
 
-  const date = new Date();
-  const formattedDate = date.toLocaleDateString("en-US", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  // const date = new Date();
+  // const formattedDate = date.toLocaleDateString("en-US", {
+  //   day: "2-digit",
+  //   month: "2-digit",
+  //   year: "numeric",
+  // });
+
+  const date = new Date(); // Replace this with your date variable
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+
+  const formattedDate = `${day}-${month}-${year}`;
 
   const subsidyReports = useSelector((state) => state?.eligibleSubsidy);
   const district_taluka_name = useSelector((state) => state?.taluka);
@@ -123,7 +131,11 @@ function ViewReport({ data, setModalShow }) {
                 </div>
                 <div className="col-sm-3 d-flex flex-column">
                   <h6>Created Date</h6>
-                  <p>{formattedDate}</p>
+                  <p>
+                    {new Date(viewReport?.info?.dt_created)
+                      ?.toLocaleDateString("en-GB")
+                      .replace(/\//g, "-")}
+                  </p>
                 </div>
               </div>
               <div className="row mt-4 mx-5">
@@ -137,11 +149,11 @@ function ViewReport({ data, setModalShow }) {
                 </div>
                 <div className="col-sm-3 d-flex flex-column">
                   <h6>Company Name</h6>
-                  <p>ABC</p>
+                  <p>{viewReport?.info?.company_name}</p>
                 </div>
                 <div className="col-sm-3 d-flex flex-column">
                   <h6>Created By</h6>
-                  <p>super admin</p>
+                  <p>{viewReport?.info?.owner_name}</p>
                 </div>
               </div>
             </div>

@@ -31,12 +31,19 @@ const actions = [
 const AllReportLists = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const date = new Date();
-  const formattedDate = date.toLocaleDateString("en-US", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  // const date = new Date();
+  // const formattedDate = date.toLocaleDateString("en-US", {
+  //   day: "2-digit",
+  //   month: "2-digit",
+  //   year: "numeric",
+  // });
+  const date = new Date(); // Replace this with your date variable
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+
+  const formattedDate = `${day}-${month}-${year}`;
 
   const [modalShow, setModalShow] = useState(false);
   const [type, setType] = useState("");
@@ -177,6 +184,9 @@ const AllReportLists = () => {
                     Created date
                   </th>
                   <th className="p-4" scope="col">
+                    Created by
+                  </th>
+                  <th className="p-4" scope="col">
                     Category
                   </th>
                   <th className="p-4" scope="col">
@@ -188,19 +198,36 @@ const AllReportLists = () => {
               <tbody>
                 {allReportLists?.allReports?.result
                   ?.filter((x) =>
-                    x?.industry_category_name
-                      ?.toLowerCase()
-                      .includes(search.toLowerCase())
+                    x?.industry_category_name !== null
+                      ? x?.industry_category_name
+                          .toLowerCase()
+                          .includes(search.toLowerCase())
+                      : true
                   )
                   .map((data, index) => {
                     return (
                       <tr className="text-center" key={index}>
-                        <th scope="row">#{data?.id}</th>
-                        <td> - </td>
-                        <td> - </td>
-                        <td>{formattedDate}</td>
-                        <td scope="col"> {data?.industry_category_name} </td>
-                        <td>
+                        <th scope="col">#{data?.id}</th>
+                        <td scope="col">
+                          {data?.company_name !== null
+                            ? data?.company_name
+                            : "-"}
+                        </td>
+                        <td scope="col">
+                          {data?.owner_name !== null ? data?.owner_name : "-"}
+                        </td>
+                        <td scope="col">
+                          {new Date(data?.dt_created)
+                            ?.toLocaleDateString("en-GB")
+                            .replace(/\//g, "-")}
+                        </td>
+                        <td scope="col">{data?.user_username}</td>
+                        <td scope="col">
+                          {data?.industry_category_name !== null
+                            ? data?.industry_category_name
+                            : "-"}
+                        </td>
+                        <td scope="col">
                           <ul className="d-flex justify-content-center">
                             {actions?.map(({ icon: Icon }, idx) => {
                               return (
