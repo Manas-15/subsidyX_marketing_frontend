@@ -194,14 +194,11 @@ const AllReportLists = () => {
                   </th>
                 </tr>
               </thead>
-              {console.log(allReportLists?.allReports?.result)}
               <tbody>
                 {allReportLists?.allReports?.result
                   ?.filter((x) =>
-                    x?.industry_category_name !== null
-                      ? x?.industry_category_name
-                          .toLowerCase()
-                          .includes(search.toLowerCase())
+                    x?.id !== null
+                      ? x?.id?.toString()?.includes(search.toLowerCase())
                       : true
                   )
                   .map((data, index) => {

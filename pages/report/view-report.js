@@ -123,11 +123,19 @@ function ViewReport({ data, setModalShow }) {
                 </div>
                 <div className="col-sm-3 d-flex flex-column">
                   <h6>Category</h6>
-                  <p>{viewReport?.info?.industry_category_name}</p>
+                  <p>
+                    {viewReport?.info?.industry_category_name !== null
+                      ? viewReport?.info?.industry_category_name
+                      : "-"}
+                  </p>
                 </div>
                 <div className="col-sm-3 d-flex flex-column">
                   <h6>Sector</h6>
-                  <p>{viewReport?.info?.industry_sector_name}</p>
+                  <p>
+                    {viewReport?.info?.industry_sector_name !== null
+                      ? viewReport?.info?.industry_sector_name
+                      : "-"}
+                  </p>
                 </div>
                 <div className="col-sm-3 d-flex flex-column">
                   <h6>Created Date</h6>
@@ -141,19 +149,35 @@ function ViewReport({ data, setModalShow }) {
               <div className="row mt-4 mx-5">
                 <div className="col-sm-3 d-flex flex-column">
                   <h6>State</h6>
-                  <p>{viewReport?.info?.state_name}</p>
+                  <p>
+                    {viewReport?.info?.state_name !== null
+                      ? viewReport?.info?.state_name
+                      : "-"}
+                  </p>
                 </div>
                 <div className="col-sm-3 d-flex flex-column">
                   <h6>Taluka</h6>
-                  <p>{viewReport?.info?.taluka_name}</p>
+                  <p>
+                    {viewReport?.info?.taluka_name !== null
+                      ? viewReport?.info?.taluka_name
+                      : "-"}
+                  </p>
                 </div>
                 <div className="col-sm-3 d-flex flex-column">
                   <h6>Company Name</h6>
-                  <p>{viewReport?.info?.company_name}</p>
+                  <p>
+                    {viewReport?.info?.company_name !== null
+                      ? viewReport?.info?.company_name
+                      : "-"}
+                  </p>
                 </div>
                 <div className="col-sm-3 d-flex flex-column">
                   <h6>Created By</h6>
-                  <p>{viewReport?.info?.owner_name}</p>
+                  <p>
+                    {viewReport?.info?.owner_name !== null
+                      ? viewReport?.info?.owner_name
+                      : "-"}
+                  </p>
                 </div>
               </div>
             </div>

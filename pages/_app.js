@@ -5,10 +5,12 @@ import { Provider } from "react-redux";
 import { store } from "redux/Store";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { Loader } from "@layouts/components/Loader";
 
 const App = ({ Component, pageProps }) => {
   const router = useRouter();
   const [showChild, setShowChild] = useState(false);
+    const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const pathName = router?.pathname
@@ -29,6 +31,29 @@ const App = ({ Component, pageProps }) => {
   useEffect(() => {
     setShowChild(true);
   }, []);
+
+   useEffect(() => {
+     const handleStart = (url) => {
+       // Show the loader when navigation starts
+       setLoading(true);
+     };
+
+     const handleComplete = (url) => {
+       // Hide the loader when navigation is complete
+       setLoading(false);
+     };
+
+     router.events.on("routeChangeStart", handleStart);
+     router.events.on("routeChangeComplete", handleComplete);
+     router.events.on("routeChangeError", handleComplete);
+
+     // Clean up the event listeners when the component unmounts
+     return () => {
+       router.events.off("routeChangeStart", handleStart);
+       router.events.off("routeChangeComplete", handleComplete);
+       router.events.off("routeChangeError", handleComplete);
+     };
+   }, []);
 
   if (!showChild) {
     return null;
@@ -54,6 +79,7 @@ const App = ({ Component, pageProps }) => {
               content="width=device-width, initial-scale=1, maximum-scale=5"
             />
           </Head>
+          {loading && <Loader />}
           <Component {...pageProps} />
         </Provider>
       </>
