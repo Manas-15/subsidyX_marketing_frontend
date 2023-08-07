@@ -28,24 +28,22 @@ const Dashboard = ({ data }) => {
     (state) => state?.eligibleSubsidy?.eligible_subsidy
   );
   console.log(eligibleSubsidy);
+  console.log(gstNumberData);
+
   useEffect(() => {
-    // const data = {
-    //   user_info: {
-    //     mobile_number: 9784596522,
-    //     state_id: gstNumberData?.state_id,
-    //     industry_category_id: gstNumberData?.industry_category_id,
-    //     industry_sector_id: gstNumberData?.industry_sector_id,
-    //   },
-    // };
     const data = {
       user_info: {
         mobile_number: 9784596522,
-        state_id: 12,
-        industry_category_id: 18,
-        industry_sector_id: 0,
+        state_id:
+          gstNumberData?.state_id !== undefined ? gstNumberData?.state_id : 0,
+        industry_category_id:
+          gstNumberData?.industry_id > 0 ? gstNumberData?.industry_id?.[0] : 0,
+        industry_sector_id:
+          gstNumberData?.industry_sector_id !== undefined
+            ? gstNumberData?.industry_sector_id
+            : 0,
       },
     };
-
     if (gstData && data) {
       console.log("GET ELIGIBLE");
       dispatch(eligibleSubsidyAction.getEligible(data));
@@ -53,13 +51,14 @@ const Dashboard = ({ data }) => {
       setModalShow(true);
       setType("gst");
     }
-  }, [gstNumberData?.state, gstData]);
+  }, [gstNumberData?.state_id, gstData]);
 
   const handleRadioClick = (e) => {
     setSelectedRadioButton(e.target.value);
   };
 
   const goToNext = () => {
+    console.log("Next CALLING");
     setNext(true);
     if (gstNumber !== "") {
       setGstData(true);
@@ -93,6 +92,7 @@ const Dashboard = ({ data }) => {
       <section className="section">
         <div className="container">
           <div className="section row pb-0">
+            {console.log(modalShow, selectedRadioButton === "1", next)}
             {modalShow && selectedRadioButton === "1" && next && (
               <CongratulationsModal
                 type={type}
@@ -102,6 +102,7 @@ const Dashboard = ({ data }) => {
                 setModalShow={setModalShow}
                 onHide={() => setModalShow(false)}
                 setNext={setNext}
+                setGstData={setGstData}
                 setGSTNumber={setGSTNumber}
                 setSelectedRadioButton={setSelectedRadioButton}
               />

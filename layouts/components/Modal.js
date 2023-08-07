@@ -18,6 +18,7 @@ export const CongratulationsModal = (props) => {
     (subsidy, ind) => subsidy.is_central === false
   ).length;
 
+  console.log(isCentral, isState);
   const submitModal = () => {
     props.setModalShow(false);
     router.push("/questions-after-eligible");
@@ -41,11 +42,20 @@ export const CongratulationsModal = (props) => {
 
   const handleNO = () => {
     props.setModalShow(false);
+    props.setNext(true);
+    props.setSelectedRadioButton("2");
+    router.push("/dashboard");
+    dispatch(eligibleSubsidyAction.clearEligible());
+  };
+
+  const handleGstNO = () => {
+    props.setModalShow(false);
     if (props?.type === "gst") {
       props.setGSTNumber("");
     }
+    props.setGstData(false);
     props.setNext(true);
-    props.setSelectedRadioButton("2");
+    props.setSelectedRadioButton("1");
     router.push("/dashboard");
     dispatch(eligibleSubsidyAction.clearEligible());
   };
@@ -57,8 +67,6 @@ export const CongratulationsModal = (props) => {
 
   const generateReport = () => {
     console.log("111111111111111111111111");
-    // dispatch(reportManagementAction?.getReportByID(props?.action));
-    // router.push("/report/confirm-report");
   };
   return (
     <>
@@ -82,6 +90,8 @@ export const CongratulationsModal = (props) => {
               <h3> Warning!! </h3>
             ) : props?.type === "success" ? (
               <h3> Success!! </h3>
+            ) : isCentral === undefined && isState === undefined ? (
+              <h3> Warning!! </h3>
             ) : (
               <h3> Congratulations!! </h3>
             )}
@@ -115,12 +125,14 @@ export const CongratulationsModal = (props) => {
                     subsidies applicable to you <br />
                     from Central Government.
                   </>
-                ) : (
+                ) : isState > 0 ? (
                   <>
                     Based on information provided there are {isState} subsidies
                     applicable to you <br />
                     from Government of Gujurat.
                   </>
+                ) : (
+                  <>No Subsidy matched based on your inputs</>
                 )}
               </span>
             )}
@@ -154,6 +166,18 @@ export const CongratulationsModal = (props) => {
                   bgColor="#FA6130"
                   onClick={() => handleOK()}
                 />
+              ) : isCentral === undefined && isState === undefined ? (
+                <>
+                  {" "}
+                  <CustomButton
+                    name="Cancel"
+                    color="#000000"
+                    width="100px"
+                    bgColor="#FFFFFF"
+                    border="1px solid #000000"
+                    onClick={() => handleGstNO()}
+                  />
+                </>
               ) : (
                 <>
                   <CustomButton
@@ -163,14 +187,25 @@ export const CongratulationsModal = (props) => {
                     bgColor="#FA6130"
                     onClick={() => submitModal()}
                   />
-                  <CustomButton
-                    name="NO"
-                    color="#000000"
-                    width="100px"
-                    bgColor="#FFFFFF"
-                    border="1px solid #000000"
-                    onClick={() => handleNO()}
-                  />
+                  {props?.type === "gst" ? (
+                    <CustomButton
+                      name="NO"
+                      color="#000000"
+                      width="100px"
+                      bgColor="#FFFFFF"
+                      border="1px solid #000000"
+                      onClick={() => handleGstNO()}
+                    />
+                  ) : (
+                    <CustomButton
+                      name="NO"
+                      color="#000000"
+                      width="100px"
+                      bgColor="#FFFFFF"
+                      border="1px solid #000000"
+                      onClick={() => handleNO()}
+                    />
+                  )}
                 </>
               )}
               {/* <CustomButton
