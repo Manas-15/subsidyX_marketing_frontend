@@ -7,7 +7,7 @@ export const eligibleSubsidyAction = {
   clearEligible,
   selectedDataForEligibleSubsidy,
   selectedInformationForEligibleSubsidy,
-  savedAadharNumber,
+  getDetailsOfGST,
 };
 
 function getEligible(data) {
@@ -75,17 +75,36 @@ function selectedInformationForEligibleSubsidy(data) {
   }
 }
 
-function savedAadharNumber(data) {
+function getDetailsOfGST(gstNumber) {
   return (dispatch) => {
-    dispatch(savedAadharNumber(data));
+    dispatch(request(gstNumber));
+    eligibleSubsidyService.getDetailsOfGST(gstNumber).then(
+      (res) => {
+        dispatch(success(res));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
   };
 
-  function savedAadharNumber(data) {
+  function request(gstNumber) {
+    return {
+      type: eligibleSubsidyConstant.SAVED_AADHAR_NUMBER_REQUEST,
+      gstNumber,
+    };
+  }
+  function success(data) {
     return {
       type: eligibleSubsidyConstant.SAVED_AADHAR_NUMBER_SUCCESS,
       data,
     };
   }
+  function failure(error) {
+    return {
+      type: eligibleSubsidyConstant.SAVED_AADHAR_NUMBER_FAILURE,
+      error,
+    };
+  }
 }
-
-

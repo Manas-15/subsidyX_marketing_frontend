@@ -4,6 +4,7 @@ import { alertActions } from "./alertAction";
 
 export const userActions = {
   signup,
+  clearSignup,
   login,
   logout,
   userReportCount,
@@ -20,12 +21,17 @@ function signup(data) {
       (res) => {
         dispatch(success(res));
         console.log(res);
-        const result = JSON.stringify(res?.data?.token?.access_token);
-        localStorage.setItem("accessToken", result);
-        dispatch(alertActions.success("User Signup successfully"));
+        if (res?.data?.detail?.error_msg) {
+          dispatch(
+            alertActions.success(res?.data?.detail?.error_msg?.toString())
+          );
+        } else {
+          dispatch(alertActions.success("User Signup successfully"));
+        }
+        // const result = JSON.stringify(res?.data?.token?.access_token);
+        // localStorage.setItem("accessToken", result);
       },
       (error) => {
-        console.log("SIGNupppppppppppppppppppppp", error.toString());
         dispatch(failure(error.toString()));
         dispatch(alertActions.error(error.toString()));
       }
@@ -40,6 +46,10 @@ function signup(data) {
   function failure(error) {
     return { type: userConstants.USER_SIGNUP_FAILURE, error };
   }
+}
+
+function clearSignup() {
+  return { type: userConstants.CLEAR_SIGN_UP };
 }
 
 function generateOTP(credential) {
@@ -102,7 +112,7 @@ function validateOtp(data) {
       (res) => {
         dispatch(success(res));
         console.log(res);
-        if (res?.data?.detail) {
+        if (res?.data?.detail?.error_msg) {
           dispatch(
             alertActions.error(res?.data?.detail?.error_msg?.toString())
           );

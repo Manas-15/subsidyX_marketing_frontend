@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { IoIosArrowDropright } from "react-icons/io";
 import EligibleSubsidy from "@layouts/components/eligibleSubsidy";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CongratulationsModal } from "@layouts/components/Modal";
 
 const Dashboard = ({ data }) => {
@@ -14,21 +14,57 @@ const Dashboard = ({ data }) => {
   const router = useRouter();
   const [next, setNext] = useState(false);
   const [selectedRadioButton, setSelectedRadioButton] = useState(0);
-  const [aadharNumber, setAadharNumber] = useState("");
+  const [gstNumber, setGSTNumber] = useState("");
   const [modalShow, setModalShow] = useState(false);
+  const [gstData, setGstData] = useState(false);
   const [type, setType] = useState("");
   const [validateAadhar, setValidateAadhar] = useState();
   const { edit } = router?.query;
+
+  const gstNumberData = useSelector(
+    (state) => state?.eligibleSubsidy?.gst_number_data
+  );
+  const eligibleSubsidy = useSelector(
+    (state) => state?.eligibleSubsidy?.eligible_subsidy
+  );
+  console.log(eligibleSubsidy);
+  useEffect(() => {
+    // const data = {
+    //   user_info: {
+    //     mobile_number: 9784596522,
+    //     state_id: gstNumberData?.state_id,
+    //     industry_category_id: gstNumberData?.industry_category_id,
+    //     industry_sector_id: gstNumberData?.industry_sector_id,
+    //   },
+    // };
+    const data = {
+      user_info: {
+        mobile_number: 9784596522,
+        state_id: 12,
+        industry_category_id: 18,
+        industry_sector_id: 0,
+      },
+    };
+
+    if (gstData && data) {
+      console.log("GET ELIGIBLE");
+      dispatch(eligibleSubsidyAction.getEligible(data));
+      dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
+      setModalShow(true);
+      setType("gst");
+    }
+  }, [gstNumberData?.state, gstData]);
+
   const handleRadioClick = (e) => {
     setSelectedRadioButton(e.target.value);
   };
 
   const goToNext = () => {
     setNext(true);
-    if (aadharNumber !== "") {
-      setModalShow(true);
-      setType("success");
-      dispatch(eligibleSubsidyAction.savedAadharNumber(aadharNumber));
+    if (gstNumber !== "") {
+      setGstData(true);
+      console.log("GST API CALLING");
+      dispatch(eligibleSubsidyAction.getDetailsOfGST(gstNumber));
     }
   };
 
@@ -39,7 +75,7 @@ const Dashboard = ({ data }) => {
     const str = e.target.value;
     if (regex.test(str) == true) {
       setValidateAadhar(false);
-      setAadharNumber(e.target.value);
+      setGSTNumber(e.target.value);
     } else {
       setValidateAadhar(true);
     }
@@ -61,12 +97,12 @@ const Dashboard = ({ data }) => {
               <CongratulationsModal
                 type={type}
                 setType={setType}
-                // action={eligibleSubsidy}
+                action={eligibleSubsidy}
                 show={modalShow}
                 setModalShow={setModalShow}
                 onHide={() => setModalShow(false)}
                 setNext={setNext}
-                setAadharNumber={setAadharNumber}
+                setGSTNumber={setGSTNumber}
                 setSelectedRadioButton={setSelectedRadioButton}
               />
             )}
@@ -93,10 +129,12 @@ const Dashboard = ({ data }) => {
                           onChange={(e) => handleChange(e)}
                         />
                         {validateAadhar === false && (
-                          <p className="text-success">GST number verified</p>
+                          <p className="text-success mt-1">
+                            GST number verified
+                          </p>
                         )}
                         {validateAadhar === true && (
-                          <p className="text-danger">
+                          <p className="text-danger mt-1">
                             Please enter valid GST Number
                           </p>
                         )}

@@ -26,6 +26,20 @@ const Signup = ({ data }) => {
   });
 
   const user = useSelector((state) => state?.user);
+  console.log(user?.sign_up_user);
+
+  useEffect(() => {
+    if (
+      user?.sign_up_user?.detail?.error_msg ===
+      "Email or phone_number already exist"
+    ) {
+      router.push("/signup");
+    } else if (user?.sign_up_user) {
+      router.push("/login");
+    } else {
+      router.push("/signup");
+    }
+  }, [user?.sign_up_user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -86,6 +100,7 @@ const Signup = ({ data }) => {
         password: credential?.password,
       };
       dispatch(userActions.signup(signupData));
+      console.log("Signup calling");
     }
 
     setCredential({
@@ -97,31 +112,27 @@ const Signup = ({ data }) => {
     });
   };
 
-  const accessToken = useMemo(
-    () => user?.user?.access_token,
-    [user?.user?.access_token]
-  );
+  // const accessToken = useMemo(
+  //   () => user?.user?.access_token,
+  //   [user?.user?.access_token]
+  // );
 
-  useEffect(() => {
-    if (accessToken !== undefined) {
-      try {
-        const decodedToken = jwt.decode(accessToken);
-        // if (decodedToken?.report_count > 0) {
-        //   dispatch(userActions?.userReportCount(decodedToken));
-        //   router.push("/report/all-report-list");
-        // } else {
-        dispatch(userActions?.userReportCount(decodedToken));
-        router.push("/login");
-        // }
-      } catch (error) {
-        console.log("Error decoding access token:", error);
-        return null;
-      }
-    } else {
-      router.push("/signup");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.user?.access_token]);
+  // useEffect(() => {
+  //   if (accessToken !== undefined) {
+  //     try {
+  //       // const decodedToken = jwt.decode(accessToken);
+  //       // dispatch(userActions?.userReportCount(decodedToken));
+  //       router.push("/login");
+  //       // }
+  //     } catch (error) {
+  //       console.log("Error decoding access token:", error);
+  //       return null;
+  //     }
+  //   } else {
+  //     router.push("/signup");
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [user?.user?.access_token]);
 
   return (
     <Base
@@ -155,6 +166,7 @@ const Signup = ({ data }) => {
                       <input
                         type="text"
                         name="firstName"
+                        value={credential?.firstName}
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="First Name"
@@ -165,10 +177,12 @@ const Signup = ({ data }) => {
                         </span>
                       )}
                     </div>
+
                     <div className="form-floating mb-3  col-sm-6">
                       <input
                         type="text"
                         name="lastName"
+                        value={credential?.lastName}
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Last Name"
@@ -185,6 +199,7 @@ const Signup = ({ data }) => {
                       <input
                         type="email"
                         name="email"
+                        value={credential?.email}
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Email"
@@ -199,6 +214,7 @@ const Signup = ({ data }) => {
                       <input
                         type="number"
                         name="number"
+                        value={credential?.number}
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Phone Number"
@@ -215,6 +231,7 @@ const Signup = ({ data }) => {
                       <input
                         type="password"
                         name="password"
+                        value={credential?.password}
                         onChange={(e) => handleChange(e)}
                         className="form-control"
                         placeholder="Password"

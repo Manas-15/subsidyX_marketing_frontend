@@ -23,8 +23,10 @@ const MainReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-  if (action.type === userConstants.LOGOUT) {
+
+  if (action.type === userConstants?.LOGOUT) {
     state = undefined;
+    // localStorage.setItem("accessToken", "");
   }
   return MainReducer(state, action);
 };

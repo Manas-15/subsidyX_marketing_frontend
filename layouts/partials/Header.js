@@ -24,6 +24,8 @@ const Header = () => {
   const handleLogout = () => {
     dispatch(userActions.logout());
     dispatch(userActions.clearOTP());
+    // localStorage.removeItem("accessToken");
+    localStorage.setItem("accessToken", "");
     router.push("/account");
   };
 

@@ -8,6 +8,7 @@ export const reportManagementAction = {
   getReportByID,
   deleteReport,
   downloadPDF,
+  savedPageData,
 };
 function getAllReportBasedOnUser(pageData) {
   return (dispatch) => {
@@ -147,6 +148,19 @@ function downloadPDF(id) {
     return {
       type: reportManagementConstants.GENERATE_PDF_BASED_ON_REPORT_ID_FAILURE,
       error,
+    };
+  }
+}
+
+function savedPageData(data) {
+  return (dispatch) => {
+    dispatch(success(data));
+  };
+
+  function success(data) {
+    return {
+      type: reportManagementConstants.SAVED_PAGE_DATA_SUCCESS,
+      data,
     };
   }
 }

@@ -48,6 +48,11 @@ export function report(state = initialState, action) {
     case reportManagementConstants.GENERATE_PDF_BASED_ON_REPORT_ID_FAILURE:
       return { ...state, isSuccess: false };
 
+    case reportManagementConstants.SAVED_PAGE_DATA_SUCCESS:
+      return {
+        ...state,
+        saved_page_date: action?.data,
+      };
     default:
       return state;
   }

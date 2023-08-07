@@ -9,6 +9,7 @@ import { alertActions } from "redux/Actions/alertAction";
 import { notification } from "antd";
 import Sidebar from "./components/Sidebar";
 import DashboardHeader from "./partials/DashboardHeader";
+import { userActions } from "redux/Actions/userAction";
 
 const Base = ({
   title,
@@ -28,6 +29,9 @@ const Base = ({
   const alert = useSelector((state) => state.alert);
   const user = useSelector((state) => state?.user);
 
+  useEffect(() => {
+    dispatch(userActions.clearSignup());
+  }, [router.pathname]);
 
   useEffect(() => {
     dispatch(alertActions.clear());

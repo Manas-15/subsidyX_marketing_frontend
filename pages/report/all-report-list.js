@@ -37,23 +37,21 @@ const AllReportLists = () => {
   //   month: "2-digit",
   //   year: "numeric",
   // });
-  const date = new Date(); // Replace this with your date variable
-
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const year = date.getFullYear();
-
-  const formattedDate = `${day}-${month}-${year}`;
+  const allReportLists = useSelector((state) => state?.report);
+  const defaultPage = allReportLists?.saved_page_date?.page
+    ? allReportLists?.saved_page_date?.page
+    : 1;
+  const defaultPageSize = allReportLists?.saved_page_date?.pageSize
+    ? allReportLists?.saved_page_date?.pageSize
+    : 20;
 
   const [modalShow, setModalShow] = useState(false);
   const [type, setType] = useState("");
   const [action, setAction] = useState({});
-  const [pageSize, setPageSize] = useState(10);
-  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(defaultPageSize);
+  const [page, setPage] = useState(defaultPage);
   const [search, setSearch] = useState("");
   const [sortHeader, setSortHeader] = useState("name");
-
-  const allReportLists = useSelector((state) => state?.report);
 
   useEffect(() => {
     if (allReportLists?.allReports?.result?.length === 0) {
@@ -67,6 +65,8 @@ const AllReportLists = () => {
         pagination: { page, pageSize },
       })
     );
+    const data = { page, pageSize };
+    dispatch(reportManagementAction.savedPageData(data));
   }, [page, pageSize]);
 
   const addNewReports = () => {
@@ -141,7 +141,7 @@ const AllReportLists = () => {
                         borderBottomLeftRadius: "0px",
                         borderLeft: "none",
                       }}
-                      placeholder="Search..."
+                      placeholder="Search by ID..."
                       type={"text"}
                       name="search"
                       value={search}

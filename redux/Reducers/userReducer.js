@@ -3,29 +3,22 @@ import { userConstants } from "redux/Constants/userConstant";
 export function user(state = {}, action) {
   switch (action.type) {
     case userConstants.USER_LOGIN_REQUEST:
-      return {
-        loggingIn: true,
-      };
+      return { ...state, loggingIn: true };
     case userConstants.USER_LOGIN_SUCCESS:
-      return {
-        loggedIn: true,
-        user: action?.data?.data,
-      };
+      return { ...state, loggedIn: true, user: action?.data?.data };
     case userConstants.USER_LOGIN_FAILURE:
-      return { loggingIn: false };
+      return { ...state, loggingIn: false };
 
     case userConstants.USER_SIGNUP_REQUEST:
-      return {
-        loggingIn: true,
-      };
+      return { ...state };
     case userConstants.USER_SIGNUP_SUCCESS:
-      return {
-        loggedIn: true,
-        user: action?.data?.data?.token,
-      };
+      return { ...state, sign_up_user: action?.data?.data };
 
     case userConstants.USER_SIGNUP_FAILURE:
-      return { loggingIn: false };
+      return { ...state };
+
+    case userConstants.CLEAR_SIGN_UP:
+      return { ...state, sign_up_user: "" };
 
     case userConstants.USER_OTP_SAVED_SUCCESS:
       return {

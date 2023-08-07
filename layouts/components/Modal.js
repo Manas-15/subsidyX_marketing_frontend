@@ -30,8 +30,8 @@ export const CongratulationsModal = (props) => {
 
   const handleOK = () => {
     props.setModalShow(false);
-    if (props?.type === "success") {
-      props.setAadharNumber("");
+    if (props?.type === "gst") {
+      props.setGSTNumber("");
     }
     props.setNext(false);
     props.setSelectedRadioButton(0);
@@ -41,8 +41,8 @@ export const CongratulationsModal = (props) => {
 
   const handleNO = () => {
     props.setModalShow(false);
-    if (props?.type === "success") {
-      props.setAadharNumber("");
+    if (props?.type === "gst") {
+      props.setGSTNumber("");
     }
     props.setNext(true);
     props.setSelectedRadioButton("2");
