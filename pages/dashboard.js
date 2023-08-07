@@ -27,9 +27,7 @@ const Dashboard = ({ data }) => {
   const eligibleSubsidy = useSelector(
     (state) => state?.eligibleSubsidy?.eligible_subsidy
   );
-  console.log(eligibleSubsidy);
-  console.log(gstNumberData);
-
+ 
   useEffect(() => {
     const data = {
       user_info: {
@@ -58,11 +56,9 @@ const Dashboard = ({ data }) => {
   };
 
   const goToNext = () => {
-    console.log("Next CALLING");
     setNext(true);
     if (gstNumber !== "") {
       setGstData(true);
-      console.log("GST API CALLING");
       dispatch(eligibleSubsidyAction.getDetailsOfGST(gstNumber));
     }
   };
