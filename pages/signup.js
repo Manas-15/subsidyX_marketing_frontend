@@ -100,7 +100,6 @@ const Signup = ({ data }) => {
         password: credential?.password,
       };
       dispatch(userActions.signup(signupData));
-      console.log("Signup calling");
     }
 
     setCredential({

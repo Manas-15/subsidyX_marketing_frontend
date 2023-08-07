@@ -20,8 +20,9 @@ function signup(data) {
     userService.signup(data).then(
       (res) => {
         dispatch(success(res));
-        console.log(res);
+
         if (res?.data?.detail?.error_msg) {
+          alert(res?.data?.detail?.error_msg?.toString());
           dispatch(
             alertActions.success(res?.data?.detail?.error_msg?.toString())
           );
