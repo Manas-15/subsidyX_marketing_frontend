@@ -185,11 +185,11 @@ function ConfirmReport() {
           </div>
         )}
 
-        <div className="d-flex justify-content-between mx-5 pb-5">
-          <IoIosArrowDropleft
+        <div className="d-flex justify-content-end mx-5 pb-5">
+          {/* <IoIosArrowDropleft
             style={{ fontSize: "50px", color: "#fa6130" }}
-            // onClick={(e) => goToNext(e)}
-          />
+            onClick={(e) => goToNext(e)}
+          /> */}
           <CustomButton
             name="Submit"
             color="#FFFFFF"

@@ -27,7 +27,7 @@ const Dashboard = ({ data }) => {
   const eligibleSubsidy = useSelector(
     (state) => state?.eligibleSubsidy?.eligible_subsidy
   );
- 
+
   useEffect(() => {
     const data = {
       user_info: {
@@ -57,6 +57,7 @@ const Dashboard = ({ data }) => {
 
   const goToNext = () => {
     setNext(true);
+    console.log(gstNumber);
     if (gstNumber !== "") {
       setGstData(true);
       dispatch(eligibleSubsidyAction.getDetailsOfGST(gstNumber));
@@ -64,15 +65,22 @@ const Dashboard = ({ data }) => {
   };
 
   const handleChange = (e) => {
+    const value = e.target.value;
+    const udaymName = value.split("-")[0];
+    console.log(udaymName);
     let regex = new RegExp(
       /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/
     );
-    const str = e.target.value;
-    if (regex.test(str) == true) {
-      setValidateAadhar(false);
-      setGSTNumber(e.target.value);
+    const str = value;
+
+    if (udaymName === "UDYAM") {
+      setGSTNumber(value);
+    } else if (regex.test(str) == true) {
+      // setValidateAadhar(false);
+      setGSTNumber(value);
     } else {
-      setValidateAadhar(true);
+      console.log("error");
+      // setValidateAadhar(true);
     }
   };
 
@@ -122,7 +130,7 @@ const Dashboard = ({ data }) => {
                           name="name"
                           placeholder="UDYAM AADHAR NUMBER / GST NUMBER"
                           autoFocus
-                          // value={inputValue}
+                          value={gstNumber}
                           onChange={(e) => handleChange(e)}
                         />
                         {validateAadhar === false && (

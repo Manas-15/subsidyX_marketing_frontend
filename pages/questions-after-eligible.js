@@ -45,6 +45,7 @@ const QuestionAfterEligible = ({ data }) => {
   });
   const [subsidyItems, setSubsidyItems] = useState();
   const [questionData, setQuestionData] = useState();
+  const [userInputError, setUserInputError] = useState(false);
 
   const allDistricts = useSelector((state) => state?.district);
   const allTalukas = useSelector((state) => state?.taluka);
@@ -132,16 +133,8 @@ const QuestionAfterEligible = ({ data }) => {
     }
   };
 
-  console.log(
-    ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-    allData
-  );
-  console.log(
-    ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-    allDataID
-  );
-
   const handleRadioClick = (e) => {
+    console.log("2222222222222222222222222222222222222222222222222");
     setCheckedValue(e.target.value);
   };
 
@@ -151,11 +144,20 @@ const QuestionAfterEligible = ({ data }) => {
   };
 
   const goToPrev = () => {
+    console.log("PREVVVVVVVVVVVVVVVVVVVVVV");
+
     if (prevQueCount > 0) {
       setQuestionData(question?.previous_question);
     }
   };
   const goToNext = () => {
+    // if (selectedOptions?.name === "" || selectedOptions?.value === "") {
+    //   setUserInputError(true);
+    // } else if (inputValue === "") {
+    //   setUserInputError(true);
+    // } else if (checkedValue === "") {
+    //   setUserInputError(true);
+    // } else {
     const user_info = subsidyData?.selected_data?.user_info;
     const datas = {
       user_info,
@@ -182,15 +184,16 @@ const QuestionAfterEligible = ({ data }) => {
       },
       report_id: question?.report_id,
     };
-    // console.log(datas);
     dispatch(eligibleSubsidyAction.getEligible(datas));
     if (questionData?.field_type_id === 3) {
       setSelectedOptions({ name: "", value: "" });
     }
     setInputValue("");
+    // }
   };
 
   const handleChange = (e) => {
+    console.log("11111111111111111111111111111111111111");
     setInputValue(e.target.value);
   };
   useEffect(() => {
@@ -207,11 +210,18 @@ const QuestionAfterEligible = ({ data }) => {
   }, [questionData?.user_response]);
 
   const handleSelectAnswer = (e) => {
+    console.log("3333333333333333333333333333333333333333333333333333333");
     const selectedOption = e.target.options[e.target.selectedIndex];
-    setSelectedOptions({
-      name: selectedOption?.text,
-      value: parseInt(e.target.value),
-    });
+    console.log(selectedOption?.text, inputValue, checkedValue);
+    if (selectedOption?.text) {
+      setUserInputError(false);
+      setSelectedOptions({
+        name: selectedOption?.text,
+        value: parseInt(e.target.value),
+      });
+    } else {
+      setUserInputError(true);
+    }
   };
 
   const clickId = allData?.taluka;
@@ -264,7 +274,7 @@ const QuestionAfterEligible = ({ data }) => {
     }
   }, [subsidiesList]);
 
-  console.log(questionData);
+  // console.log(userInputError);
   return (
     <Base
       title={"title"}
@@ -288,7 +298,7 @@ const QuestionAfterEligible = ({ data }) => {
           <div className="container">
             <div className="section pb-0">
               <div className="row inner-section">
-                <div className="col-sm-12">
+                <div className="col-sm-8">
                   <div className="d-flex justify-content-center m-5">
                     <h3 className="fw-bold">
                       {questionData?.name
@@ -312,6 +322,11 @@ const QuestionAfterEligible = ({ data }) => {
                               value={inputValue}
                               onChange={(e) => handleChange(e)}
                             />
+                            {/* {userInputError === true && (
+                              <p className="text-danger mt-1">
+                                Please enter amount
+                              </p>
+                            )} */}
                           </Form.Group>
                         </Form>
                       )}
@@ -353,21 +368,28 @@ const QuestionAfterEligible = ({ data }) => {
                       )}
 
                       {questionData?.field_type_id === 3 && (
-                        <select
-                          className="form-control"
-                          onChange={(e) => handleSelectAnswer(e)}
-                          value={selectedOptions.value}
-                        >
-                          <option value="none">Please Select</option>
-                          {questionData?.options?.map((opt, index) => (
-                            <option key={index} value={opt.id}>
-                              {opt.option}
-                            </option>
-                          ))}
-                        </select>
+                        <>
+                          <select
+                            className="form-control"
+                            onChange={(e) => handleSelectAnswer(e)}
+                            value={selectedOptions.value}
+                          >
+                            <option value="none">Please Select</option>
+                            {questionData?.options?.map((opt, index) => (
+                              <option key={index} value={opt.id}>
+                                {opt.option}
+                              </option>
+                            ))}
+                          </select>
+
+                          {/* {userInputError === true && (
+                            <p className="text-danger mt-1">
+                              Please select user reponse
+                            </p>
+                          )} */}
+                        </>
                       )}
                     </div>
-                    {console.log(prevQueCount)}
 
                     <div className="mt-4 d-flex justify-content-center">
                       {prevQueCount !== 0 && (
@@ -390,8 +412,8 @@ const QuestionAfterEligible = ({ data }) => {
                   </div>
                 </div>
 
-                {/* <div className="col-sm-4">
-                  <div className="d-flex justify-content-end">
+                <div className="col-sm-4">
+                  {/* <div className="d-flex justify-content-end">
                     <CustomButton
                       name="Restart Session"
                       color="#FFFFFF"
@@ -400,7 +422,7 @@ const QuestionAfterEligible = ({ data }) => {
                       onClick={(e) => restartSession(e)}
                       className="position-relative"
                     />
-                  </div>
+                  </div> */}
                   <div className="d-flex my-5">
                     <h4
                       style={{ textDecoration: "underline", fontWeight: "500" }}
@@ -413,7 +435,7 @@ const QuestionAfterEligible = ({ data }) => {
                       <p style={{ marginLeft: "15px" }}>{subsidyItems}</p>
                     </div>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>

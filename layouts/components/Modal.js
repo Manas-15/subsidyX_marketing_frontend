@@ -42,6 +42,7 @@ export const CongratulationsModal = (props) => {
 
   const handleNO = () => {
     props.setModalShow(false);
+    props.setGstData(false);
     props.setNext(true);
     props.setSelectedRadioButton("2");
     router.push("/dashboard");
@@ -49,10 +50,10 @@ export const CongratulationsModal = (props) => {
   };
 
   const handleGstNO = () => {
-    props.setModalShow(false);
     if (props?.type === "gst") {
       props.setGSTNumber("");
     }
+    props.setModalShow(false);
     props.setGstData(false);
     props.setNext(true);
     props.setSelectedRadioButton("1");
