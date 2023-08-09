@@ -6,6 +6,9 @@ import { store } from "redux/Store";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Loader } from "@layouts/components/Loader";
+import setupInterceptors from "../redux/setupInterceptors";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = ({ Component, pageProps }) => {
   const router = useRouter();
@@ -58,7 +61,8 @@ const App = ({ Component, pageProps }) => {
 
   useEffect(() => {
     setShowChild(true);
-  }, []);
+    setupInterceptors(store, router); // Call setupInterceptors within the component
+  }, [router]); // Include router as a dependency
 
   useEffect(() => {
     const handleStart = (url) => {
@@ -109,6 +113,7 @@ const App = ({ Component, pageProps }) => {
           </Head>
           {loading && <Loader />}
           <Component {...pageProps} />
+          <ToastContainer theme="colored" />
         </Provider>
       </>
     );

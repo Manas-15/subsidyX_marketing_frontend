@@ -193,7 +193,6 @@ const QuestionAfterEligible = ({ data }) => {
   };
 
   const handleChange = (e) => {
-    console.log("11111111111111111111111111111111111111");
     setInputValue(e.target.value);
   };
   useEffect(() => {
@@ -210,7 +209,6 @@ const QuestionAfterEligible = ({ data }) => {
   }, [questionData?.user_response]);
 
   const handleSelectAnswer = (e) => {
-    console.log("3333333333333333333333333333333333333333333333333333333");
     const selectedOption = e.target.options[e.target.selectedIndex];
     console.log(selectedOption?.text, inputValue, checkedValue);
     if (selectedOption?.text) {
@@ -256,25 +254,44 @@ const QuestionAfterEligible = ({ data }) => {
         return acc;
       }, {});
 
-      const data = Object.entries(groupedSubsidies).map(
-        ([subsidyName, schemes]) => (
-          <div key={subsidyName}>
-            <p>{subsidyName}</p>
-            <ol>
-              {schemes.map((scheme, index) => (
-                <li key={index}>
-                  <p style={{ fontSize: "15px" }}>{scheme}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        )
+      const totalSubsidyNames = Object.keys(groupedSubsidies).length;
+      let totalSchemeCount = 0;
+      for (const key in groupedSubsidies) {
+        totalSchemeCount += groupedSubsidies[key].length;
+      }
+
+      const data = (
+        <div
+          style={{
+            marginTop: "10px",
+            border: "1px solid black",
+            padding: "10px",
+          }}
+        >
+          {totalSubsidyNames}
+          {/* <p>Total Schemes: {totalSchemeCount}</p> */}
+        </div>
       );
+
+      // const data = Object.entries(groupedSubsidies).map(
+      //   ([subsidyName, schemes]) => (
+      //     <div key={subsidyName}>
+      //       <p>{subsidyName}</p>
+      //       <ol>
+      //         {schemes.map((scheme, index) => (
+      //           <li key={index}>
+      //             <p style={{ fontSize: "15px" }}>{scheme}</p>
+      //           </li>
+      //         ))}
+      //       </ol>
+      //     </div>
+      //   )
+      // );
+
       setSubsidyItems(data);
     }
   }, [subsidiesList]);
 
-  // console.log(userInputError);
   return (
     <Base
       title={"title"}
@@ -425,7 +442,11 @@ const QuestionAfterEligible = ({ data }) => {
                   </div> */}
                   <div className="d-flex my-5">
                     <h4
-                      style={{ textDecoration: "underline", fontWeight: "500" }}
+                      style={{
+                        textDecoration: "underline",
+                        fontWeight: "500",
+                        visibility: "hidden",
+                      }}
                     >
                       Displaying eligible subsidies
                     </h4>

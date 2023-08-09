@@ -35,7 +35,6 @@ const Login = ({ data }) => {
     if (accessToken !== undefined) {
       try {
         const decodedToken = jwt.decode(accessToken);
-        console.log(decodedToken);
         if (decodedToken?.report_count > 0) {
           dispatch(userActions?.userReportCount(decodedToken));
           router.push("/report/all-report-list");

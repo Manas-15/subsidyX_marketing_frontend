@@ -42,7 +42,7 @@ export const CongratulationsModal = (props) => {
 
   const handleNO = () => {
     props.setModalShow(false);
-    props.setGstData(false);
+    // props.setGstData(false);
     props.setNext(true);
     props.setSelectedRadioButton("2");
     router.push("/dashboard");

@@ -21,7 +21,6 @@ const Pagination = ({
       setTotal(parseInt(totalItems / pageSize));
     }
   }, [pageSize, totalItems]);
-  console.log(page, pageSize);
   return (
     <div className={styles.pagination_box}>
       <div>
