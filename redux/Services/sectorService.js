@@ -1,4 +1,4 @@
-import { authHeader } from "redux/authHeader";
+
 import api from "../api";
 
 export const sectorService = {
@@ -7,7 +7,5 @@ export const sectorService = {
 
 async function getSectorList(id) {
   const params = id ? `&industry_category_id=${id}` : "";
-  return await api.get(`industry_sector/?page=1&page_size=10${params}`, {
-    headers: authHeader(),
-  });
+  return await api.get(`industry_sector/?page=1&page_size=10${params}`);
 }

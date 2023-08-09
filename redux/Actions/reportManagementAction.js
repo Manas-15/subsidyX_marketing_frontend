@@ -1,6 +1,7 @@
 import { reportManagementConstants } from "redux/Constants/reportManagementConstants";
 import { alertActions } from "./alertAction";
 import { reportManagementService } from "redux/Services/reportManagementService";
+import { showToast } from "@layouts/components/ToastNotification";
 
 export const reportManagementAction = {
   getAllReportBasedOnUser,
@@ -93,6 +94,7 @@ function deleteReport(id) {
     reportManagementService.deleteReport(id).then(
       (res) => {
         dispatch(success(res));
+        // showToast("Report Deleted", "success");
         dispatch(reportManagementAction.getAllReportBasedOnUser());
       },
       (error) => {

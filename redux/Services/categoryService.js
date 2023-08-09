@@ -1,4 +1,4 @@
-import { authHeader } from "redux/authHeader";
+
 import api from "../api";
 
 export const categoryService = {
@@ -6,7 +6,5 @@ export const categoryService = {
 };
 
 async function getCategoryList() {
-  return await api.get(`industry/industries`, {
-    headers: authHeader(),
-  });
+  return await api.get(`industry/industries`, );
 }

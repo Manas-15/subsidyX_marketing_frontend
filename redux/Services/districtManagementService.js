@@ -1,4 +1,4 @@
-import { authHeader } from "../authHeader";
+
 import api from "../api";
 
 export const districtManagementService = {
@@ -10,9 +10,7 @@ export const districtManagementService = {
 
 async function getDistricts(ID) {
   let params = ID ? "?state_id=" + ID : "";
-  return await api.get(`district/${params}`, {
-    headers: authHeader(),
-  });
+  return await api.get(`district/${params}`, );
 }
 
 // async function createDistrict(districtData) {

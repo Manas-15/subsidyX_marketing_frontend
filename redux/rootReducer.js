@@ -23,10 +23,13 @@ const MainReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-
   if (action.type === userConstants?.LOGOUT) {
+    state.user.user = {};
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("state");
+
     state = undefined;
-    // localStorage.setItem("accessToken", "");
   }
   return MainReducer(state, action);
 };

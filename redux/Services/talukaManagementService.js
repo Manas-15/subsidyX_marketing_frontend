@@ -1,4 +1,3 @@
-import { authHeader } from "../authHeader";
 import api from "../api";
 
 export const talukaManagementService = {
@@ -10,9 +9,7 @@ export const talukaManagementService = {
 
 async function getTalukas(ID) {
   let params = ID ? "&district_id=" + ID : "";
-  return await api.get(`taluka/?page=1&page_size=10${params}`, {
-    headers: authHeader(),
-  });
+  return await api.get(`taluka/?page=1&page_size=10${params}`);
 }
 
 // async function createTaluka(talukaData) {

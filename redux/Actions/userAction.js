@@ -1,6 +1,7 @@
 import { userConstants } from "redux/Constants/userConstant";
 import { userService } from "redux/Services/userService";
 import { alertActions } from "./alertAction";
+import { showToast } from "@layouts/components/ToastNotification";
 
 export const userActions = {
   signup,
@@ -112,15 +113,17 @@ function validateOtp(data) {
     userService.validateOtp(data).then(
       (res) => {
         dispatch(success(res));
-        console.log(res);
         if (res?.data?.detail?.error_msg) {
           dispatch(
             alertActions.error(res?.data?.detail?.error_msg?.toString())
           );
         } else {
-          const result = JSON.stringify(res?.data?.access_token);
-          localStorage.setItem("accessToken", result);
           dispatch(alertActions.success("User loggedin successfully"));
+          const result = JSON.stringify(res?.data?.access_token);
+          const refreshToken = JSON.stringify(res?.data?.refresh_token);
+
+          localStorage.setItem("accessToken", result);
+          localStorage.setItem("refreshToken", refreshToken);
         }
       },
       (error) => {
@@ -146,9 +149,13 @@ function login(data) {
     userService.login(data).then(
       (res) => {
         dispatch(success(res));
+        // dispatch(alertActions.success("User loggedin successfully"));
+        showToast("User loggedin successfully", "success");
         const result = JSON.stringify(res?.data?.access_token);
+        const refreshToken = JSON.stringify(res?.data?.refresh_token);
+
         localStorage.setItem("accessToken", result);
-        dispatch(alertActions.success("User loggedin successfully"));
+        localStorage.setItem("refreshToken", refreshToken);
       },
       (error) => {
         dispatch(failure(error.toString()));
