@@ -1,13 +1,11 @@
 import Base from "@layouts/Baseof";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDropright, IoIosArrowDropleft } from "react-icons/io";
 import { useRouter } from "next/router";
 import { Form } from "react-bootstrap";
-import Multiselect from "multiselect-react-dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { eligibleSubsidyAction } from "../redux/Actions/eligibleSubsidyAction";
-import { CustomButton } from "@layouts/components/CustomButton";
 import { districtManagementAction } from "../redux/Actions/districtManagementAction";
 import { talukaManagementAction } from "../redux/Actions/talukaManagementAction";
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
@@ -22,7 +20,10 @@ const QuestionAfterEligible = ({ data }) => {
   const subsidiesList = subsidyData?.eligible_subsidy?.subsidies;
   const question = subsidyData?.eligible_subsidy;
 
-  const [checkedValue, setCheckedValue] = useState("");
+  const [checkedValue, setCheckedValue] = useState({
+    name: "",
+    value: "",
+  });
   const [selectedOptions, setSelectedOptions] = useState({
     name: "",
     value: "",
@@ -32,7 +33,7 @@ const QuestionAfterEligible = ({ data }) => {
   const [type, setType] = useState("");
   const [reportID, setReportID] = useState(null);
   const [next, setNext] = useState(false);
-  const [isCompanyPage, setIsCompanyPage] = useState(true);
+  // const [isCompanyPage, setIsCompanyPage] = useState(true);
   const [allDataID, setAllDataID] = useState({
     district: 0,
     taluka: 0,
@@ -45,15 +46,13 @@ const QuestionAfterEligible = ({ data }) => {
   });
   const [subsidyItems, setSubsidyItems] = useState();
   const [questionData, setQuestionData] = useState();
-  const [userInputError, setUserInputError] = useState(false);
+  // const [userInputError, setUserInputError] = useState(false);
 
   const allDistricts = useSelector((state) => state?.district);
   const allTalukas = useSelector((state) => state?.taluka);
   const [prevQueCount, setPrevQueCount] = useState(0);
-
-  // console.log(Object.keys(questionData?.question).length === true);
-
-  console.log(questionData);
+  const [tempPrevQueStore, setTempPrevQueStore] = useState();
+  const [backButtonVisible, setBackButtonVisible] = useState(false);
 
   useEffect(() => {
     if (subsidyData?.selected_data?.user_info?.state_id) {
@@ -73,14 +72,13 @@ const QuestionAfterEligible = ({ data }) => {
   useEffect(() => {
     let questionCount = null;
     if (question?.question !== undefined && question?.question !== null) {
-      questionCount = Object.keys(question.question).length;
+      questionCount = Object.keys(question?.question).length;
     }
+    console.log(question?.previous_question);
 
-    if (
-      question?.previous_question !== undefined &&
-      question?.previous_question !== null
-    ) {
-      const queCount = Object.keys(question?.previous_question).length;
+    if (question?.previous_question?.length > 0) {
+      const queCount = question?.previous_question?.length;
+      // console.log(queCount);
       setPrevQueCount(queCount);
     }
 
@@ -94,7 +92,6 @@ const QuestionAfterEligible = ({ data }) => {
       );
       console.log("Go to confirm report screen");
       router.push("/report/confirm-report");
-      // setReportID(subsidyData?.eligible_subsidy?.report_id);
     }
     if (questionData?.status === 205 && subsidiesList?.length === 0) {
       setModalShow(true);
@@ -134,8 +131,29 @@ const QuestionAfterEligible = ({ data }) => {
   };
 
   const handleRadioClick = (e) => {
-    console.log("2222222222222222222222222222222222222222222222222");
-    setCheckedValue(e.target.value);
+    const selectedOption = questionData?.options.find(
+      (option) => option.id === parseInt(e.target.value)
+    );
+    if (selectedOption) {
+      setCheckedValue({
+        name: selectedOption.option,
+        value: parseInt(e.target.value),
+      });
+    } else {
+      // setUserInputError(true);
+    }
+  };
+  const handleSelectAnswer = (e) => {
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    if (selectedOption?.text) {
+      // setUserInputError(false);
+      setSelectedOptions({
+        name: selectedOption?.text,
+        value: parseInt(e.target.value),
+      });
+    } else {
+      // setUserInputError(true);
+    }
   };
 
   const handleNext = () => {
@@ -143,11 +161,27 @@ const QuestionAfterEligible = ({ data }) => {
     setNext(true);
   };
 
-  const goToPrev = () => {
-    console.log("PREVVVVVVVVVVVVVVVVVVVVVV");
+  useEffect(() => {
+    setTempPrevQueStore(question?.previous_question);
+  }, [question?.previous_question]);
 
-    if (prevQueCount > 0) {
-      setQuestionData(question?.previous_question);
+  const goToPrev = () => {
+    if (tempPrevQueStore?.length > 0) {
+      setBackButtonVisible(true);
+      let currentIndex = tempPrevQueStore?.length - 1;
+      console.log(currentIndex); //2
+      if (currentIndex === 0) {
+        setBackButtonVisible(false);
+      }
+      if (currentIndex >= 0) {
+        const currentItem = question?.previous_question[currentIndex]; //2 index ra value
+        console.log(currentItem); // You can do whatever you need with the retrieved item
+        setQuestionData(currentItem);
+        tempPrevQueStore?.splice(currentIndex, 1);
+        setTempPrevQueStore(tempPrevQueStore);
+      } else {
+        console.log("Reached the beginning of the data array.");
+      }
     }
   };
   const goToNext = () => {
@@ -158,6 +192,7 @@ const QuestionAfterEligible = ({ data }) => {
     // } else if (checkedValue === "") {
     //   setUserInputError(true);
     // } else {
+
     const user_info = subsidyData?.selected_data?.user_info;
     const datas = {
       user_info,
@@ -166,14 +201,16 @@ const QuestionAfterEligible = ({ data }) => {
         option_id:
           selectedOptions?.value !== "" && selectedOptions?.value !== undefined
             ? parseInt(selectedOptions?.value)
+            : checkedValue?.value !== "" && checkedValue?.value !== undefined
+            ? checkedValue?.value
             : 0,
         response:
           selectedOptions?.name !== "" && selectedOptions?.name !== undefined
             ? selectedOptions?.name
             : inputValue !== ""
             ? inputValue
-            : checkedValue !== ""
-            ? checkedValue
+            : checkedValue?.name !== "" && checkedValue?.name !== undefined
+            ? checkedValue?.name
             : "",
         subscheme_id: questionData?.subscheme_id,
         subsidy_id: questionData?.subsidy_id,
@@ -187,9 +224,15 @@ const QuestionAfterEligible = ({ data }) => {
     dispatch(eligibleSubsidyAction.getEligible(datas));
     if (questionData?.field_type_id === 3) {
       setSelectedOptions({ name: "", value: "" });
+    } else if (questionData?.field_type_id === 2) {
+      setCheckedValue({
+        name: "",
+        value: "",
+      });
     }
     setInputValue("");
     // }
+    setBackButtonVisible(true);
   };
 
   const handleChange = (e) => {
@@ -197,30 +240,19 @@ const QuestionAfterEligible = ({ data }) => {
   };
   useEffect(() => {
     if (questionData?.field_type_id === 1) {
-      setInputValue(questionData?.user_response);
+      setInputValue(questionData?.response);
     } else if (questionData?.field_type_id === 2) {
-      console.log("22222222");
-    } else {
-      setSelectedOptions({
-        name: questionData?.user_response,
-        value: questionData?.user_response_option_id,
-      });
-    }
-  }, [questionData?.user_response]);
-
-  const handleSelectAnswer = (e) => {
-    const selectedOption = e.target.options[e.target.selectedIndex];
-    console.log(selectedOption?.text, inputValue, checkedValue);
-    if (selectedOption?.text) {
-      setUserInputError(false);
-      setSelectedOptions({
-        name: selectedOption?.text,
-        value: parseInt(e.target.value),
+      setCheckedValue({
+        name: questionData?.response,
+        value: questionData?.option_id,
       });
     } else {
-      setUserInputError(true);
+      setSelectedOptions({
+        name: questionData?.response,
+        value: questionData?.option_id,
+      });
     }
-  };
+  }, [questionData?.response]);
 
   const clickId = allData?.taluka;
 
@@ -315,7 +347,7 @@ const QuestionAfterEligible = ({ data }) => {
           <div className="container">
             <div className="section pb-0">
               <div className="row inner-section">
-                <div className="col-sm-8">
+                <div className="col-sm-10">
                   <div className="d-flex justify-content-center m-5">
                     <h3 className="fw-bold">
                       {questionData?.name
@@ -350,37 +382,23 @@ const QuestionAfterEligible = ({ data }) => {
 
                       {questionData?.field_type_id === 2 && (
                         <>
-                          <div className="d-flex justify-content-center">
-                            <input
-                              type="radio"
-                              name="subsidy"
-                              value="Yes"
-                              // checked={false}
-                              style={{
-                                width: "30px",
-                                height: "30px",
-                                marginRight: "10px",
-                              }}
-                              onChange={(e) => handleRadioClick(e)}
-                            />
-                            <h3>Yes</h3>
-                          </div>
-
-                          <div className="d-flex justify-content-center">
-                            <input
-                              type="radio"
-                              name="subsidy"
-                              value="No"
-                              // checked={true}
-                              style={{
-                                width: "30px",
-                                height: "30px",
-                                marginRight: "10px",
-                              }}
-                              onChange={(e) => handleRadioClick(e)}
-                            />
-                            <h3>No</h3>
-                          </div>
+                          {questionData?.options?.map((option, idx) => (
+                            <div className="d-flex justify-content-center">
+                              <input
+                                type="radio"
+                                name="subsidy"
+                                value={option?.id}
+                                checked={checkedValue?.value === option?.id}
+                                style={{
+                                  width: "30px",
+                                  height: "30px",
+                                  marginRight: "10px",
+                                }}
+                                onChange={(e) => handleRadioClick(e)}
+                              />
+                              <h3>{option?.option}</h3>
+                            </div>
+                          ))}
                         </>
                       )}
 
@@ -389,7 +407,7 @@ const QuestionAfterEligible = ({ data }) => {
                           <select
                             className="form-control"
                             onChange={(e) => handleSelectAnswer(e)}
-                            value={selectedOptions.value}
+                            value={selectedOptions?.value}
                           >
                             <option value="none">Please Select</option>
                             {questionData?.options?.map((opt, index) => (
@@ -409,14 +427,14 @@ const QuestionAfterEligible = ({ data }) => {
                     </div>
 
                     <div className="mt-4 d-flex justify-content-center">
-                      {prevQueCount !== 0 && (
+                      {/* prevQueCount !== 0 */}
+                      {backButtonVisible && (
                         <IoIosArrowDropleft
                           style={{ fontSize: "50px", color: "#fa6130" }}
                           onClick={(e) => goToPrev(e)}
                           disabled={true}
                         />
                       )}
-
                       <IoIosArrowDropright
                         style={{
                           fontSize: "50px",
@@ -429,7 +447,7 @@ const QuestionAfterEligible = ({ data }) => {
                   </div>
                 </div>
 
-                <div className="col-sm-4">
+                <div className="col-sm-2">
                   {/* <div className="d-flex justify-content-end">
                     <CustomButton
                       name="Restart Session"
