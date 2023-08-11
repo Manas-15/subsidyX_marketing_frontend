@@ -293,7 +293,6 @@ const QuestionAfterEligible = ({ data }) => {
           style={{
             marginTop: "10px",
             border: "1px solid black",
-            // padding: "50px 70px",
             borderRadius: "10px",
             backgroundColor: "#04032B",
             color: "white",
@@ -457,6 +456,35 @@ const QuestionAfterEligible = ({ data }) => {
                         onClick={(e) => goToNext(e)}
                       />
                     </div>
+                    {questionData?.tooltip !== null && (
+                      <div className="mt-5 d-flex justify-content-center">
+                        <div
+                          style={{
+                            marginTop: "100px",
+                            border: "1px solid black",
+                            borderRadius: "10px",
+                            backgroundColor: "rgb(237 217 207)",
+                            color: "black",
+                          }}
+                        >
+                          <div
+                            style={{
+                              justifyContent: "center",
+                              alignItems: "center",
+                              width: "710px",
+                              height: "87px",
+                              display: "flex",
+                              flexDirection: "column",
+                            }}
+                          >
+                            <span style={{ fontSize: "15px" }}>
+                              {questionData?.tooltip}
+                            </span>
+                          </div>
+                          {/* <p>Total Schemes: {totalSchemeCount}</p> */}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
