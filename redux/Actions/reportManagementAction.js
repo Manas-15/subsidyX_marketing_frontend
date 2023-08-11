@@ -20,7 +20,8 @@ function getAllReportBasedOnUser(pageData) {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };
@@ -65,7 +66,8 @@ function getReportByID(id) {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };
@@ -94,12 +96,13 @@ function deleteReport(id) {
     reportManagementService.deleteReport(id).then(
       (res) => {
         dispatch(success(res));
-        // showToast("Report Deleted", "success");
+        showToast("Report Deleted", "success");
         dispatch(reportManagementAction.getAllReportBasedOnUser());
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };
@@ -131,7 +134,8 @@ function downloadPDF(id) {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };

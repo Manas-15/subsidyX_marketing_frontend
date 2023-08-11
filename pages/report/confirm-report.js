@@ -165,7 +165,7 @@ function ConfirmReport() {
           <div className={`mb-4 ${styles.report_tablee}`}>
             <div className="py-3">
               <div className="d-flex justify-content-between mx-5 ">
-                <h4>Information based on Service and Large Industry</h4>
+                <h4>User Inputs</h4>
               </div>
               <div className="row mt-4 mx-5">
                 {viewReport?.result?.map((question, idx) => {

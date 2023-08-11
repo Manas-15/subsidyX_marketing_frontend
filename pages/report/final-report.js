@@ -30,13 +30,6 @@ function FinalReport({ data, setModalShow }) {
   const [stateSubsidyList, setStateSubsidyList] = useState();
   const [centralSubsidyList, setCentralSubsidyList] = useState();
 
-  // const date = new Date();
-  // const formattedDate = date.toLocaleDateString("en-US", {
-  //   day: "2-digit",
-  //   month: "2-digit",
-  //   year: "numeric",
-  // });
-
   const subsidyReports = useSelector((state) => state?.eligibleSubsidy);
   const district_taluka_name = useSelector((state) => state?.taluka);
   const viewReport = useSelector((state) => state?.report?.get_report);
@@ -67,111 +60,121 @@ function FinalReport({ data, setModalShow }) {
         return acc;
       }, {});
 
-      const data = Object.entries(groupedData).map(([subsidyName, schemes]) => (
-        <div className={styles.report_tablee}>
-          <div className="py-3">
-            <div
-              className="d-flex justify-content-center mx-4"
-              style={{
-                border: "1px solid black",
-                borderRadius: "10px",
-                backgroundColor: "#F0EAFF",
-              }}
-            >
-              <span className="my-2" style={{ fontWeight: "bold" }}>
-                Gujurat State Government Subsidies
-              </span>
-            </div>
-            <div key={subsidyName} class="container p-4">
-              <div class="row gx-2">
-                <div className="col mb-4">
-                  <div
-                    className="col p-3"
-                    style={{
-                      border: "1px solid black",
-                      borderRadius: "10px",
-                    }}
-                  >
-                    <div className="row">
-                      <div className="col-sm-8 d-flex flex-column">
-                        <p
-                          className="final_report_name"
-                          style={{
-                            textDecoration: "underline",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Subsidy Scheme Name
-                        </p>
-                        <p className="final_report_name">{subsidyName}</p>
-                      </div>
-                      <div className="col-sm-4 d-flex flex-column">
-                        <span
-                          className="final_report_name"
-                          style={{
-                            textDecoration: "underline",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Subsidy Amount
-                        </span>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-12">
-                        <ol>
-                          {schemes.map((item, index) => (
-                            <li key={index} className="d-flex w-100">
-                              <p style={{ fontSize: "15px", width: "70%" }}>
-                                {item?.scheme}
-                              </p>
-                              <p style={{ fontSize: "15px", width: "30%" }}>
-                                &#8377;{" "}
-                                {item?.calculated_subsidy !== undefined
-                                  ? item?.calculated_subsidy
-                                      ?.toLocaleString("en-IN")
-                                      .replace(/,/g, ",")
-                                  : 0}
-                              </p>
-                            </li>
-                          ))}
-                        </ol>
-                      </div>
-                    </div>
-                    <div className="row mt-2">
-                      <div className="col-sm-8 d-flex flex-column">
-                        <span
-                          className="final_report_name"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Total Subsidy Amount in {subsidyName}
-                        </span>
-                      </div>
-                      <div className="col-sm-4 d-flex flex-column">
-                        <span
-                          className="final_report_name mx-4"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          &#8377;{" "}
-                          {schemes
-                            .reduce(
-                              (acc, scheme) =>
-                                acc + (scheme?.calculated_subsidy || 0),
-                              0
-                            )
-                            .toLocaleString("en-IN")
-                            .replace(/,/g, ",")}
-                        </span>
+      if (Object.entries(groupedData)?.length > 0) {
+        const data = (
+          <div className={styles.report_tablee}>
+            <div className="pb-5 pt-3">
+              <div
+                className="d-flex justify-content-center mx-4"
+                style={{
+                  border: "1px solid black",
+                  borderRadius: "10px",
+                  backgroundColor: "#F0EAFF",
+                }}
+              >
+                <span className="my-2" style={{ fontWeight: "bold" }}>
+                  Gujurat State Government Subsidies
+                </span>
+              </div>
+
+              {Object.entries(groupedData).map(([subsidyName, schemes]) => (
+                <div key={subsidyName} class="container pt-4">
+                  <div class="row">
+                    <div className="col">
+                      <div
+                        className="col p-3"
+                        style={{
+                          border: "1px solid black",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        <div className="row">
+                          <div className="col-sm-8 d-flex flex-column">
+                            <p
+                              className="final_report_name"
+                              style={{
+                                textDecoration: "underline",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Subsidy Scheme Name
+                            </p>
+                            <p className="final_report_name">
+                              {subsidyName !== "null" ? subsidyName : ""}
+                            </p>
+                          </div>
+                          <div className="col-sm-4 d-flex flex-column">
+                            <span
+                              className="final_report_name"
+                              style={{
+                                textDecoration: "underline",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Subsidy Amount
+                            </span>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-sm-12">
+                            <ol>
+                              {schemes.map((item, index) => (
+                                <li key={index} className="d-flex w-100">
+                                  <p style={{ fontSize: "15px", width: "70%" }}>
+                                    {item?.scheme}
+                                  </p>
+                                  <p style={{ fontSize: "15px", width: "30%" }}>
+                                    &#8377;{" "}
+                                    {item?.calculated_subsidy !== undefined
+                                      ? item?.calculated_subsidy
+                                          ?.toLocaleString("en-IN")
+                                          .replace(/,/g, ",")
+                                      : 0}
+                                  </p>
+                                </li>
+                              ))}
+                            </ol>
+                          </div>
+                        </div>
+                        <div className="row mt-2">
+                          <div className="col-sm-8 d-flex flex-column">
+                            <span
+                              className="final_report_name"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              Total Subsidy Amount in{" "}
+                              {subsidyName !== "null"
+                                ? subsidyName
+                                : schemes?.[0]?.scheme}
+                            </span>
+                          </div>
+                          <div className="col-sm-4 d-flex flex-column">
+                            <span
+                              className="final_report_name mx-4"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              &#8377;{" "}
+                              {schemes
+                                .reduce(
+                                  (acc, scheme) =>
+                                    acc + (scheme?.calculated_subsidy || 0),
+                                  0
+                                )
+                                .toLocaleString("en-IN")
+                                .replace(/,/g, ",")}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
-        </div>
-      ));
-      setStateSubsidyList(data);
+        );
+        setStateSubsidyList(data);
+      }
     }
 
     //groupby sibsidies list using parent subsidy name of Central
@@ -185,112 +188,120 @@ function FinalReport({ data, setModalShow }) {
         return acc;
       }, {});
 
-      const data = Object.entries(groupedData).map(([subsidyName, schemes]) => (
-        <div className={styles.report_tablee}>
-          <div className="py-3">
-            <div
-              className="d-flex justify-content-center mx-4"
-              style={{
-                border: "1px solid black",
-                borderRadius: "10px",
-                backgroundColor: "#F0EAFF",
-              }}
-            >
-              <span className="my-2" style={{ fontWeight: "bold" }}>
-                Central Government Subsidies
-              </span>
-            </div>
-
-            <div key={subsidyName} class="container p-4">
-              <div class="row gx-2">
-                <div className="col mb-4">
-                  <div
-                    className="col p-3"
-                    style={{
-                      border: "1px solid black",
-                      borderRadius: "10px",
-                    }}
-                  >
-                    <div className="row">
-                      <div className="col-sm-8 d-flex flex-column">
-                        <p
-                          className="final_report_name"
-                          style={{
-                            textDecoration: "underline",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Subsidy Scheme Name
-                        </p>
-                        <p className="final_report_name">{subsidyName}</p>
-                      </div>
-                      <div className="col-sm-4 d-flex flex-column">
-                        <span
-                          className="final_report_name"
-                          style={{
-                            textDecoration: "underline",
-                            fontWeight: "bold",
-                          }}
-                        >
-                          Subsidy Amount
-                        </span>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-sm-12">
-                        <ol>
-                          {schemes.map((item, index) => (
-                            <li key={index} className="d-flex w-100">
-                              <p style={{ fontSize: "15px", width: "70%" }}>
-                                {item?.scheme}
-                              </p>
-                              <p style={{ fontSize: "15px", width: "30%" }}>
-                                &#8377;{" "}
-                                {item?.calculated_subsidy !== undefined
-                                  ? item?.calculated_subsidy
-                                      ?.toLocaleString("en-IN")
-                                      .replace(/,/g, ",")
-                                  : 0}
-                              </p>
-                            </li>
-                          ))}
-                        </ol>
-                      </div>
-                    </div>
-                    <div className="row mt-2">
-                      <div className="col-sm-8 d-flex flex-column">
-                        <span
-                          className="final_report_name"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Total Subsidy Amount in {subsidyName}
-                        </span>
-                      </div>
-                      <div className="col-sm-4 d-flex flex-column">
-                        <span
-                          className="final_report_name mx-4"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          &#8377;{" "}
-                          {schemes
-                            .reduce(
-                              (acc, scheme) =>
-                                acc + (scheme?.calculated_subsidy || 0),
-                              0
-                            )
-                            .toLocaleString("en-IN")
-                            .replace(/,/g, ",")}
-                        </span>
+      if (Object.entries(groupedData)?.length > 0) {
+        const data = (
+          <div className={styles.report_tablee}>
+            <div className="pb-5 pt-3">
+              <div
+                className="d-flex justify-content-center mx-4"
+                style={{
+                  border: "1px solid black",
+                  borderRadius: "10px",
+                  backgroundColor: "#F0EAFF",
+                }}
+              >
+                <span className="my-2" style={{ fontWeight: "bold" }}>
+                  Central Government Subsidies
+                </span>
+              </div>
+              {Object.entries(groupedData).map(([subsidyName, schemes]) => (
+                <div key={subsidyName} class="container pt-4">
+                  <div class="row">
+                    <div className="col">
+                      <div
+                        className="col p-3"
+                        style={{
+                          border: "1px solid black",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        <div className="row">
+                          <div className="col-sm-8 d-flex flex-column">
+                            <p
+                              className="final_report_name"
+                              style={{
+                                textDecoration: "underline",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Subsidy Scheme Name
+                            </p>
+                            <p className="final_report_name">
+                              {subsidyName !== "null" ? subsidyName : ""}
+                            </p>
+                          </div>
+                          <div className="col-sm-4 d-flex flex-column">
+                            <span
+                              className="final_report_name"
+                              style={{
+                                textDecoration: "underline",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Subsidy Amount
+                            </span>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-sm-12">
+                            <ol>
+                              {schemes.map((item, index) => (
+                                <li key={index} className="d-flex w-100">
+                                  <p style={{ fontSize: "15px", width: "70%" }}>
+                                    {item?.scheme}
+                                  </p>
+                                  <p style={{ fontSize: "15px", width: "30%" }}>
+                                    &#8377;{" "}
+                                    {item?.calculated_subsidy !== undefined
+                                      ? item?.calculated_subsidy
+                                          ?.toLocaleString("en-IN")
+                                          .replace(/,/g, ",")
+                                      : 0}
+                                  </p>
+                                </li>
+                              ))}
+                            </ol>
+                          </div>
+                        </div>
+                        <div className="row mt-2">
+                          <div className="col-sm-8 d-flex flex-column">
+                            <span
+                              className="final_report_name"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              Total Subsidy Amount in{" "}
+                              {subsidyName !== "null"
+                                ? subsidyName
+                                : schemes?.[0]?.scheme}
+                            </span>
+                          </div>
+                          <div className="col-sm-4 d-flex flex-column">
+                            <span
+                              className="final_report_name mx-4"
+                              style={{ fontWeight: "bold" }}
+                            >
+                              &#8377;{" "}
+                              {schemes
+                                .reduce(
+                                  (acc, scheme) =>
+                                    acc + (scheme?.calculated_subsidy || 0),
+                                  0
+                                )
+                                .toLocaleString("en-IN")
+                                .replace(/,/g, ",")}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
-        </div>
-      ));
-      setCentralSubsidyList(data);
+        );
+        setCentralSubsidyList(data);
+      }
     }
   }, []);
 
