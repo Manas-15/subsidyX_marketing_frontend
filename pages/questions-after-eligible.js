@@ -361,7 +361,7 @@ const QuestionAfterEligible = ({ data }) => {
               <div className="row inner-section">
                 <div className="col-sm-10">
                   <div className="d-flex justify-content-center m-5">
-                    <h3 className="fw-bold">
+                    <h3 style={{ fontSize: "20px" }}>
                       {questionData?.name
                         ? questionData?.name
                         : "No question available"}
@@ -456,35 +456,37 @@ const QuestionAfterEligible = ({ data }) => {
                         onClick={(e) => goToNext(e)}
                       />
                     </div>
-                    {questionData?.tooltip !== null && (
-                      <div className="mt-5 d-flex justify-content-center">
-                        <div
-                          style={{
-                            marginTop: "100px",
-                            border: "1px solid black",
-                            borderRadius: "10px",
-                            backgroundColor: "rgb(237 217 207)",
-                            color: "black",
-                          }}
-                        >
+                    {console.log(questionData?.tooltip)}
+                    {questionData?.tooltip !== null &&
+                      questionData?.tooltip !== "" && (
+                        <div className="mt-5 d-flex justify-content-center">
                           <div
                             style={{
-                              justifyContent: "center",
-                              alignItems: "center",
-                              width: "710px",
-                              height: "87px",
-                              display: "flex",
-                              flexDirection: "column",
+                              marginTop: "100px",
+                              border: "1px solid black",
+                              borderRadius: "10px",
+                              backgroundColor: "rgb(237 217 207)",
+                              color: "black",
                             }}
                           >
-                            <span style={{ fontSize: "15px" }}>
-                              {questionData?.tooltip}
-                            </span>
+                            <div
+                              style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: "710px",
+                                height: "87px",
+                                display: "flex",
+                                flexDirection: "column",
+                              }}
+                            >
+                              <span style={{ fontSize: "15px" }}>
+                                {questionData?.tooltip}
+                              </span>
+                            </div>
+                            {/* <p>Total Schemes: {totalSchemeCount}</p> */}
                           </div>
-                          {/* <p>Total Schemes: {totalSchemeCount}</p> */}
                         </div>
-                      </div>
-                    )}
+                      )}
                   </div>
                 </div>
 
