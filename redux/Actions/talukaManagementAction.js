@@ -1,6 +1,6 @@
 import { talukaManagementConstants } from "../Constants/talukaManagementConstants";
 import { talukaManagementService } from "../Services/talukaManagementService";
-import { alertActions } from "./alertAction";
+// import { alertActions } from "./alertAction";
 
 export const talukaManagementAction = {
   getTalukas,
@@ -14,12 +14,12 @@ function getTalukas(ID) {
     dispatch(request(ID));
     talukaManagementService.getTalukas(ID).then(
       (res) => {
-        console.log(res);
         dispatch(success(res));
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };

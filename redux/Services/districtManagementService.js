@@ -1,4 +1,3 @@
-
 import api from "../api";
 
 export const districtManagementService = {
@@ -8,9 +7,13 @@ export const districtManagementService = {
   // deleteDistrict,
 };
 
-async function getDistricts(ID) {
-  let params = ID ? "?state_id=" + ID : "";
-  return await api.get(`district/${params}`, );
+async function getDistricts(pageData) {
+  let params = pageData?.id ? "&state_id=" + pageData?.id : "";
+  return await api.get(
+    `district/?page=${pageData?.pagination?.page || 1}&page_size=${
+      pageData?.pagination?.pageSize || 300000
+    }${params}`
+  );
 }
 
 // async function createDistrict(districtData) {

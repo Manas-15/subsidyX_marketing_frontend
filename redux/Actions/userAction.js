@@ -21,21 +21,18 @@ function signup(data) {
     userService.signup(data).then(
       (res) => {
         dispatch(success(res));
-
         if (res?.data?.detail?.error_msg) {
-          alert(res?.data?.detail?.error_msg?.toString());
-          dispatch(
-            alertActions.success(res?.data?.detail?.error_msg?.toString())
-          );
+          showToast(res?.data?.detail?.error_msg?.toString(), "error");
         } else {
-          dispatch(alertActions.success("User Signup successfully"));
+          showToast("User Signup successfully", "success");
         }
         // const result = JSON.stringify(res?.data?.token?.access_token);
         // localStorage.setItem("accessToken", result);
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };
@@ -60,20 +57,18 @@ function generateOTP(credential) {
     userService.generateOTP(credential).then(
       (res) => {
         dispatch(success(res));
-        if (res?.data?.detail?.error_msg !== undefined) {
+        if (res?.data?.detail?.error_msg) {
           dispatch(userActions?.saveOTP(res?.data));
-          dispatch(
-            alertActions.error(res?.data?.detail?.error_msg?.toString())
-          );
+          showToast(res?.data?.detail?.error_msg?.toString(), "error");
         } else {
-          console.log(res?.data);
           dispatch(userActions?.saveOTP(res?.data));
-          dispatch(alertActions.success("OTP sent successfully"));
+          showToast("OTP sent successfully", "success");
         }
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };
@@ -114,11 +109,9 @@ function validateOtp(data) {
       (res) => {
         dispatch(success(res));
         if (res?.data?.detail?.error_msg) {
-          dispatch(
-            alertActions.error(res?.data?.detail?.error_msg?.toString())
-          );
+          showToast(res?.data?.detail?.error_msg?.toString(), "error");
         } else {
-          dispatch(alertActions.success("User loggedin successfully"));
+          showToast("User loggedin successfully", "success");
           const result = JSON.stringify(res?.data?.access_token);
           const refreshToken = JSON.stringify(res?.data?.refresh_token);
 
@@ -128,7 +121,8 @@ function validateOtp(data) {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };
@@ -149,7 +143,6 @@ function login(data) {
     userService.login(data).then(
       (res) => {
         dispatch(success(res));
-        // dispatch(alertActions.success("User loggedin successfully"));
         showToast("User loggedin successfully", "success");
         const result = JSON.stringify(res?.data?.access_token);
         const refreshToken = JSON.stringify(res?.data?.refresh_token);
@@ -159,7 +152,8 @@ function login(data) {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };
@@ -177,7 +171,7 @@ function login(data) {
 function logout() {
   return (dispatch) => {
     dispatch(logout());
-    dispatch(alertActions.success("User logged out successfully"));
+    showToast("User logged out successfully", "success");
   };
 
   function logout() {

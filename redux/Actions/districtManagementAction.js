@@ -1,6 +1,6 @@
 import { districtManagementService } from "redux/Services/districtManagementService";
-import { alertActions } from "./alertAction";
 import { districtManagementConstants } from "redux/Constants/districtManagementConstants";
+import { showToast } from "@layouts/components/ToastNotification";
 
 export const districtManagementAction = {
   getDistricts,
@@ -8,17 +8,17 @@ export const districtManagementAction = {
   // updateDistrict,
   // deleteDistrict,
 };
-function getDistricts(ID) {
+function getDistricts(pageData) {
   return (dispatch) => {
-    dispatch(request(ID));
-    districtManagementService.getDistricts(ID).then(
+    dispatch(request(pageData));
+    districtManagementService.getDistricts(pageData).then(
       (res) => {
-        console.log(res);
         dispatch(success(res));
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };

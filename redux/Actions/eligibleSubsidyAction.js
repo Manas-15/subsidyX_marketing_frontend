@@ -1,6 +1,8 @@
 import { eligibleSubsidyConstant } from "redux/Constants/eligibleSubsidyConstant";
 import { alertActions } from "./alertAction";
 import { eligibleSubsidyService } from "redux/Services/eligibleSubsidyService";
+import { showToast } from "@layouts/components/ToastNotification";
+
 
 export const eligibleSubsidyAction = {
   getEligible,
@@ -19,7 +21,9 @@ function getEligible(data) {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
+
       }
     );
   };
@@ -84,7 +88,9 @@ function getDetailsOfGST(gstNumber) {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
+
       }
     );
   };

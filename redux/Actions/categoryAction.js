@@ -1,6 +1,7 @@
 import { categoryService } from "redux/Services/categoryService";
-import { alertActions } from "./alertAction";
 import { categoryConstant } from "redux/Constants/categoryConstant";
+import { showToast } from "@layouts/components/ToastNotification";
+
 
 export const categoryAction = {
   getCategoryList,
@@ -15,7 +16,8 @@ function getCategoryList() {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        // dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };

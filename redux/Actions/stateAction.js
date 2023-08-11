@@ -1,7 +1,7 @@
-import { userConstants } from "redux/Constants/userConstant";
 import { alertActions } from "./alertAction";
 import { stateConstant } from "redux/Constants/stateConstant";
 import { stateService } from "redux/Services/stateService";
+import { showToast } from "@layouts/components/ToastNotification";
 
 export const stateAction = {
   getStateList,
@@ -16,7 +16,7 @@ function getStateList(pageData) {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        showToast(error.toString(), "error");
       }
     );
   };
