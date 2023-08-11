@@ -55,12 +55,9 @@ const QuestionAfterEligible = ({ data }) => {
   const [backButtonVisible, setBackButtonVisible] = useState(false);
 
   useEffect(() => {
-    if (subsidyData?.selected_data?.user_info?.state_id) {
-      dispatch(
-        districtManagementAction?.getDistricts(
-          subsidyData?.selected_data?.user_info?.state_id
-        )
-      );
+    const id = subsidyData?.selected_data?.user_info?.state_id;
+    if (id) {
+      dispatch(districtManagementAction?.getDistricts({ id: id }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -74,7 +71,6 @@ const QuestionAfterEligible = ({ data }) => {
     if (question?.question !== undefined && question?.question !== null) {
       questionCount = Object.keys(question?.question).length;
     }
-    console.log(question?.previous_question);
 
     if (question?.previous_question?.length > 0) {
       const queCount = question?.previous_question?.length;
@@ -297,10 +293,27 @@ const QuestionAfterEligible = ({ data }) => {
           style={{
             marginTop: "10px",
             border: "1px solid black",
-            padding: "10px",
+            // padding: "50px 70px",
+            borderRadius: "10px",
+            backgroundColor: "#04032B",
+            color: "white",
           }}
         >
-          {totalSubsidyNames}
+          <div
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              width: "220px",
+              height: "180px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <span style={{ fontSize: "14px" }}>Applicable Subsidies</span>
+            <span style={{ fontSize: "30px", marginTop: "5px" }}>
+              {totalSubsidyNames}
+            </span>
+          </div>
           {/* <p>Total Schemes: {totalSchemeCount}</p> */}
         </div>
       );
@@ -458,7 +471,7 @@ const QuestionAfterEligible = ({ data }) => {
                       className="position-relative"
                     />
                   </div> */}
-                  <div className="d-flex my-5">
+                  {/* <div className="d-flex my-5">
                     <h4
                       style={{
                         textDecoration: "underline",
@@ -468,7 +481,7 @@ const QuestionAfterEligible = ({ data }) => {
                     >
                       Displaying eligible subsidies
                     </h4>
-                  </div>
+                  </div> */}
                   <div className="mt-5">
                     <div className="d-flex">
                       <p style={{ marginLeft: "15px" }}>{subsidyItems}</p>
