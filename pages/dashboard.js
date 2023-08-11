@@ -96,7 +96,6 @@ const Dashboard = ({ data }) => {
       <section className="section">
         <div className="container">
           <div className="section row pb-0">
-            {console.log(modalShow, selectedRadioButton === "1", next)}
             {modalShow && selectedRadioButton === "1" && next && (
               <CongratulationsModal
                 type={type}

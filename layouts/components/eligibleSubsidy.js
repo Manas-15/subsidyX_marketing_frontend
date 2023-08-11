@@ -45,7 +45,7 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
   );
 
   useEffect(() => {
-    dispatch(stateAction.getStateList({ pagination: { page, pageSize } }));
+    dispatch(stateAction.getStateList());
     dispatch(categoryAction.getCategoryList());
   }, []);
 
@@ -75,30 +75,6 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
       dispatch(sectorAction.getSectorList(value));
     }
 
-    // if (name === "industrySectorID") {
-    //   const selectedData = {
-    //     stateID: selectedInformation?.stateID,
-    //     industryCategoryID: selectedInformation?.industryCategoryID,
-    //     industrySectorID: selectedOption?.text,
-    //   };
-
-    //   const data = {
-    //     user_info: {
-    //       mobile_number: eligibleUserInfo?.mobileNumber,
-    //       state_id: eligibleUserInfo?.stateID,
-    //       industry_category_id: eligibleUserInfo?.industryCategoryID,
-    //       industry_sector_id: value,
-    //     },
-    //   };
-
-    //   dispatch(eligibleSubsidyAction.getEligible(data));
-    //   dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
-    //   dispatch(
-    //     eligibleSubsidyAction.selectedInformationForEligibleSubsidy(
-    //       selectedData
-    //     )
-    //   );
-    // }
   };
 
   const goToNext = () => {
