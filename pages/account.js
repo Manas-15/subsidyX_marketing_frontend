@@ -41,7 +41,7 @@ const Account = ({ data }) => {
             <div className="col-12 inner-section">
               <div>
                 <div className="d-flex justify-content-center mt-5 mb-5">
-                  <h2 className="fw-bold text-white">
+                  <h2 style={{ fontSize: "25px", color: "white" }}>
                     Hey!! Do you have a SubsidyX Account?
                   </h2>
                 </div>
@@ -52,13 +52,13 @@ const Account = ({ data }) => {
                       name="udyamAadhar"
                       value="1"
                       style={{
-                        width: "30px",
-                        height: "30px",
+                        width: "20px",
+                        height: "25px",
                         marginRight: "10px",
                       }}
                       onChange={(e) => handleRadioClick(e)}
                     />
-                    <h3 className="text-white">YES</h3>
+                    <h3 style={{ fontSize: "20px", color: "white" }}>YES</h3>
                   </div>
 
                   <div className="d-flex justify-content-center">
@@ -67,13 +67,13 @@ const Account = ({ data }) => {
                       name="udyamAadhar"
                       value="2"
                       style={{
-                        width: "30px",
-                        height: "30px",
+                        width: "20px",
+                        height: "25px",
                         marginRight: "10px",
                       }}
                       onChange={(e) => handleRadioClick(e)}
                     />
-                    <h3 className="fw-bold text-white">NO</h3>
+                    <h3 style={{ fontSize: "20px", color: "white" }}>NO</h3>
                   </div>
                   <span className="mt-5 d-flex justify-content-center">
                     <IoIosArrowDropright

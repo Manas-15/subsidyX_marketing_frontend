@@ -114,7 +114,7 @@ const Dashboard = ({ data }) => {
               <>
                 <div className="col-12 inner-section ">
                   <div className="d-flex justify-content-center mt-5 mb-5">
-                    <h2 className="fw-bold text-dark">
+                    <h2 style={{ fontSize: "25px" }}>
                       Please provide Udyam Registration Number or GST Number?
                     </h2>
                   </div>
@@ -166,7 +166,7 @@ const Dashboard = ({ data }) => {
             ) : (
               <div className="col-12 inner-section ">
                 <div className="d-flex justify-content-center mt-5 mb-5">
-                  <h2 className="fw-bold text-dark">
+                  <h2 style={{ fontSize: "25px" }}>
                     Hey!! Do you have Udyam Aadhar Number or GST Number?
                   </h2>
                 </div>
@@ -178,13 +178,13 @@ const Dashboard = ({ data }) => {
                       value="1"
                       // checked={true}
                       style={{
-                        width: "30px",
-                        height: "30px",
+                        width: "20px",
+                        height: "25px",
                         marginRight: "10px",
                       }}
                       onChange={(e) => handleRadioClick(e)}
                     />
-                    <h3 className="text-dark">YES</h3>
+                    <h3 style={{ fontSize: "19px" }}>YES</h3>
                   </div>
 
                   <div className="d-flex justify-content-center">
@@ -194,13 +194,13 @@ const Dashboard = ({ data }) => {
                       value="2"
                       // checked={false}
                       style={{
-                        width: "30px",
-                        height: "30px",
+                        width: "20px",
+                        height: "25px",
                         marginRight: "10px",
                       }}
                       onChange={(e) => handleRadioClick(e)}
                     />
-                    <h3 className="fw-bold text-dark">NO</h3>
+                    <h3 style={{ fontSize: "19px" }}>NO</h3>
                   </div>
                   <span className="mt-5 d-flex justify-content-center">
                     <IoIosArrowDropright

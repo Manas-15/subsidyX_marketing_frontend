@@ -74,7 +74,6 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
     if (name === "industryCategoryID") {
       dispatch(sectorAction.getSectorList(value));
     }
-
   };
 
   const goToNext = () => {
@@ -138,7 +137,7 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
         {/* {isLoading && <Loader />} */}
 
         <div className="d-flex justify-content-center mt-5 mb-5">
-          <h2 className="fw-bold text-dark">
+          <h2 style={{ fontSize: "25px" }}>
             Please Select State, Industry Category and Industry Sector
           </h2>
         </div>

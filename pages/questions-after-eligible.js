@@ -310,7 +310,7 @@ const QuestionAfterEligible = ({ data }) => {
           >
             <span style={{ fontSize: "14px" }}>Applicable Subsidies</span>
             <span style={{ fontSize: "30px", marginTop: "5px" }}>
-              {totalSubsidyNames}
+              {question?.scheme_counter}
             </span>
           </div>
           {/* <p>Total Schemes: {totalSchemeCount}</p> */}
@@ -361,7 +361,7 @@ const QuestionAfterEligible = ({ data }) => {
               <div className="row inner-section">
                 <div className="col-sm-10">
                   <div className="d-flex justify-content-center m-5">
-                    <h3 style={{ fontSize: "20px" }}>
+                    <h3 style={{ fontSize: "23px" }}>
                       {questionData?.name
                         ? questionData?.name
                         : "No question available"}
@@ -402,13 +402,15 @@ const QuestionAfterEligible = ({ data }) => {
                                 value={option?.id}
                                 checked={checkedValue?.value === option?.id}
                                 style={{
-                                  width: "30px",
-                                  height: "30px",
+                                  width: "20px",
+                                  height: "24px",
                                   marginRight: "10px",
                                 }}
                                 onChange={(e) => handleRadioClick(e)}
                               />
-                              <h3>{option?.option}</h3>
+                              <h3 style={{ fontSize: "20px" }}>
+                                {option?.option}
+                              </h3>
                             </div>
                           ))}
                         </>
@@ -456,8 +458,9 @@ const QuestionAfterEligible = ({ data }) => {
                         onClick={(e) => goToNext(e)}
                       />
                     </div>
-                    {console.log(questionData?.tooltip)}
+
                     {questionData?.tooltip !== null &&
+                      questionData?.tooltip !== undefined &&
                       questionData?.tooltip !== "" && (
                         <div className="mt-5 d-flex justify-content-center">
                           <div
