@@ -18,7 +18,7 @@ export const CongratulationsModal = (props) => {
     (subsidy, ind) => subsidy.is_central === false
   ).length;
 
-  console.log(isCentral, isState);
+  console.log(isCentral + isState);
   const submitModal = () => {
     props.setModalShow(false);
     router.push("/questions-after-eligible");
@@ -114,23 +114,26 @@ export const CongratulationsModal = (props) => {
               <span className="text-white">
                 {isCentral > 0 && isState > 0 ? (
                   <>
-                    Based on information provided there are {isCentral}{" "}
-                    subsidies applicable to you <br />
-                    from Central Government and {isState} subsidies applicable
-                    to you <br />
-                    from Government of Gujurat.
+                    Based on the primary information provided there are{" "}
+                    {isCentral + isState} subsidies are applicable to you.{" "}
+                    <br />
+                    Central Government Subsidies : {isCentral} <br />
+                    State Government Subsidies : {isState}
                   </>
                 ) : isCentral > 0 ? (
                   <>
-                    Based on information provided there are {isCentral}{" "}
-                    subsidies applicable to you <br />
-                    from Central Government.
+                    Based on the primary information provided there are{" "}
+                    {isCentral} subsidies are applicable to you. <br />
+                    Central Government Subsidies : {isCentral} <br />
                   </>
                 ) : isState > 0 ? (
                   <>
-                    Based on information provided there are {isState} subsidies
+                    {/* Based on information provided there are {isState} subsidies
                     applicable to you <br />
-                    from Government of Gujurat.
+                    from Government of Gujurat. */}
+                    Based on the primary information provided there are{" "}
+                    {isState} subsidies are applicable to you. <br />
+                    State Government Subsidies : {isState}
                   </>
                 ) : (
                   <>No Subsidy matched based on your inputs</>
