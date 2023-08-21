@@ -26,7 +26,7 @@ const Header = () => {
     dispatch(userActions.clearOTP());
     // localStorage.removeItem("accessToken");
     localStorage.setItem("accessToken", "");
-    router.push("/account");
+    router.push("/");
   };
 
   return (

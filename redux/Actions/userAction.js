@@ -1,6 +1,5 @@
 import { userConstants } from "redux/Constants/userConstant";
 import { userService } from "redux/Services/userService";
-import { alertActions } from "./alertAction";
 import { showToast } from "@layouts/components/ToastNotification";
 
 export const userActions = {

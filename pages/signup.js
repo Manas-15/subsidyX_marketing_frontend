@@ -1,5 +1,4 @@
 import Base from "@layouts/Baseof";
-import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -8,25 +7,15 @@ import { userActions } from "redux/Actions/userAction";
 import Link from "next/link";
 import { useMemo } from "react";
 import jwt from "jsonwebtoken";
+import { SignupSchema } from "@layouts/components/Validation";
+import { useFormik } from "formik";
+import { Col, Form, Row } from "react-bootstrap";
+import { CustomButton } from "@layouts/components/CustomButton";
 
 const Signup = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [firstNameError, setFirstNameError] = useState(false);
-  const [lastNameError, setLastNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [numberError, setNumberError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [credential, setCredential] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    number: "",
-    password: "",
-  });
-
   const user = useSelector((state) => state?.user);
-  console.log(user?.sign_up_user);
 
   useEffect(() => {
     if (
@@ -41,97 +30,21 @@ const Signup = ({ data }) => {
     }
   }, [user?.sign_up_user]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    if (name === "firstName") {
-      if (value === "") {
-        setFirstNameError(true);
-      } else {
-        setFirstNameError(false);
-      }
-    } else if (name === "lastName") {
-      if (value === "") {
-        setLastNameError(true);
-      } else {
-        setLastNameError(false);
-      }
-    } else if (name === "email") {
-      if (value === "") {
-        setEmailError(true);
-      } else {
-        setEmailError(false);
-      }
-    } else if (name === "number") {
-      if (value === "") {
-        setNumberError(true);
-      } else {
-        setNumberError(false);
-      }
-    } else {
-      if (value === "") {
-        setPasswordError(true);
-      } else {
-        setPasswordError(false);
-      }
-    }
-    setCredential({ ...credential, [name]: value });
-  };
-
-  const handleSignup = (e) => {
-    e.preventDefault();
-    if (
-      credential?.firstName === "" ||
-      credential?.lastName === "" ||
-      credential?.email === "" ||
-      credential?.number === "" ||
-      credential?.password === ""
-    ) {
-      setFirstNameError(true);
-      setLastNameError(true);
-      setEmailError(true);
-      setNumberError(true);
-      setPasswordError(true);
-    } else {
-      const signupData = {
-        first_name: credential?.firstName,
-        last_name: credential?.lastName,
-        email: credential?.email,
-        phone_number: credential?.number,
-        password: credential?.password,
-      };
-      dispatch(userActions.signup(signupData));
-    }
-
-    setCredential({
-      firstName: "",
-      lastName: "",
+  const formik = useFormik({
+    initialValues: {
+      first_name: "",
+      last_name: "",
       email: "",
-      number: "",
+      phone_number: "",
       password: "",
-    });
-  };
-
-  // const accessToken = useMemo(
-  //   () => user?.user?.access_token,
-  //   [user?.user?.access_token]
-  // );
-
-  // useEffect(() => {
-  //   if (accessToken !== undefined) {
-  //     try {
-  //       // const decodedToken = jwt.decode(accessToken);
-  //       // dispatch(userActions?.userReportCount(decodedToken));
-  //       router.push("/login");
-  //       // }
-  //     } catch (error) {
-  //       console.log("Error decoding access token:", error);
-  //       return null;
-  //     }
-  //   } else {
-  //     router.push("/signup");
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [user?.user?.access_token]);
+    },
+    validationSchema: SignupSchema,
+    onSubmit: (values) => {
+      // console.log(values);
+      const signupData = values;
+      dispatch(userActions.signup(signupData));
+    },
+  });
 
   return (
     <Base
@@ -152,127 +65,126 @@ const Signup = ({ data }) => {
       >
         <div className="container">
           <div className="section row pb-0">
-            <div className="col-12 inner-section">
-              <Form onSubmit={(e) => handleSignup(e)}>
-                <div className="d-flex justify-content-center mt-5 mb-5">
-                  <h2 className="fw-bold text-white">
-                    Please provide your Details
-                  </h2>
-                </div>
-                <div style={{ margin: "auto", width: "500px" }}>
-                  <div className="row">
-                    <div className="form-floating mb-3 col-sm-6">
-                      <input
-                        type="text"
-                        name="firstName"
-                        value={credential?.firstName}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        placeholder="First Name"
-                      />
-                      {firstNameError && (
-                        <span style={{ color: "red", fontSize: "15px" }}>
-                          Please enter first name
-                        </span>
-                      )}
-                    </div>
+            <div className="col-12 signup-section">
+              <Form onSubmit={formik.handleSubmit}>
+                <h2 className="fw-bold text-white">
+                  Please provide your Details
+                </h2>
+                <div>
+                  <Row>
+                    <Col>
+                      <Form.Group className="mb-3" controlId="first_name">
+                        <Form.Control
+                          style={{
+                            padding: "0.5rem",
+                            border: "2px solid rgba(0,0,0,0.2)",
+                            borderRadius: "10px",
+                          }}
+                          placeholder="First Name"
+                          type="text"
+                          name="first_name"
+                          value={formik.values.first_name}
+                          onChange={formik.handleChange}
+                          isInvalid={
+                            formik.touched.first_name &&
+                            formik.errors.first_name
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {formik.errors.first_name}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
 
-                    <div className="form-floating mb-3  col-sm-6">
-                      <input
-                        type="text"
-                        name="lastName"
-                        value={credential?.lastName}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        placeholder="Last Name"
-                      />
-                      {lastNameError && (
-                        <span style={{ color: "red", fontSize: "15px" }}>
-                          Please enter last name
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="form-floating mb-3 col-sm-6">
-                      <input
-                        type="email"
-                        name="email"
-                        value={credential?.email}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        placeholder="Email"
-                      />
-                      {emailError && (
-                        <span style={{ color: "red", fontSize: "15px" }}>
-                          Please enter your email
-                        </span>
-                      )}
-                    </div>
-                    <div className="form-floating mb-3 col-sm-6">
-                      <input
-                        type="number"
-                        name="number"
-                        value={credential?.number}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        placeholder="Phone Number"
-                      />
-                      {numberError && (
-                        <span style={{ color: "red", fontSize: "15px" }}>
-                          Please enter phone number
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="form-floating mb-3 col-sm-12">
-                      <input
-                        type="password"
-                        name="password"
-                        value={credential?.password}
-                        onChange={(e) => handleChange(e)}
-                        className="form-control"
-                        placeholder="Password"
-                      />
-                      {passwordError && (
-                        <span style={{ color: "red", fontSize: "15px" }}>
-                          Please enter password
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                    <Col>
+                      <Form.Group className="mb-3" controlId="last_name">
+                        <Form.Control
+                          style={{
+                            padding: "0.5rem",
+                            border: "2px solid rgba(0,0,0,0.2)",
+                            borderRadius: "10px",
+                          }}
+                          placeholder="Last Name"
+                          type="text"
+                          name="last_name"
+                          value={formik.values.last_name}
+                          onChange={formik.handleChange}
+                          isInvalid={
+                            formik.touched.last_name && formik.errors.last_name
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {formik.errors.last_name}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Form.Group className="mb-3" controlId="email">
+                        <Form.Control
+                          style={{
+                            padding: "0.5rem",
+                            border: "2px solid rgba(0,0,0,0.2)",
+                            borderRadius: "10px",
+                          }}
+                          placeholder="Email"
+                          type="email"
+                          name="email"
+                          value={formik?.values?.email}
+                          onChange={formik.handleChange}
+                          isInvalid={
+                            formik.touched.email && formik.errors.email
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {formik.errors.email}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    <Col>
+                      <Form.Group className="mb-3" controlId="phone_number">
+                        <Form.Control
+                          style={{
+                            padding: "0.5rem",
+                            border: "2px solid rgba(0,0,0,0.2)",
+                            borderRadius: "10px",
+                          }}
+                          placeholder="Contact Number"
+                          type="number"
+                          name="phone_number"
+                          maxLength={10}
+                          value={formik.values.phone_number}
+                          onChange={formik.handleChange}
+                          isInvalid={
+                            formik.touched.phone_number &&
+                            formik.errors.phone_number
+                          }
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {formik.errors.phone_number}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
 
-                  <div className="my-3 d-flex justify-content-center">
-                    <input
-                      type="checkbox"
-                      onChange={(e) => console.log(e.target.checked)}
-                    />
-                    <Link
-                      href="https://www.lipsum.com/"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="text-white mx-2"
-                    >
-                      I agree with terms & conditions
-                    </Link>
-                  </div>
-
-                  <div className=" d-flex justify-content-center">
-                    <button
+                  <div className="d-flex justify-content-end">
+                    <CustomButton
+                      name="Submit"
+                      color="#FFFFFF"
+                      bgColor="#FA6130"
                       type="submit"
-                      className="btn btn-primary log_btn"
-                      title="signup"
-                    >
-                      SUBMIT
-                    </button>
-                  </div>
-                  <div className="text-white d-flex justify-content-center mt-3">
-                    Already have an account ? &nbsp;
-                    <Link href="/login" className="text-primary">
-                      {" "}
-                      Log In{" "}
-                    </Link>
+                    />
+                    <CustomButton
+                      name="Cancel"
+                      color="#000000"
+                      bgColor="#FFFFFF"
+                      border="1px solid #000000"
+                      type={"button"}
+                      onClick={() => {
+                        // router.push("/clients/client_management");
+                      }}
+                    />
                   </div>
                 </div>
               </Form>
