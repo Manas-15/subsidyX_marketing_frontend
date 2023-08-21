@@ -16,6 +16,7 @@ const Signup = ({ data }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSelector((state) => state?.user);
+  const [toggleCheck, setToggleCheck] = useState(true);
 
   useEffect(() => {
     if (
@@ -40,9 +41,9 @@ const Signup = ({ data }) => {
     },
     validationSchema: SignupSchema,
     onSubmit: (values) => {
-      // console.log(values);
+      console.log(values);
       const signupData = values;
-      dispatch(userActions.signup(signupData));
+      // dispatch(userActions.signup(signupData));
     },
   });
 
@@ -67,10 +68,10 @@ const Signup = ({ data }) => {
           <div className="section row pb-0">
             <div className="col-12 signup-section">
               <Form onSubmit={formik.handleSubmit}>
-                <h2 className="fw-bold text-white">
+                <h2 className="fw-bold text-white d-flex justify-content-center">
                   Please provide your Details
                 </h2>
-                <div>
+                <div className="mt-5">
                   <Row>
                     <Col>
                       <Form.Group className="mb-3" controlId="first_name">
@@ -168,23 +169,37 @@ const Signup = ({ data }) => {
                     </Col>
                   </Row>
 
-                  <div className="d-flex justify-content-end">
-                    <CustomButton
-                      name="Submit"
-                      color="#FFFFFF"
-                      bgColor="#FA6130"
+                  <div className="my-3 d-flex justify-content-center">
+                    <input
+                      type="checkbox"
+                      onChange={(e) => setToggleCheck(!toggleCheck)}
+                    />
+                    <Link
+                      href="https://www.lipsum.com/"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      className="text-white mx-2"
+                    >
+                      I agree with terms & conditions
+                    </Link>
+                  </div>
+
+                  <div className=" d-flex justify-content-center">
+                    <button
+                      disabled={toggleCheck}
                       type="submit"
-                    />
-                    <CustomButton
-                      name="Cancel"
-                      color="#000000"
-                      bgColor="#FFFFFF"
-                      border="1px solid #000000"
-                      type={"button"}
-                      onClick={() => {
-                        // router.push("/clients/client_management");
-                      }}
-                    />
+                      className="btn btn-primary log_btn"
+                      title="signup"
+                    >
+                      SUBMIT
+                    </button>
+                  </div>
+                  <div className="text-white d-flex justify-content-center mt-3">
+                    Already have an account ? &nbsp;
+                    <Link href="/login" className="text-primary">
+                      {" "}
+                      Log In{" "}
+                    </Link>
                   </div>
                 </div>
               </Form>

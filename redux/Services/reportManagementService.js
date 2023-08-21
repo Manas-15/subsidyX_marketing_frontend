@@ -18,7 +18,7 @@ async function getAllReportBasedOnUser(pageData) {
 
 async function getReportByID(id) {
   //   let params = ID ? "?state_id=" + ID : "";
-  return await api.get(`subsidy/fetch_answered_question ?report_id=${id}`);
+  return await api.get(`subsidy/fetch_answered_question ?report_id=367`);
 }
 
 async function deleteReport(id) {

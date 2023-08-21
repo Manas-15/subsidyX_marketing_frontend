@@ -49,7 +49,7 @@ function FinalReport({ data, setModalShow }) {
 
   // Group the subsidies by subsidy_name start
   useEffect(() => {
-    //groupby subsidies list using same subsidy name of Gujurat State
+    //groupby subsidies list using same subsidy name of Gujarat State
     if (stateSubsidies !== undefined) {
       const groupedData = stateSubsidies.reduce((acc, curr) => {
         const parentSubsidyName = curr?.parent_subsidy_name;
@@ -73,7 +73,7 @@ function FinalReport({ data, setModalShow }) {
                 }}
               >
                 <span className="my-2" style={{ fontWeight: "bold" }}>
-                  Gujurat State Government Subsidies
+                  Gujarat State Government Subsidies
                 </span>
               </div>
 
@@ -111,7 +111,7 @@ function FinalReport({ data, setModalShow }) {
                                 fontWeight: "bold",
                               }}
                             >
-                              Subsidy Amount
+                              Subsidy Amount Estimated
                             </span>
                           </div>
                         </div>
@@ -238,7 +238,7 @@ function FinalReport({ data, setModalShow }) {
                                 fontWeight: "bold",
                               }}
                             >
-                              Subsidy Amount
+                              Subsidy Amount Estimated
                             </span>
                           </div>
                         </div>
@@ -631,7 +631,7 @@ function FinalReport({ data, setModalShow }) {
             </div>
           )} */}
 
-          {/* Gujurat Government */}
+          {/* Gujarat Government */}
           <p>{stateSubsidyList}</p>
         </div>
       </Base>

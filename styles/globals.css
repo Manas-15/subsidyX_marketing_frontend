@@ -355,7 +355,13 @@ ul.social-icons li a {
 ul.social-icons li a:hover {
   color: #4682e3;
 }
-
+.signup-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 100vh; */
+  min-height: 536px;
+}
 .inner-section {
   min-height: 536px;
   padding-top: 20px;

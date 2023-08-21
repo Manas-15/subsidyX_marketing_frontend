@@ -108,7 +108,7 @@ export const CongratulationsModal = (props) => {
                       subsidies applicable to you <br />
                       from Central Government and {isState}
                       subsidies applicable to you <br />
-                      from Government of Gujurat.
+                      from Government of Gujarat.
                     </>
                   ) : isCentral > 0 ? (
                     <>
@@ -120,7 +120,7 @@ export const CongratulationsModal = (props) => {
                     <>
                       Based on information provided there are {isState}{" "}
                       subsidies applicable to you <br />
-                      from Government of Gujurat.
+                      from Government of Gujarat.
                     </>
                   )}
                 </span>

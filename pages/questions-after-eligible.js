@@ -439,7 +439,6 @@ const QuestionAfterEligible = ({ data }) => {
                         </>
                       )}
                     </div>
-
                     <div className="mt-4 d-flex justify-content-center">
                       {/* prevQueCount !== 0 */}
                       {backButtonVisible && (
@@ -482,7 +481,14 @@ const QuestionAfterEligible = ({ data }) => {
                                 flexDirection: "column",
                               }}
                             >
-                              <span style={{ fontSize: "15px" }}>
+                              <span
+                                style={{
+                                  fontSize: "15px",
+                                  width: "710px",
+                                  overflowX: "scroll",
+                                  padding: "15px 15px 0 15px",
+                                }}
+                              >
                                 {questionData?.tooltip}
                               </span>
                             </div>
@@ -532,7 +538,7 @@ const QuestionAfterEligible = ({ data }) => {
           <>
             <div className="d-flex justify-content-center mt-5 mb-5">
               <h2 className="fw-bold text-dark">
-                Enter your Company Name, Owner Name, District and Taluka
+                Enter your Organization Name, User Name, District and Taluka
               </h2>
             </div>
             <div style={{ margin: "auto" }}>
@@ -542,7 +548,7 @@ const QuestionAfterEligible = ({ data }) => {
                   type="text"
                   onChange={(e) => handleSelectChange(e)}
                   className="form-control mb-3 w-25"
-                  placeholder="Enter Company Name"
+                  placeholder="Enter Organization Name"
                 />
               </div>
 
@@ -552,7 +558,7 @@ const QuestionAfterEligible = ({ data }) => {
                   type="text"
                   onChange={(e) => handleSelectChange(e)}
                   className="form-control mb-3 w-25"
-                  placeholder="Enter Owner Name"
+                  placeholder="Enter User Name"
                 />
               </div>
               {/* <div className="mt-5 d-flex justify-content-center">

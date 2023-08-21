@@ -130,7 +130,7 @@ export const CongratulationsModal = (props) => {
                   <>
                     {/* Based on information provided there are {isState} subsidies
                     applicable to you <br />
-                    from Government of Gujurat. */}
+                    from Government of Gujarat. */}
                     Based on the primary information provided there are{" "}
                     {isState} subsidies are applicable to you. <br />
                     State Government Subsidies : {isState}
