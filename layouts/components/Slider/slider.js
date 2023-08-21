@@ -13,14 +13,13 @@ function Slider() {
   const services = [
     {
       title:
-        "Get your benifit report with in few minutes and start planning for your business",
-      heading: "Instant benifits report",
-      sub_heading: "Instant benifits report",
+        "Get your benefit report with in few minutes and start planning for your business",
+      heading: "Instant benefits report",
+      sub_heading: "Instant benefits report",
       image: { sliderGif },
     },
   ];
 
-  console.log(services);
   return (
     <div className="benefit_sec w-100">
       {/* <Swiper

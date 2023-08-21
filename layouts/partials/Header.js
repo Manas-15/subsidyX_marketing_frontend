@@ -85,7 +85,7 @@ const Header = () => {
                   Home
                 </Link>
               </li>
-              <li
+              {/* <li
                 className={
                   router.pathname == "/service" ? "nav-item active" : "nav-item"
                 }
@@ -93,7 +93,7 @@ const Header = () => {
                 <Link href="#" className="nav-link" title="services">
                   Services
                 </Link>
-              </li>
+              </li> */}
               <li
                 className={
                   router.pathname == "/about" ? "nav-item active" : "nav-item"

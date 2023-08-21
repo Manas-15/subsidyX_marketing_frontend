@@ -163,7 +163,7 @@ const Home = () => {
           <div className="ites_part">
             <h2 className="cmn_h2_heading text-center">
               <span className="col_orng">MSME INCENTIVES </span>
-              <span className="col_blue">BY GUJURAT GOVERNMENTS </span>
+              <span className="col_blue">BY GUJARAT GOVERNMENTS </span>
             </h2>
             <div className="row incen_row_content">
               <div className="col-md-5 ">
