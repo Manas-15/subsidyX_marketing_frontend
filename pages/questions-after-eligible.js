@@ -376,7 +376,7 @@ const QuestionAfterEligible = ({ data }) => {
                             <Form.Control
                               type="text"
                               name="name"
-                              placeholder="Enter Amount"
+                              placeholder=" "
                               autoFocus
                               value={inputValue}
                               onChange={(e) => handleChange(e)}

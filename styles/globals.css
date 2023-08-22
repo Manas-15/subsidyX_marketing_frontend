@@ -115,19 +115,30 @@ td {
   border-radius: 0.8rem;
 }
 a:active {
-  background-color: #fa6130 !important;
+  background-color: #3d3c5d !important;
 }
 a:focus {
-  background-color: #fa6130 !important;
+  background-color: #3d3c5d !important;
 }
 a:hover {
   background-color: #3d3c5d;
   color: #ffffff;
 }
 .navbar-brand {
+  background-color: transparent !important;
   margin-right: 0 !important;
   padding-right: 1rem !important;
 }
+.navbar-brand:active {
+  background-color: transparent !important;
+}
+.navbar-brand:focus {
+  background-color: transparent !important;
+}
+.navbar-brand:hover {
+  background-color: transparent !important;
+}
+
 .sidebar_icon {
   font-size: 1.2rem;
   display: inline-block;

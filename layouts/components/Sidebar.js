@@ -54,7 +54,17 @@ const Sidebar = () => {
       </button>
       <aside className="sidebar" data-collapse={isCollapsed}>
         <div className="sidebar_top">
-          <Link
+          <span className="navbar-brand">
+            <Image src="/images/logo.png" height="50" width="50" alt="logo" />
+            <Image
+              src="/images/logo-text.png"
+              height="35"
+              width="133"
+              alt="logo name"
+              className="sidebar_logo_name"
+            />
+          </span>
+          {/* <Link
             href="/login"
             className="navbar-brand"
             onClick={() => dispatch(userActions.logout())}
@@ -67,15 +77,7 @@ const Sidebar = () => {
               alt="logo name"
               className="sidebar_logo_name"
             />
-            {/* <figure>
-              <img className="logo" src="/images/logo.png" alt="" />
-              <img
-                src="/images/logo-text.png"
-                alt=""
-                className="sidebar_logo_name"
-              />
-            </figure> */}
-          </Link>
+          </Link> */}
         </div>
         <ul className="sidebar_list">
           {sideBarItems?.map(({ name, href, icon: Icon }, index) => {
