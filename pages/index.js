@@ -7,6 +7,7 @@ import Portfolio from "layouts/components/Slider/portfolio";
 import greatBenifitImg from "../public/images/great_benifits.png";
 import hugeBenifitImg from "../public/images/huge_benifits.png";
 import centralAndStateGif from "../public/images/central_and_state.gif";
+import afthoniaImg from "../public/images/afthonialogo.png";
 
 const Home = () => {
   const { title } = config.site;
@@ -200,7 +201,7 @@ const Home = () => {
           <div className="ites_part">
             <h2 className="cmn_h2_heading text-center">
               <span className="col_blue">GREAT BENEFITS IN </span>
-              <span className="col_orng">ELECTRONICS</span>
+              <span className="col_orng">ELECTRONICS </span>
               <span className="col_blue">SECTOR </span>
             </h2>
             <div className="row incen_row_content">
@@ -302,6 +303,44 @@ const Home = () => {
                     alt=""
                   />
                 </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="cmn_sec_pad incentive_sec_msme">
+        <div className="container">
+          <div className="ites_part">
+            <h2 className="cmn_h2_heading text-center">
+              <span className="col_blue">PROUDLY INCUBATED AT </span>
+              {/* <span className="col_orng">TEXTILE </span>
+              <span className="col_blue">SECTOR </span> */}
+            </h2>
+            <div className="row incen_row_content">
+              <div className="col-md-5 ">
+                <figure>
+                  <Image
+                    src={afthoniaImg?.src}
+                    width="351"
+                    height="359"
+                    alt=""
+                  />
+                </figure>
+              </div>
+              <div className="col-md-7 text-center">
+                <div>
+                  <p className="incen_content">
+                    Revitalize your textile business - Gujarat Governments
+                    incentives can help you grow and expand your unit like never
+                    before.
+                  </p>
+                </div>
+                <div>
+                  <Link href="/contact" className="btn btn-primary lo_ck_btn">
+                    CHECK YOUR BENEFITS
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

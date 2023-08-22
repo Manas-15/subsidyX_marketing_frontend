@@ -50,7 +50,6 @@ const PhoneNumberLogin = ({ data }) => {
       setPhoneError(false);
       setLoading(true);
       dispatch(userActions.generateOTP(credential));
-      // router.push("/otp");
     }
   };
 

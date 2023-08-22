@@ -1,6 +1,8 @@
 import { userConstants } from "redux/Constants/userConstant";
 import { userService } from "redux/Services/userService";
 import { showToast } from "@layouts/components/ToastNotification";
+import axios from "axios";
+import api from "../api";
 
 export const userActions = {
   signup,
@@ -55,18 +57,16 @@ function generateOTP(credential) {
     dispatch(request(credential));
     userService.generateOTP(credential).then(
       (res) => {
-        dispatch(success(res));
         if (res?.data?.detail?.error_msg) {
-          dispatch(userActions?.saveOTP(res?.data));
           showToast(res?.data?.detail?.error_msg?.toString(), "error");
         } else {
-          dispatch(userActions?.saveOTP(res?.data));
+          dispatch(success(res));
           showToast("OTP sent successfully", "success");
         }
+        dispatch(userActions?.saveOTP(res?.data));
       },
       (error) => {
         dispatch(failure(error.toString()));
-        // dispatch(alertActions.error(error.toString()));
         showToast(error.toString(), "error");
       }
     );
