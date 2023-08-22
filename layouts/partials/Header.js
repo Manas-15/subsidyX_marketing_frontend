@@ -97,7 +97,7 @@ const Header = () => {
                   router.pathname == "/about" ? "nav-item active" : "nav-item"
                 }
               >
-                <Link href="#" className="nav-link" title="about">
+                <Link href="/about-us" className="nav-link" title="about">
                   About
                 </Link>
               </li>
