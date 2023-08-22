@@ -4,6 +4,7 @@ import { useState } from "react";
 import { IoIosArrowDropright } from "react-icons/io";
 import { useRouter } from "next/router";
 import questilonList from "../config/questions.json";
+import withAuth from "@layouts/partials/withAuth";
 
 const QuestionPage = ({ data }) => {
   const router = useRouter();
@@ -87,4 +88,4 @@ const QuestionPage = ({ data }) => {
   );
 };
 
-export default QuestionPage;
+export default withAuth(QuestionPage);

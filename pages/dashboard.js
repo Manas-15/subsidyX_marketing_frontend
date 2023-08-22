@@ -8,6 +8,7 @@ import EligibleSubsidy from "@layouts/components/eligibleSubsidy";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 import { useDispatch, useSelector } from "react-redux";
 import { CongratulationsModal } from "@layouts/components/Modal";
+import withAuth from "@layouts/partials/withAuth";
 
 const Dashboard = ({ data }) => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Dashboard = ({ data }) => {
   const [modalShow, setModalShow] = useState(false);
   const [gstData, setGstData] = useState(false);
   const [type, setType] = useState("");
-  const [validateAadhar, setValidateAadhar] = useState();
+  // const [validateAadhar, setValidateAadhar] = useState();
   const { edit } = router?.query;
 
   const gstNumberData = useSelector(
@@ -51,38 +52,36 @@ const Dashboard = ({ data }) => {
     }
   }, [gstNumberData?.state_id, gstData]);
 
-  const handleRadioClick = (e) => {
-    setSelectedRadioButton(e.target.value);
-  };
+  // const handleRadioClick = (e) => {
+  //   setSelectedRadioButton(e.target.value);
+  // };
 
-  const goToNext = () => {
-    setNext(true);
-    console.log(gstNumber);
-    if (gstNumber !== "") {
-      setGstData(true);
-      dispatch(eligibleSubsidyAction.getDetailsOfGST(gstNumber));
-    }
-  };
+  // const goToNext = () => {
+  //   setNext(true);
+  //   console.log(gstNumber);
+  //   if (gstNumber !== "") {
+  //     setGstData(true);
+  //     dispatch(eligibleSubsidyAction.getDetailsOfGST(gstNumber));
+  //   }
+  // };
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    const udaymName = value.split("-")[0];
-    console.log(udaymName);
-    let regex = new RegExp(
-      /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/
-    );
-    const str = value;
-
-    if (udaymName === "UDYAM") {
-      setGSTNumber(value);
-    } else if (regex.test(str) == true) {
-      // setValidateAadhar(false);
-      setGSTNumber(value);
-    } else {
-      console.log("error");
-      // setValidateAadhar(true);
-    }
-  };
+  // const handleChange = (e) => {
+  //   const value = e.target.value;
+  //   const udaymName = value.split("-")[0];
+  //   let regex = new RegExp(
+  //     /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/
+  //   );
+  //   const str = value;
+  //   if (udaymName === "UDYAM") {
+  //     setGSTNumber(value);
+  //   } else if (regex.test(str) == true) {
+  //     // setValidateAadhar(false);
+  //     setGSTNumber(value);
+  //   } else {
+  //     console.log("error");
+  //     // setValidateAadhar(true);
+  //   }
+  // };
 
   return (
     <Base
@@ -223,4 +222,4 @@ const Dashboard = ({ data }) => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);

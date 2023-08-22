@@ -8,9 +8,36 @@ import greatBenifitImg from "../public/images/great_benifits.png";
 import hugeBenifitImg from "../public/images/huge_benifits.png";
 import centralAndStateGif from "../public/images/central_and_state.gif";
 import afthoniaImg from "../public/images/afthonialogo.png";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 
 const Home = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const { title } = config.site;
+
+  const msmeBenefit = () => {
+    console.log("msmeBenifits clicked");
+
+    const data = { stateId: 12 };
+    dispatch(eligibleSubsidyAction.benefitsData(data));
+    router.push("/dashboard");
+  };
+
+  const itesBenefit = () => {
+    console.log("itesBenefits clicked");
+
+    const data = { stateId: 12 };
+    dispatch(eligibleSubsidyAction.benefitsData(data));
+    router.push("/dashboard");
+  };
+  const electronicsBenefit = () => {
+    console.log("electronicsBenefit clicked");
+    const data = { stateId: 12 };
+    dispatch(eligibleSubsidyAction.benefitsData(data));
+    router.push("/dashboard");
+  };
 
   return (
     <Base title={title}>
@@ -138,10 +165,11 @@ const Home = () => {
                     Gujarat Government!!
                   </p>
                 </div>
-                <div>
-                  <Link href="/contact" className="btn btn-primary lo_ck_btn">
-                    CHECK YOUR BENEFITS
-                  </Link>
+                <div
+                  className="btn btn-primary lo_ck_btn"
+                  onClick={() => itesBenefit()}
+                >
+                  CHECK YOUR BENEFITS
                 </div>
               </div>
               <div className="col-md-5">
@@ -185,10 +213,11 @@ const Home = () => {
                     heights!
                   </p>
                 </div>
-                <div>
-                  <Link href="/contact" className="btn btn-primary lo_ck_btn">
-                    CHECK YOUR BENEFITS
-                  </Link>
+                <div
+                  className="btn btn-primary lo_ck_btn"
+                  onClick={() => msmeBenefit()}
+                >
+                  CHECK YOUR BENEFITS
                 </div>
               </div>
             </div>
@@ -212,10 +241,11 @@ const Home = () => {
                     Gujarat Government support for your unit
                   </p>
                 </div>
-                <div>
-                  <Link href="/contact" className="btn btn-primary lo_ck_btn">
-                    CHECK YOUR BENEFITS
-                  </Link>
+                <div
+                  className="btn btn-primary lo_ck_btn"
+                  onClick={() => electronicsBenefit()}
+                >
+                  CHECK YOUR BENEFITS
                 </div>
               </div>
               <div className="col-md-5">
@@ -260,10 +290,11 @@ const Home = () => {
                     before.
                   </p>
                 </div>
-                <div>
-                  <Link href="/contact" className="btn btn-primary lo_ck_btn">
-                    CHECK YOUR BENEFITS
-                  </Link>
+                <div
+                  className="btn btn-primary lo_ck_btn"
+                  // onClick={() => msmeBenefit()}
+                >
+                  CHECK YOUR BENEFITS
                 </div>
               </div>
             </div>
@@ -287,14 +318,14 @@ const Home = () => {
                     business!
                   </p>
                 </div>
-                <div>
-                  <Link href="/contact" className="btn btn-primary lo_ck_btn">
-                    CHECK YOUR BENEFITS
-                  </Link>
+                <div
+                  className="btn btn-primary lo_ck_btn"
+                  // onClick={() => msmeBenefit()}
+                >
+                  CHECK YOUR BENEFITS
                 </div>
               </div>
               <div className="col-md-5">
-                {console.log(centralAndStateGif)}
                 <figure>
                   <Image
                     src={centralAndStateGif?.src}
@@ -336,10 +367,11 @@ const Home = () => {
                     before.
                   </p>
                 </div>
-                <div>
-                  <Link href="/contact" className="btn btn-primary lo_ck_btn">
-                    CHECK YOUR BENEFITS
-                  </Link>
+                <div
+                  className="btn btn-primary lo_ck_btn"
+                  // onClick={() => msmeBenefit()}
+                >
+                  CHECK YOUR BENEFITS
                 </div>
               </div>
             </div>

@@ -10,6 +10,7 @@ import { districtManagementAction } from "../redux/Actions/districtManagementAct
 import { talukaManagementAction } from "../redux/Actions/talukaManagementAction";
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
 import { CongratulationsModal } from "@layouts/components/Modal";
+import withAuth from "@layouts/partials/withAuth";
 
 const catData = [{ 1: [11, 12, 13] }, { 2: [14, 15, 16] }, { 3: [17, 18, 1] }];
 
@@ -642,4 +643,4 @@ const QuestionAfterEligible = ({ data }) => {
   );
 };
 
-export default QuestionAfterEligible;
+export default withAuth(QuestionAfterEligible);

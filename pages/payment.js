@@ -1,5 +1,6 @@
 import Base from "@layouts/Baseof";
 import { CustomButton } from "@layouts/components/CustomButton";
+import withAuth from "@layouts/partials/withAuth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -69,4 +70,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default withAuth(Payment);

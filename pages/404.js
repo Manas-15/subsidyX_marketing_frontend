@@ -1,5 +1,6 @@
 import NotFound from "@layouts/404";
 import Base from "@layouts/Baseof";
+import withAuth from "@layouts/partials/withAuth";
 
 const notFound = ({ data }) => {
   return (
@@ -9,4 +10,4 @@ const notFound = ({ data }) => {
   );
 };
 
-export default notFound;
+export default withAuth(notFound);

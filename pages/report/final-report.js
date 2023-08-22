@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
 import Link from "next/link";
 import { DotLoading } from "@layouts/components/Loader";
+import withAuth from "@layouts/partials/withAuth";
 
 function FinalReport({ data, setModalShow }) {
   console.log(data);
@@ -639,4 +640,4 @@ function FinalReport({ data, setModalShow }) {
   );
 }
 
-export default FinalReport;
+export default withAuth(FinalReport);

@@ -21,6 +21,7 @@ import ViewReport from "./view-report";
 import { ReportManagementModal } from "@layouts/components/Modal";
 import Pagination from "../../layouts/components/Pagination";
 import { Button, Form, InputGroup } from "react-bootstrap";
+import withAuth from "@layouts/partials/withAuth";
 
 const actions = [
   // { icon: BsShareFill },
@@ -262,4 +263,4 @@ const AllReportLists = () => {
   );
 };
 
-export default AllReportLists;
+export default withAuth(AllReportLists);

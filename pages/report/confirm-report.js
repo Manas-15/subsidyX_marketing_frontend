@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { IoIosArrowDropleft } from "react-icons/io";
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
+import withAuth from "@layouts/partials/withAuth";
 
 function ConfirmReport() {
   const router = useRouter();
@@ -170,18 +171,24 @@ function ConfirmReport() {
               <div className="row mt-4 mx-5">
                 {viewReport?.result?.map((question, idx) => {
                   return (
-                    <div key={idx} className="col-sm-3 d-flex flex-column">
-                      <h6>
-                        {question?.question_display_name
-                          ? question?.question_display_name
-                          : question?.question_name}
-                      </h6>
-                      <p>
-                        {question?.answer === "Not Applicable"
-                          ? "-"
-                          : question?.answer}
-                      </p>
-                    </div>
+                    <>
+                      {question?.answer === "Not Applicable" ? (
+                        <></>
+                      ) : (
+                        <div key={idx} className="col-sm-3 d-flex flex-column">
+                          <h6>
+                            {question?.question_display_name
+                              ? question?.question_display_name
+                              : question?.question_name}
+                          </h6>
+                          <p>
+                            {question?.answer === "Not Applicable"
+                              ? "-"
+                              : question?.answer}
+                          </p>
+                        </div>
+                      )}
+                    </>
                   );
                 })}
               </div>
@@ -207,4 +214,4 @@ function ConfirmReport() {
   );
 }
 
-export default ConfirmReport;
+export default withAuth(ConfirmReport);

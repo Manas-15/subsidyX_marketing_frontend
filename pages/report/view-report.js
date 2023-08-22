@@ -16,6 +16,7 @@ import Base from "@layouts/Baseof";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { IoIosArrowDropleft } from "react-icons/io";
+import withAuth from "@layouts/partials/withAuth";
 
 function ViewReport({ data, setModalShow }) {
   console.log(data);
@@ -227,4 +228,4 @@ function ViewReport({ data, setModalShow }) {
   );
 }
 
-export default ViewReport;
+export default withAuth(ViewReport);

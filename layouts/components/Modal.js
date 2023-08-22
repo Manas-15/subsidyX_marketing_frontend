@@ -54,7 +54,7 @@ export const CongratulationsModal = (props) => {
       props.setGSTNumber("");
     }
     props.setModalShow(false);
-    props?.setGstData(false);
+    // props?.setGstData(false);
     props.setNext(true);
     props.setSelectedRadioButton("1");
     router.push("/dashboard");
