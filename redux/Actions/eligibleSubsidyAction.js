@@ -3,13 +3,13 @@ import { alertActions } from "./alertAction";
 import { eligibleSubsidyService } from "redux/Services/eligibleSubsidyService";
 import { showToast } from "@layouts/components/ToastNotification";
 
-
 export const eligibleSubsidyAction = {
   getEligible,
   clearEligible,
   selectedDataForEligibleSubsidy,
   selectedInformationForEligibleSubsidy,
   getDetailsOfGST,
+  benefitsData,
 };
 
 function getEligible(data) {
@@ -23,7 +23,6 @@ function getEligible(data) {
         dispatch(failure(error.toString()));
         // dispatch(alertActions.error(error.toString()));
         showToast(error.toString(), "error");
-
       }
     );
   };
@@ -90,7 +89,6 @@ function getDetailsOfGST(gstNumber) {
         dispatch(failure(error.toString()));
         // dispatch(alertActions.error(error.toString()));
         showToast(error.toString(), "error");
-
       }
     );
   };
@@ -111,6 +109,20 @@ function getDetailsOfGST(gstNumber) {
     return {
       type: eligibleSubsidyConstant.SAVED_AADHAR_NUMBER_FAILURE,
       error,
+    };
+  }
+}
+
+function benefitsData(data) {
+  console.log("2222222222");
+  return (dispatch) => {
+    dispatch(success(data));
+  };
+
+  function success(data) {
+    return {
+      type: eligibleSubsidyConstant.BENEFITS_DATA_SUCCESS,
+      data,
     };
   }
 }

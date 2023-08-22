@@ -9,7 +9,7 @@ export const talukaManagementService = {
 
 async function getTalukas(ID) {
   let params = ID ? "&district_id=" + ID : "";
-  return await api.get(`taluka/?page=1&page_size=10${params}`);
+  return await api.get(`taluka/?page=1&page_size=1000${params}`);
 }
 
 // async function createTaluka(talukaData) {

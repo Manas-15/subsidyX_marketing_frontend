@@ -6,14 +6,9 @@ import rootReducer from "./rootReducer";
 const loggerMiddleware = createLogger();
 const persistedState = loadFromLocalStorage();
 
-const initialState = {
-  isAuthenticated: false, // Set this to true when user is authenticated
-  // ...other states
-};
-
 export const store = configureStore({
   reducer: rootReducer,
-  preloadedState: persistedState || initialState,
+  preloadedState: persistedState,
   middleware: [thunkMiddleware],
 });
 

@@ -31,8 +31,15 @@ export function eligibleSubsidy(state = {}, action) {
         ...state,
         gst_number_data: action?.data?.data,
       };
+
     case eligibleSubsidyConstant.SAVED_AADHAR_NUMBER_FAILURE:
       return { ...state };
+
+    case eligibleSubsidyConstant.BENEFITS_DATA_SUCCESS:
+      return {
+        ...state,
+        benefits_data: action?.data,
+      };
 
     default:
       return state;

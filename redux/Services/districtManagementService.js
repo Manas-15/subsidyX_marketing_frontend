@@ -11,7 +11,7 @@ async function getDistricts(pageData) {
   let params = pageData?.id ? "&state_id=" + pageData?.id : "";
   return await api.get(
     `district/?page=${pageData?.pagination?.page || 1}&page_size=${
-      pageData?.pagination?.pageSize || 300000
+      pageData?.pagination?.pageSize || 1000
     }${params}`
   );
 }
