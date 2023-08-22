@@ -174,14 +174,23 @@ const Signup = ({ data }) => {
                       type="checkbox"
                       onChange={(e) => setToggleCheck(!toggleCheck)}
                     />
-                    <Link
+                    <span
+                      className="text-white mx-2"
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => router.push("/terms-conditions")}
+                    >
+                      I agree with terms & conditions
+                    </span>
+                    {/* <Link
                       href="https://www.lipsum.com/"
                       rel="noopener noreferrer"
                       target="_blank"
                       className="text-white mx-2"
                     >
                       I agree with terms & conditions
-                    </Link>
+                    </Link> */}
                   </div>
 
                   <div className=" d-flex justify-content-center">

@@ -12,7 +12,10 @@ const PrivacyPolicy = ({ data }) => {
       canonical={"canonical"}
     >
       <section className="section bg-inner">
-        <div className="container pt-4 pb-4 text-white">
+        <div
+          className="container pt-4 pb-4"
+          style={{ color: "#04032b", height: "760px", overflowY: "scroll" }}
+        >
           <h1>Privacy Policy for Jinishis Fintech Private Limited</h1>
 
           <p>

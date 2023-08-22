@@ -110,7 +110,7 @@ const Dashboard = ({ data }) => {
                 setSelectedRadioButton={setSelectedRadioButton}
               />
             )}
-            {next && selectedRadioButton === "1" ? (
+            {/* {next && selectedRadioButton === "1" ? (
               <>
                 <div className="col-12 inner-section ">
                   <div className="d-flex justify-content-center mt-5 mb-5">
@@ -157,13 +157,14 @@ const Dashboard = ({ data }) => {
                   </div>
                 </div>
               </>
-            ) : next && selectedRadioButton === "2" ? (
-              <EligibleSubsidy
-                edit={edit}
-                setNext={setNext}
-                setSelectedRadioButton={setSelectedRadioButton}
-              />
-            ) : (
+            ) : next && selectedRadioButton === "2" ? ( */}
+            <EligibleSubsidy
+              edit={edit}
+              setNext={setNext}
+              setSelectedRadioButton={setSelectedRadioButton}
+            />
+            {/* ) : 
+            (
               <div className="col-12 inner-section ">
                 <div className="d-flex justify-content-center mt-5 mb-5">
                   <h2 style={{ fontSize: "25px" }}>
@@ -214,7 +215,7 @@ const Dashboard = ({ data }) => {
                   </span>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </section>

@@ -165,13 +165,11 @@ const QuestionAfterEligible = ({ data }) => {
     if (tempPrevQueStore?.length > 0) {
       setBackButtonVisible(true);
       let currentIndex = tempPrevQueStore?.length - 1;
-      console.log(currentIndex); //2
       if (currentIndex === 0) {
         setBackButtonVisible(false);
       }
       if (currentIndex >= 0) {
         const currentItem = question?.previous_question[currentIndex]; //2 index ra value
-        console.log(currentItem); // You can do whatever you need with the retrieved item
         setQuestionData(currentItem);
         tempPrevQueStore?.splice(currentIndex, 1);
         setTempPrevQueStore(tempPrevQueStore);
@@ -310,7 +308,7 @@ const QuestionAfterEligible = ({ data }) => {
           >
             <span style={{ fontSize: "14px" }}>Applicable Subsidies</span>
             <span style={{ fontSize: "30px", marginTop: "5px" }}>
-              {question?.scheme_counter}
+              {questionData?.scheme_counter}
             </span>
           </div>
           {/* <p>Total Schemes: {totalSchemeCount}</p> */}
@@ -334,7 +332,7 @@ const QuestionAfterEligible = ({ data }) => {
 
       setSubsidyItems(data);
     }
-  }, [subsidiesList]);
+  }, [subsidiesList, questionData]);
 
   return (
     <Base

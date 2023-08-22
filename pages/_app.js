@@ -14,34 +14,7 @@ const App = ({ Component, pageProps }) => {
   const router = useRouter();
   const [showChild, setShowChild] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const [accessTokenJSON, setAccessTokenJSON] = useState();
-
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     setAccessTokenJSON(localStorage.getItem("accessToken"));
-  //   }
-  // }, []);
-  // console.log(accessTokenJSON);
-  // useEffect(() => {
-  //   if (accessTokenJSON) {
-  //     let accessToken = JSON.parse(accessTokenJSON);
-  //     console.log(accessToken);
-  //   } else {
-  //     if (
-  //       (!accessTokenJSON && router.pathname === "/dashboard") ||
-  //       (!accessTokenJSON && router.pathname === "/report/all-report-list") ||
-  //       (!accessTokenJSON && router.pathname === "/report/confirm-report") ||
-  //       (!accessTokenJSON && router.pathname === "/report/final-report") ||
-  //       (!accessTokenJSON && router.pathname === "/report/view-report") ||
-  //       (!accessTokenJSON && router.pathname === "/payment") ||
-  //       (!accessTokenJSON && router.pathname === "/questions") ||
-  //       (!accessTokenJSON && router.pathname === "/questions-after-eligible")
-  //     ) {
-  //       router.push("/login");
-  //       console.log("accessToken not found in localStorage.");
-  //     }
-  //   }
-  // }, [accessTokenJSON, router.pathname]);
+  const [accessTokenJSON, setAccessTokenJSON] = useState();
 
   useEffect(() => {
     const pathName = router?.pathname
@@ -54,9 +27,6 @@ const App = ({ Component, pageProps }) => {
         return item.charAt(0).toUpperCase() + item.slice(1);
       })
       .join(" ");
-
-    // console.log(item);
-    //  dispatch(sidebarActions.selectedCategory(item));
   }, [router?.pathname]);
 
   useEffect(() => {

@@ -6,9 +6,14 @@ import rootReducer from "./rootReducer";
 const loggerMiddleware = createLogger();
 const persistedState = loadFromLocalStorage();
 
+const initialState = {
+  isAuthenticated: false, // Set this to true when user is authenticated
+  // ...other states
+};
+
 export const store = configureStore({
   reducer: rootReducer,
-  preloadedState: persistedState,
+  preloadedState: persistedState || initialState,
   middleware: [thunkMiddleware],
 });
 
@@ -26,7 +31,7 @@ function loadFromLocalStorage() {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("state")) {
         const serializedState = localStorage.getItem("state");
-        if (serializedState === null) return undefined;
+        if (serializedState === null) return initialState;
         return JSON.parse(serializedState);
       } else {
         return [];
@@ -34,7 +39,7 @@ function loadFromLocalStorage() {
     }
   } catch (err) {
     console.log(err);
-    return undefined;
+    return initialState;
   }
 }
 

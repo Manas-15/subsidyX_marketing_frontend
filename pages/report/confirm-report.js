@@ -176,7 +176,11 @@ function ConfirmReport() {
                           ? question?.question_display_name
                           : question?.question_name}
                       </h6>
-                      <p>{question?.answer}</p>
+                      <p>
+                        {question?.answer === "Not Applicable"
+                          ? "-"
+                          : question?.answer}
+                      </p>
                     </div>
                   );
                 })}
