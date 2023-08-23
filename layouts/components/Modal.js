@@ -245,8 +245,6 @@ export const BenefitsModal = (props) => {
     dispatch(eligibleSubsidyAction.clearEligible());
   };
 
-  console.log(isCentral, isState);
-
   return (
     <>
       <div className={styles.modalWrapper}>

@@ -55,6 +55,7 @@ const AllReportLists = () => {
       path: "",
     };
     dispatch(eligibleSubsidyAction.benefitsData(extraData));
+    dispatch(eligibleSubsidyAction.clearEligible());
   }, []);
 
   useEffect(() => {

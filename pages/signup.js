@@ -43,7 +43,7 @@ const Signup = ({ data }) => {
     onSubmit: (values) => {
       console.log(values);
       const signupData = values;
-      // dispatch(userActions.signup(signupData));
+      dispatch(userActions.signup(signupData));
     },
   });
 

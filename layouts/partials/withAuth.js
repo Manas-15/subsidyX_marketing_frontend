@@ -11,7 +11,7 @@ const withAuth = (WrappedComponent) => {
         const token = localStorage.getItem("accessToken");
 
         if (token === undefined || token === null) {
-          router.push("/login");
+          router.push("/account");
         } else {
           setIsAuthenticated(true);
         }

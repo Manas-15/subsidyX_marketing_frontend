@@ -11,6 +11,7 @@ const Contact = ({ data }) => {
       path: "",
     };
     dispatch(eligibleSubsidyAction.benefitsData(extraData));
+    dispatch(eligibleSubsidyAction.clearEligible());
   }, []);
   return (
     <Base

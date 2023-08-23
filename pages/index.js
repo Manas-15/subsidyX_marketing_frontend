@@ -24,6 +24,7 @@ const Home = () => {
       path: "",
     };
     dispatch(eligibleSubsidyAction.benefitsData(extraData));
+    dispatch(eligibleSubsidyAction.clearEligible());
   }, []);
 
   const itesBenefit = () => {

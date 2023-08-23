@@ -101,6 +101,9 @@ const QuestionAfterEligible = ({ data }) => {
           subsidyData?.eligible_subsidy?.report_id
         )
       );
+      console.log(
+        "confirm report calling:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+      );
       router.push("/report/confirm-report");
     }
     if (questionData?.status === 205 && subsidiesList?.length === 0) {
