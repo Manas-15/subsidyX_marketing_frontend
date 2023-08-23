@@ -1,19 +1,8 @@
 import styles from "../../styles/Report.module.css";
-// import { CiSearch } from "react-icons/ci";
-import { HiEye } from "react-icons/hi";
-import { BsShareFill } from "react-icons/bs";
-import { MdModeEdit } from "react-icons/md";
-import { RiDeleteBin5Fill } from "react-icons/ri";
-import { BiSolidFilePdf } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  CustomButton,
-  ExportButton,
-  FilterButton,
-} from "@layouts/components/CustomButton";
+import { CustomButton } from "@layouts/components/CustomButton";
 import Base from "@layouts/Baseof";
-// import { eligibleSubsidyAction } from "../redux/Actions/eligibleSubsidyAction";
 import { useRouter } from "next/router";
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
 import Link from "next/link";
@@ -21,18 +10,17 @@ import { DotLoading } from "@layouts/components/Loader";
 import withAuth from "@layouts/partials/withAuth";
 
 function FinalReport({ data, setModalShow }) {
-  console.log(data);
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [stateSubsidiesList, setStateSubsidiesList] = useState();
-  const [centralSubsidiesList, setCentralSubsidiesList] = useState();
+  // const [stateSubsidiesList, setStateSubsidiesList] = useState();
+  // const [centralSubsidiesList, setCentralSubsidiesList] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [stateSubsidyList, setStateSubsidyList] = useState();
   const [centralSubsidyList, setCentralSubsidyList] = useState();
 
-  const subsidyReports = useSelector((state) => state?.eligibleSubsidy);
-  const district_taluka_name = useSelector((state) => state?.taluka);
+  // const subsidyReports = useSelector((state) => state?.eligibleSubsidy);
+  // const district_taluka_name = useSelector((state) => state?.taluka);
   const viewReport = useSelector((state) => state?.report?.get_report);
   const generatePdf = useSelector((state) => state?.report?.generate_pdf);
 
@@ -42,10 +30,10 @@ function FinalReport({ data, setModalShow }) {
   //   );
 
   const centralSubsidies = viewReport?.info?.subsidies?.filter(
-    (subsidy, index) => subsidy?.is_central === true
+    (subsidy, index) => subsidy?.is_central === true && subsidy?.category === 1
   );
   const stateSubsidies = viewReport?.info?.subsidies?.filter(
-    (subsidy, index) => subsidy?.is_central === false
+    (subsidy, index) => subsidy?.is_central === false && subsidy?.category === 1
   );
 
   // Group the subsidies by subsidy_name start

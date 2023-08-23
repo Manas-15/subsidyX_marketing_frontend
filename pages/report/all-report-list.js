@@ -22,6 +22,7 @@ import { ReportManagementModal } from "@layouts/components/Modal";
 import Pagination from "../../layouts/components/Pagination";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import withAuth from "@layouts/partials/withAuth";
+import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 
 const actions = [
   // { icon: BsShareFill },
@@ -32,12 +33,6 @@ const actions = [
 const AllReportLists = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  // const date = new Date();
-  // const formattedDate = date.toLocaleDateString("en-US", {
-  //   day: "2-digit",
-  //   month: "2-digit",
-  //   year: "numeric",
-  // });
   const allReportLists = useSelector((state) => state?.report);
   const defaultPage = allReportLists?.saved_page_date?.page
     ? allReportLists?.saved_page_date?.page
@@ -52,7 +47,15 @@ const AllReportLists = () => {
   const [pageSize, setPageSize] = useState(defaultPageSize);
   const [page, setPage] = useState(defaultPage);
   const [search, setSearch] = useState("");
-  const [sortHeader, setSortHeader] = useState("name");
+  // const [sortHeader, setSortHeader] = useState("name");
+
+  useEffect(() => {
+    const extraData = {
+      next: false,
+      path: "",
+    };
+    dispatch(eligibleSubsidyAction.benefitsData(extraData));
+  }, []);
 
   useEffect(() => {
     if (allReportLists?.allReports?.result?.length === 0) {

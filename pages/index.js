@@ -11,32 +11,126 @@ import afthoniaImg from "../public/images/afthonialogo.png";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
+import { useEffect } from "react";
 
 const Home = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { title } = config.site;
 
-  const msmeBenefit = () => {
-    console.log("msmeBenifits clicked");
-
-    const data = { stateId: 12 };
-    dispatch(eligibleSubsidyAction.benefitsData(data));
-    router.push("/dashboard");
-  };
+  useEffect(() => {
+    const extraData = {
+      next: false,
+      path: "",
+    };
+    dispatch(eligibleSubsidyAction.benefitsData(extraData));
+  }, []);
 
   const itesBenefit = () => {
     console.log("itesBenefits clicked");
+    const data = {
+      user_info: {
+        mobile_number: 9784596522,
+        state_id: 12,
+        industry_category_id: 20,
+        industry_sector_id: 32,
+      },
+    };
+    const extraData = {
+      next: true,
+      path: "questions-after-eligible",
+    };
+    if (data) {
+      dispatch(eligibleSubsidyAction.benefitsData(extraData));
+      // dispatch(eligibleSubsidyAction.getEligible(data));
+      dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
+      router.push("/questions-after-eligible");
+    }
+  };
+  const msmeBenefit = () => {
+    console.log("msmeBenifits clicked");
+    const data = {
+      user_info: {
+        mobile_number: 9784596522,
+        state_id: 12,
+        industry_category_id: 0,
+        industry_sector_id: 0,
+      },
+    };
+    const extraData = {
+      next: true,
+      path: "questions-after-eligible",
+    };
 
-    const data = { stateId: 12 };
-    dispatch(eligibleSubsidyAction.benefitsData(data));
-    router.push("/dashboard");
+    if (data) {
+      dispatch(eligibleSubsidyAction.benefitsData(extraData));
+      // dispatch(eligibleSubsidyAction.getEligible(data));
+      dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
+      router.push("/questions-after-eligible");
+    }
   };
   const electronicsBenefit = () => {
     console.log("electronicsBenefit clicked");
-    const data = { stateId: 12 };
-    dispatch(eligibleSubsidyAction.benefitsData(data));
-    router.push("/dashboard");
+    const data = {
+      user_info: {
+        mobile_number: 9784596522,
+        state_id: 12,
+        industry_category_id: 18,
+        industry_sector_id: 17,
+      },
+    };
+    const extraData = {
+      next: true,
+      path: "questions-after-eligible",
+    };
+    if (data) {
+      dispatch(eligibleSubsidyAction.benefitsData(extraData));
+      // dispatch(eligibleSubsidyAction.getEligible(data));
+      dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
+      router.push("/questions-after-eligible");
+    }
+  };
+  const textileBenefit = () => {
+    console.log("electronicsBenefit clicked");
+    const data = {
+      user_info: {
+        mobile_number: 9784596522,
+        state_id: 12,
+        industry_category_id: 18,
+        industry_sector_id: 16,
+      },
+    };
+    const extraData = {
+      next: true,
+      path: "questions-after-eligible",
+    };
+    if (data) {
+      dispatch(eligibleSubsidyAction.benefitsData(extraData));
+      // dispatch(eligibleSubsidyAction.getEligible(data));
+      dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
+      router.push("/questions-after-eligible");
+    }
+  };
+  const centralBenefit = () => {
+    console.log("central benifit clicked");
+    const data = {
+      user_info: {
+        mobile_number: 9784596522,
+        state_id: 0,
+        industry_category_id: 0,
+        industry_sector_id: 0,
+      },
+    };
+    const extraData = {
+      next: true,
+      path: "questions-after-eligible",
+    };
+    if (data) {
+      dispatch(eligibleSubsidyAction.benefitsData(extraData));
+      // dispatch(eligibleSubsidyAction.getEligible(data));
+      dispatch(eligibleSubsidyAction.selectedDataForEligibleSubsidy(data));
+      router.push("/questions-after-eligible");
+    }
   };
 
   return (
@@ -292,7 +386,7 @@ const Home = () => {
                 </div>
                 <div
                   className="btn btn-primary lo_ck_btn"
-                  // onClick={() => msmeBenefit()}
+                  onClick={() => textileBenefit()}
                 >
                   CHECK YOUR BENEFITS
                 </div>
@@ -320,7 +414,7 @@ const Home = () => {
                 </div>
                 <div
                   className="btn btn-primary lo_ck_btn"
-                  // onClick={() => msmeBenefit()}
+                  onClick={() => centralBenefit()}
                 >
                   CHECK YOUR BENEFITS
                 </div>

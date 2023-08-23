@@ -9,7 +9,7 @@ import { eligibleSubsidyAction } from "../redux/Actions/eligibleSubsidyAction";
 import { districtManagementAction } from "../redux/Actions/districtManagementAction";
 import { talukaManagementAction } from "../redux/Actions/talukaManagementAction";
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
-import { CongratulationsModal } from "@layouts/components/Modal";
+import { BenefitsModal, CongratulationsModal } from "@layouts/components/Modal";
 import withAuth from "@layouts/partials/withAuth";
 
 const catData = [{ 1: [11, 12, 13] }, { 2: [14, 15, 16] }, { 3: [17, 18, 1] }];
@@ -20,6 +20,11 @@ const QuestionAfterEligible = ({ data }) => {
   const subsidyData = useSelector((state) => state?.eligibleSubsidy);
   const subsidiesList = subsidyData?.eligible_subsidy?.subsidies;
   const question = subsidyData?.eligible_subsidy;
+  const benefitsData = useSelector(
+    (state) => state?.eligibleSubsidy?.benefits_data?.next
+  );
+  console.log(benefitsData);
+  const benefitsNextData = benefitsData !== undefined ? benefitsData : false;
 
   const [checkedValue, setCheckedValue] = useState({
     name: "",
@@ -31,10 +36,10 @@ const QuestionAfterEligible = ({ data }) => {
   });
   const [inputValue, setInputValue] = useState("");
   const [modalShow, setModalShow] = useState(false);
+  const [benefitsModalShow, setBenefitsModalShow] = useState(false);
   const [type, setType] = useState("");
   const [reportID, setReportID] = useState(null);
-  const [next, setNext] = useState(false);
-  // const [isCompanyPage, setIsCompanyPage] = useState(true);
+  const [next, setNext] = useState(benefitsNextData);
   const [allDataID, setAllDataID] = useState({
     district: 0,
     taluka: 0,
@@ -48,12 +53,23 @@ const QuestionAfterEligible = ({ data }) => {
   const [subsidyItems, setSubsidyItems] = useState();
   const [questionData, setQuestionData] = useState();
   // const [userInputError, setUserInputError] = useState(false);
-
   const allDistricts = useSelector((state) => state?.district);
   const allTalukas = useSelector((state) => state?.taluka);
   const [prevQueCount, setPrevQueCount] = useState(0);
   const [tempPrevQueStore, setTempPrevQueStore] = useState();
   const [backButtonVisible, setBackButtonVisible] = useState(false);
+
+  useEffect(() => {
+    if (benefitsNextData) {
+      const user_info = subsidyData?.selected_data?.user_info;
+      if (user_info) {
+        const data = { user_info };
+        console.log(data);
+        dispatch(eligibleSubsidyAction.getEligible(data));
+        setBenefitsModalShow(true);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const id = subsidyData?.selected_data?.user_info?.state_id;
@@ -75,26 +91,22 @@ const QuestionAfterEligible = ({ data }) => {
 
     if (question?.previous_question?.length > 0) {
       const queCount = question?.previous_question?.length;
-      // console.log(queCount);
       setPrevQueCount(queCount);
     }
 
     if (questionCount === 0) {
-      // setModalShow(true);
       setType("noQuestion");
       dispatch(
         reportManagementAction?.getReportByID(
           subsidyData?.eligible_subsidy?.report_id
         )
       );
-      console.log("Go to confirm report screen");
       router.push("/report/confirm-report");
     }
     if (questionData?.status === 205 && subsidiesList?.length === 0) {
       setModalShow(true);
       setType("warn");
       setReportID(subsidyData?.eligible_subsidy?.report_id);
-      console.log("When subsidies is not available");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subsidiesList]);
@@ -179,15 +191,8 @@ const QuestionAfterEligible = ({ data }) => {
       }
     }
   };
-  const goToNext = () => {
-    // if (selectedOptions?.name === "" || selectedOptions?.value === "") {
-    //   setUserInputError(true);
-    // } else if (inputValue === "") {
-    //   setUserInputError(true);
-    // } else if (checkedValue === "") {
-    //   setUserInputError(true);
-    // } else {
 
+  const goToNext = () => {
     const user_info = subsidyData?.selected_data?.user_info;
     const datas = {
       user_info,
@@ -344,6 +349,15 @@ const QuestionAfterEligible = ({ data }) => {
       noindex={"noindex"}
       canonical={"canonical"}
     >
+      {benefitsModalShow && (
+        <BenefitsModal
+          action={question}
+          show={benefitsModalShow}
+          setModalShow={setBenefitsModalShow}
+          onHide={() => setBenefitsModalShow(false)}
+        />
+      )}
+
       {modalShow && (
         <CongratulationsModal
           type={type}

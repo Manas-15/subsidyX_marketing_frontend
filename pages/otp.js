@@ -13,6 +13,9 @@ const Otp = ({ data }) => {
   const dispatch = useDispatch();
   const [code, setCode] = useState("");
   const user = useSelector((state) => state?.user);
+  const extraData = useSelector(
+    (state) => state?.eligibleSubsidy?.benefits_data
+  );
 
   const accessToken = useMemo(
     () => user?.user?.access_token,
@@ -23,13 +26,20 @@ const Otp = ({ data }) => {
     if (accessToken !== undefined) {
       try {
         const decodedToken = jwt.decode(accessToken);
-        console.log(decodedToken);
         if (decodedToken?.report_count > 0) {
           dispatch(userActions?.userReportCount(decodedToken));
-          router.push("/report/all-report-list");
+          if (extraData?.path === "questions-after-eligible") {
+            router.push("/questions-after-eligible");
+          } else {
+            router.push("/report/all-report-list");
+          }
         } else {
           dispatch(userActions?.userReportCount(decodedToken));
-          router.push("/dashboard");
+          if (extraData?.path === "questions-after-eligible") {
+            router.push("/questions-after-eligible");
+          } else {
+            router.push("/dashboard");
+          }
         }
       } catch (error) {
         console.log("Error decoding access token:", error);

@@ -1,6 +1,17 @@
 import Base from "@layouts/Baseof";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
 
 const AboutUs = ({ data }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const extraData = {
+      next: false,
+      path: "",
+    };
+    dispatch(eligibleSubsidyAction.benefitsData(extraData));
+  }, []);
   return (
     <Base
       title={"About Us"}
