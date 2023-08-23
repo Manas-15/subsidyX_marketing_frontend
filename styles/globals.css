@@ -152,6 +152,33 @@ a:hover {
   margin-bottom: auto;
 }
 
+.blink-text {
+  animation: blink-animation 2s linear infinite;
+  -webkit-animation: blink-animation 2s linear infinite;
+}
+@keyframes blink-animation {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes blink-animation {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 [data-collapse="true"] {
   width: 5.3rem;
 }

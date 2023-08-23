@@ -56,7 +56,8 @@ function ConfirmReport() {
         getReports?.get_report?.info?.report_id
       )
     );
-    router.push("/payment");
+    router.push("/report/final-report");
+    // router.push("/payment");
   };
 
   return (
@@ -76,24 +77,33 @@ function ConfirmReport() {
           overflowY: "auto",
         }}
       >
-        <h4 className="mx-5 mt-4" style={{ fontWeight: "400" }}>
+        <h4 className="mx-5 mt-4 mb-4 blink-text" style={{ fontWeight: "400" }}>
           Based on the information provided by you we have gathered the
           following data. kindly verify all the details carefully before
           generation report.
         </h4>
+        <div className="d-flex justify-content-end me-5 mb-2">
+          <CustomButton
+            name="Edit"
+            color="#FFFFFF"
+            width="100px"
+            bgColor="#FA6130"
+            onClick={() => router.push("/dashboard")}
+          />
+        </div>
+        {/* <Link
+          href={{
+            pathname: "/dashboard",
+            query: { edit: "editEligibleSubsidy" },
+          }}
+          passHref
+        >
+          Edit
+        </Link> */}
         <div className={`mb-4 ${styles.report_tablee}`}>
           <div>
             <div className="d-flex justify-content-between mx-5 mt-3">
               <h4>General Information</h4>
-              <Link
-                href={{
-                  pathname: "/dashboard",
-                  query: { edit: "editEligibleSubsidy" },
-                }}
-                passHref
-              >
-                Edit
-              </Link>
             </div>
             <div className="row mt-4 mx-5">
               <div className="col-sm-3 d-flex flex-column">

@@ -466,7 +466,7 @@ const QuestionAfterEligible = ({ data }) => {
                               marginTop: "100px",
                               border: "1px solid black",
                               borderRadius: "10px",
-                              backgroundColor: "rgb(237 217 207)",
+                              backgroundColor: "rgba(255, 190, 157, 0.3)",
                               color: "black",
                             }}
                           >

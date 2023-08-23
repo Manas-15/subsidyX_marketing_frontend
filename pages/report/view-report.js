@@ -192,14 +192,27 @@ function ViewReport({ data, setModalShow }) {
                 <div className="row mt-4 mx-5">
                   {viewReport?.result?.map((question, idx) => {
                     return (
-                      <div key={idx} className="col-sm-3 d-flex flex-column">
-                        <h6>
-                          {question?.question_display_name
-                            ? question?.question_display_name
-                            : question?.question_name}
-                        </h6>
-                        <p>{question?.answer}</p>
-                      </div>
+                      <>
+                        {question?.answer === "Not Applicable" ? (
+                          <></>
+                        ) : (
+                          <div
+                            key={idx}
+                            className="col-sm-3 d-flex flex-column"
+                          >
+                            <h6>
+                              {question?.question_display_name
+                                ? question?.question_display_name
+                                : question?.question_name}
+                            </h6>
+                            <p>
+                              {question?.answer === "Not Applicable"
+                                ? "-"
+                                : question?.answer}
+                            </p>
+                          </div>
+                        )}
+                      </>
                     );
                   })}
                 </div>
@@ -213,7 +226,7 @@ function ViewReport({ data, setModalShow }) {
               style={{ marginRight: "20px" }}
             >
               <CustomButton
-                name="Pay Now"
+                name="Next"
                 color="#FFFFFF"
                 height="50px"
                 width="200px"

@@ -83,7 +83,7 @@ const AboutUs = ({ data }) => {
           </p>
 
           <h1 className="d-flex justify-content-center ">
-            <strong>Mission</strong>
+            <strong>MISSION</strong>
           </h1>
 
           <p className="d-flex justify-content-center ">

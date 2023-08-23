@@ -121,10 +121,22 @@ function FinalReport({ data, setModalShow }) {
                             <ol>
                               {schemes.map((item, index) => (
                                 <li key={index} className="d-flex w-100">
-                                  <p style={{ fontSize: "15px", width: "70%" }}>
+                                  <p
+                                    style={{
+                                      fontSize: "15px",
+                                      width: "70%",
+                                      paddingRight: "30px",
+                                    }}
+                                  >
                                     {item?.scheme}
                                   </p>
-                                  <p style={{ fontSize: "15px", width: "30%" }}>
+                                  <p
+                                    style={{
+                                      fontSize: "15px",
+                                      width: "30%",
+                                      paddingRight: "30px",
+                                    }}
+                                  >
                                     &#8377;{" "}
                                     {item?.calculated_subsidy !== undefined
                                       ? item?.calculated_subsidy
@@ -504,14 +516,27 @@ function FinalReport({ data, setModalShow }) {
                 <div className="row mt-4 mx-5">
                   {viewReport?.result?.map((question, idx) => {
                     return (
-                      <div key={idx} className="col-sm-3 d-flex flex-column">
-                        <h6>
-                          {question?.question_display_name
-                            ? question?.question_display_name
-                            : question?.question_name}
-                        </h6>
-                        <p>{question?.answer}</p>
-                      </div>
+                      <>
+                        {question?.answer === "Not Applicable" ? (
+                          <></>
+                        ) : (
+                          <div
+                            key={idx}
+                            className="col-sm-3 d-flex flex-column"
+                          >
+                            <h6>
+                              {question?.question_display_name
+                                ? question?.question_display_name
+                                : question?.question_name}
+                            </h6>
+                            <p>
+                              {question?.answer === "Not Applicable"
+                                ? "-"
+                                : question?.answer}
+                            </p>
+                          </div>
+                        )}
+                      </>
                     );
                   })}
                 </div>
