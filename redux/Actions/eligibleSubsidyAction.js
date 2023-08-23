@@ -114,7 +114,6 @@ function getDetailsOfGST(gstNumber) {
 }
 
 function benefitsData(data) {
-  console.log("2222222222");
   return (dispatch) => {
     dispatch(success(data));
   };
