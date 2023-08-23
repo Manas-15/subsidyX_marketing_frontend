@@ -9,6 +9,7 @@ import { reportManagementAction } from "redux/Actions/reportManagementAction";
 export const CongratulationsModal = (props) => {
   console.log(props);
   const subsidies = props?.action?.subsidies;
+  console.log(subsidies);
   const dispatch = useDispatch();
   const router = useRouter();
   const isCentral = subsidies?.filter(
@@ -22,11 +23,6 @@ export const CongratulationsModal = (props) => {
   const submitModal = () => {
     props.setModalShow(false);
     router.push("/questions-after-eligible");
-  };
-
-  const cancelModal = () => {
-    props.setModalShow(false);
-    dispatch(eligibleSubsidyAction.clearEligible());
   };
 
   const handleOK = () => {
@@ -212,19 +208,131 @@ export const CongratulationsModal = (props) => {
                   )}
                 </>
               )}
-              {/* <CustomButton
-                name="Submit"
-                color="#FFFFFF"
-                width="100px"
-                bgColor="#FA6130"
-              />
-              <CustomButton
-                name="Cancel"
-                color="#FFFFFF"
-                width="100px"
-                bgColor="#FA6130"
-                onClick={() => setShowModal(false)}
-              /> */}
+            </>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </>
+  );
+};
+
+export const BenefitsModal = (props) => {
+  console.log("Benefit modal Calling");
+  console.log(props);
+  const subsidies = props?.action?.subsidies;
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const isCentral = subsidies?.filter(
+    (subsidy, ind) => subsidy.is_central === true
+  ).length;
+  const isState = subsidies?.filter(
+    (subsidy, ind) => subsidy.is_central === false
+  ).length;
+
+  const submitModal = () => {
+    props.setModalShow(false);
+  };
+
+  const handleNO = () => {
+    props.setModalShow(false);
+    const extraData = {
+      next: false,
+      path: "",
+    };
+    dispatch(eligibleSubsidyAction.benefitsData(extraData));
+    router.push("/dashboard");
+    dispatch(eligibleSubsidyAction.clearEligible());
+  };
+
+  console.log(isCentral, isState);
+
+  return (
+    <>
+      <div className={styles.modalWrapper}>
+        <div
+          className={styles.modalContainer}
+          style={{
+            backgroundImage: `url(
+            "../../images/popupbg.png"
+          )`,
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "fixed",
+            backgroundSize: "100% 100%",
+            color: "#FFFFFF",
+          }}
+        >
+          <div className={styles.h2}>
+            {isCentral > 0 || isState > 0 ? (
+              <h3> Congratulations!! </h3>
+            ) : (
+              <h3> Warning!! </h3>
+            )}
+          </div>
+          <div className={styles.p}>
+            <span className="text-white">
+              {isCentral > 0 && isState > 0 ? (
+                <>
+                  Based on the primary information provided there are{" "}
+                  {isCentral + isState} subsidies are applicable to you. <br />
+                  Central Government Subsidies : {isCentral} <br />
+                  State Government Subsidies : {isState}
+                </>
+              ) : isCentral > 0 ? (
+                <>
+                  Based on the primary information provided there are{" "}
+                  {isCentral} subsidies are applicable to you. <br />
+                  Central Government Subsidies : {isCentral} <br />
+                </>
+              ) : isState > 0 ? (
+                <>
+                  Based on the primary information provided there are {isState}{" "}
+                  subsidies are applicable to you. <br />
+                  State Government Subsidies : {isState}
+                </>
+              ) : (
+                <>
+                  {isCentral === 0 ||
+                  isCentral === undefined ||
+                  isState === 0 ||
+                  isState === undefined ? (
+                    <>No subsidies matched based on your inputs</>
+                  ) : null}
+                </>
+              )}
+            </span>
+          </div>
+
+          <div className={styles.modalFooter}>
+            <>
+              {isCentral > 0 || isState > 0 ? (
+                <>
+                  <CustomButton
+                    name="YES"
+                    color="#FFFFFF"
+                    width="100px"
+                    bgColor="#FA6130"
+                    onClick={() => submitModal()}
+                  />
+                  <CustomButton
+                    name="NO"
+                    color="#000000"
+                    width="100px"
+                    bgColor="#FFFFFF"
+                    border="1px solid #000000"
+                    onClick={() => handleNO()}
+                  />
+                </>
+              ) : (
+                <CustomButton
+                  name="Back"
+                  color="#000000"
+                  width="100px"
+                  bgColor="#FFFFFF"
+                  border="1px solid #000000"
+                  onClick={() => handleNO()}
+                />
+              )}
             </>
           </div>
         </div>

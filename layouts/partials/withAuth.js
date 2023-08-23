@@ -1,24 +1,26 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 
 const withAuth = (WrappedComponent) => {
   const AuthenticatedComponent = (props) => {
-    // const [accessTokenJSON, setAccessTokenJSON] = useState();
     const router = useRouter();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("accessToken");
-      console.log(token);
+    useEffect(() => {
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("accessToken");
 
-      if (token === undefined || token === null) {
-        router.push("/login");
-        return null; // Render nothing while redirecting
+        if (token === undefined || token === null) {
+          router.push("/login");
+        } else {
+          setIsAuthenticated(true);
+        }
       }
+    }, []); // Empty dependency array ensures this effect runs only once
+
+    if (!isAuthenticated) {
+      return null; // Render nothing while redirecting
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // });
 
     return <WrappedComponent {...props} />;
   };

@@ -43,27 +43,11 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
   const selectedData = useSelector(
     (state) => state?.eligibleSubsidy?.selected_data?.user_info
   );
-  const benefitsData = useSelector(
-    (state) => state?.eligibleSubsidy?.benefits_data
-  );
-
-  console.log(benefitsData?.stateId, benefitsData?.districtId);
 
   useEffect(() => {
     dispatch(stateAction.getStateList());
     dispatch(categoryAction.getCategoryList());
   }, []);
-
-  useEffect(() => {
-    if (benefitsData?.stateId !== undefined) {
-      setEligibleUserInfo({
-        mobileNumber: 9784596522,
-        stateID: benefitsData?.stateId,
-        industryCategoryID: 0,
-        industrySectorID: 0,
-      });
-    }
-  }, [benefitsData]);
 
   useEffect(() => {
     if (edit === "editEligibleSubsidy") {
