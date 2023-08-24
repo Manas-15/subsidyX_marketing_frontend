@@ -108,27 +108,12 @@ export const CongratulationsModal = (props) => {
               </span>
             ) : (
               <span className="text-white">
-                {isCentral > 0 && isState > 0 ? (
+                {isCentral > 0 || isState > 0 ? (
                   <>
                     Based on the primary information provided there are{" "}
                     {isCentral + isState} subsidies are applicable to you.{" "}
                     <br />
                     Central Government Subsidies : {isCentral} <br />
-                    State Government Subsidies : {isState}
-                  </>
-                ) : isCentral > 0 ? (
-                  <>
-                    Based on the primary information provided there are{" "}
-                    {isCentral} subsidies are applicable to you. <br />
-                    Central Government Subsidies : {isCentral} <br />
-                  </>
-                ) : isState > 0 ? (
-                  <>
-                    {/* Based on information provided there are {isState} subsidies
-                    applicable to you <br />
-                    from Government of Gujarat. */}
-                    Based on the primary information provided there are{" "}
-                    {isState} subsidies are applicable to you. <br />
                     State Government Subsidies : {isState}
                   </>
                 ) : (
@@ -181,9 +166,10 @@ export const CongratulationsModal = (props) => {
               ) : (
                 <>
                   <CustomButton
-                    name="YES"
+                    name="Proceed Further"
                     color="#FFFFFF"
-                    width="100px"
+                    width="200px"
+                    height="50px"
                     bgColor="#FA6130"
                     onClick={() => submitModal()}
                   />
@@ -197,14 +183,17 @@ export const CongratulationsModal = (props) => {
                       onClick={() => handleGstNO()}
                     />
                   ) : (
-                    <CustomButton
-                      name="NO"
-                      color="#000000"
-                      width="100px"
-                      bgColor="#FFFFFF"
-                      border="1px solid #000000"
+                    <span
+                      style={{
+                        marginTop: "8px",
+                        fontSize: "13px",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      }}
                       onClick={() => handleNO()}
-                    />
+                    >
+                      No take me back
+                    </span>
                   )}
                 </>
               )}
@@ -269,23 +258,11 @@ export const BenefitsModal = (props) => {
           </div>
           <div className={styles.p}>
             <span className="text-white">
-              {isCentral > 0 && isState > 0 ? (
+              {isCentral > 0 || isState > 0 ? (
                 <>
                   Based on the primary information provided there are{" "}
                   {isCentral + isState} subsidies are applicable to you. <br />
                   Central Government Subsidies : {isCentral} <br />
-                  State Government Subsidies : {isState}
-                </>
-              ) : isCentral > 0 ? (
-                <>
-                  Based on the primary information provided there are{" "}
-                  {isCentral} subsidies are applicable to you. <br />
-                  Central Government Subsidies : {isCentral} <br />
-                </>
-              ) : isState > 0 ? (
-                <>
-                  Based on the primary information provided there are {isState}{" "}
-                  subsidies are applicable to you. <br />
                   State Government Subsidies : {isState}
                 </>
               ) : (
@@ -306,20 +283,31 @@ export const BenefitsModal = (props) => {
               {isCentral > 0 || isState > 0 ? (
                 <>
                   <CustomButton
-                    name="YES"
+                    name="Proceed Further"
                     color="#FFFFFF"
-                    width="100px"
+                    width="200px"
+                    height="50px"
                     bgColor="#FA6130"
                     onClick={() => submitModal()}
                   />
-                  <CustomButton
-                    name="NO"
+                  <span
+                    style={{
+                      marginTop: "8px",
+                      fontSize: "13px",
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                    }}
+                    onClick={() => handleNO()}
+                  >
+                    No take me back
+                  </span>
+                  {/* <CustomButton
+                    name=""
                     color="#000000"
                     width="100px"
                     bgColor="#FFFFFF"
                     border="1px solid #000000"
-                    onClick={() => handleNO()}
-                  />
+                                      /> */}
                 </>
               ) : (
                 <CustomButton

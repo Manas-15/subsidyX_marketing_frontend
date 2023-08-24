@@ -11,6 +11,7 @@ import { talukaManagementAction } from "../redux/Actions/talukaManagementAction"
 import { reportManagementAction } from "redux/Actions/reportManagementAction";
 import { BenefitsModal, CongratulationsModal } from "@layouts/components/Modal";
 import withAuth from "@layouts/partials/withAuth";
+import { Loader } from "@layouts/components/Loader";
 
 const catData = [{ 1: [11, 12, 13] }, { 2: [14, 15, 16] }, { 3: [17, 18, 1] }];
 
@@ -23,7 +24,6 @@ const QuestionAfterEligible = ({ data }) => {
   const benefitsData = useSelector(
     (state) => state?.eligibleSubsidy?.benefits_data?.next
   );
-  console.log(benefitsData);
   const benefitsNextData = benefitsData !== undefined ? benefitsData : false;
 
   const [checkedValue, setCheckedValue] = useState({
@@ -58,6 +58,7 @@ const QuestionAfterEligible = ({ data }) => {
   const [prevQueCount, setPrevQueCount] = useState(0);
   const [tempPrevQueStore, setTempPrevQueStore] = useState();
   const [backButtonVisible, setBackButtonVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (benefitsNextData) {
@@ -66,7 +67,11 @@ const QuestionAfterEligible = ({ data }) => {
         const data = { user_info };
         console.log(data);
         dispatch(eligibleSubsidyAction.getEligible(data));
-        setBenefitsModalShow(true);
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+          setBenefitsModalShow(true);
+        }, 2000);
       }
     }
   }, []);
@@ -372,6 +377,7 @@ const QuestionAfterEligible = ({ data }) => {
       )}
       {next ? (
         <section className="section">
+          {loading && <Loader />}
           <div className="container">
             <div className="section pb-0">
               <div className="row inner-section">
