@@ -123,7 +123,9 @@ export const CongratulationsModal = (props) => {
             )}
           </div>
 
-          <div className={styles.modalFooter}>
+          <div
+            className={`${styles.modalFooter} ${styles.modalFooterCongratulation}`}
+          >
             <>
               {props?.type === "warn" || props?.type === "noQuestion" ? (
                 <>
@@ -278,7 +280,9 @@ export const BenefitsModal = (props) => {
             </span>
           </div>
 
-          <div className={styles.modalFooter}>
+          <div
+            className={`${styles.modalFooter} ${styles.modalFooterCongratulation}`}
+          >
             <>
               {isCentral > 0 || isState > 0 ? (
                 <>

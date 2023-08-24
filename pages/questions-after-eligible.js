@@ -239,7 +239,6 @@ const QuestionAfterEligible = ({ data }) => {
       });
     }
     setInputValue("");
-    // }
     setBackButtonVisible(true);
   };
 
@@ -249,12 +248,30 @@ const QuestionAfterEligible = ({ data }) => {
   useEffect(() => {
     if (questionData?.field_type_id === 1) {
       setInputValue(questionData?.response);
+      setCheckedValue({
+        name: "",
+        value: "",
+      });
+      setSelectedOptions({
+        name: "",
+        value: "",
+      });
     } else if (questionData?.field_type_id === 2) {
+      setInputValue("");
       setCheckedValue({
         name: questionData?.response,
         value: questionData?.option_id,
       });
+      setSelectedOptions({
+        name: "",
+        value: "",
+      });
     } else {
+      setInputValue("");
+      setCheckedValue({
+        name: "",
+        value: "",
+      });
       setSelectedOptions({
         name: questionData?.response,
         value: questionData?.option_id,
