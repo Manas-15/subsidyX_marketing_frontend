@@ -78,9 +78,9 @@ function ConfirmReport() {
         }}
       >
         <h4 className="mx-5 mt-4 mb-4 blink-text" style={{ fontWeight: "400" }}>
-          Based on the information provided by you we have gathered the
-          following data. kindly verify all the details carefully before
-          generation report.
+          Based on the information provided by you, we have gathered the
+          following data. Kindly verify all the details carefully before
+          generation of report.
         </h4>
         <div className="d-flex justify-content-end me-5 mb-2">
           <CustomButton

@@ -440,34 +440,17 @@ const Home = () => {
           <div className="ites_part">
             <h2 className="cmn_h2_heading text-center">
               <span className="col_blue">PROUDLY INCUBATED AT </span>
-              {/* <span className="col_orng">TEXTILE </span>
-              <span className="col_blue">SECTOR </span> */}
             </h2>
             <div className="row incen_row_content">
-              <div className="col-md-5 ">
+              <div className="col-md-12 d-flex justify-content-center">
                 <figure>
                   <Image
                     src={afthoniaImg?.src}
                     width="351"
-                    height="359"
+                    height="200"
                     alt=""
                   />
                 </figure>
-              </div>
-              <div className="col-md-7 text-center">
-                <div>
-                  <p className="incen_content">
-                    Revitalize your textile business - Gujarat Governments
-                    incentives can help you grow and expand your unit like never
-                    before.
-                  </p>
-                </div>
-                <div
-                  className="btn btn-primary lo_ck_btn"
-                  // onClick={() => msmeBenefit()}
-                >
-                  CHECK YOUR BENEFITS
-                </div>
               </div>
             </div>
           </div>

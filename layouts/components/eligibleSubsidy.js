@@ -158,7 +158,6 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
               ))}
             </select>
           </div>
-
           <div className="d-flex justify-content-center mt-3">
             <select
               className="form-control mb-3 w-25 mx-3"
@@ -194,6 +193,15 @@ const EligibleSubsidy = ({ edit, setNext, setSelectedRadioButton }) => {
               style={{ fontSize: "50px", color: "#fa6130", cursor: "pointer" }}
               onClick={(e) => goToNext(e)}
             />
+          </span>
+          <span className="mt-5 d-flex justify-content-center">
+            <h4
+              className="mx-5 mt-4 mb-4 blink-text"
+              style={{ fontWeight: "400", fontSize: "16px" }}
+            >
+              Currently we are available in Gujarat State Only and further
+              integration of subsidies are going on day by day.
+            </h4>
           </span>
         </div>
       </div>

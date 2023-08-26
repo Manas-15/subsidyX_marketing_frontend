@@ -2,6 +2,12 @@ import Base from "@layouts/Baseof";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { eligibleSubsidyAction } from "redux/Actions/eligibleSubsidyAction";
+import { useFormik } from "formik";
+import { Col, Form, Row } from "react-bootstrap";
+import { ContactUsSchema } from "@layouts/components/Validation";
+import { CustomButton } from "@layouts/components/CustomButton";
+import { contactUsAction } from "redux/Actions/contactUsAction";
+
 const Contact = ({ data }) => {
   const dispatch = useDispatch();
 
@@ -13,6 +19,22 @@ const Contact = ({ data }) => {
     dispatch(eligibleSubsidyAction.benefitsData(extraData));
     dispatch(eligibleSubsidyAction.clearEligible());
   }, []);
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      phone_number: "",
+      message: "",
+    },
+    validationSchema: ContactUsSchema,
+    onSubmit: async (values, { resetForm }) => {
+      console.log(values);
+      dispatch(contactUsAction?.createContact(values));
+      resetForm();
+    },
+  });
+
   return (
     <Base
       title={"title"}
@@ -38,60 +60,122 @@ const Contact = ({ data }) => {
                   ></iframe>
                 </div>
                 <div className="col-md-6">
-                  <form method="post">
-                    <h3>Drop Us a Message</h3>
-                    <div className="row pt-3">
-                      <div className="col-md-12">
-                        <div className="form-group">
-                          <input
-                            type="text"
-                            name="txtName"
-                            className="form-control"
-                            placeholder="Your Name *"
-                            value=""
-                            required
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            type="text"
-                            name="txtEmail"
-                            className="form-control"
-                            placeholder="Your Email *"
-                            value=""
-                            required
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            required
-                            type="text"
-                            name="txtPhone"
-                            className="form-control"
-                            placeholder="Your Phone Number *"
-                            value=""
-                          />
-                        </div>
-                        <div className="form-group">
-                          <textarea
-                            rows="5"
-                            name="txtMsg"
-                            className="form-control"
-                            placeholder="Your Message"
-                          ></textarea>
-                        </div>
-                        <div className="form-group">
-                          <button
-                            type="submit"
-                            name="btnSubmit"
-                            className="btn btn-primary up_sld_btn"
-                          >
-                            Send Message
-                          </button>
-                        </div>
+                  <Form onSubmit={formik.handleSubmit}>
+                    <h2 className="fw-bold text-dark d-flex justify-content-center">
+                      Please provide your Details
+                    </h2>
+                    <div className="mt-5">
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-3" controlId="name">
+                            <Form.Control
+                              style={{
+                                padding: "0.5rem",
+                                border: "2px solid rgba(0,0,0,0.2)",
+                                borderRadius: "10px",
+                              }}
+                              placeholder="Name"
+                              type="text"
+                              name="name"
+                              value={formik.values.name}
+                              onChange={formik.handleChange}
+                              isInvalid={
+                                formik.touched.name && formik.errors.name
+                              }
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {formik.errors.name}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-3" controlId="email">
+                            <Form.Control
+                              style={{
+                                padding: "0.5rem",
+                                border: "2px solid rgba(0,0,0,0.2)",
+                                borderRadius: "10px",
+                              }}
+                              placeholder="Email"
+                              type="email"
+                              name="email"
+                              value={formik?.values?.email}
+                              onChange={formik.handleChange}
+                              isInvalid={
+                                formik.touched.email && formik.errors.email
+                              }
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {formik.errors.email}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-3" controlId="phone_number">
+                            <Form.Control
+                              style={{
+                                padding: "0.5rem",
+                                border: "2px solid rgba(0,0,0,0.2)",
+                                borderRadius: "10px",
+                              }}
+                              placeholder="Phone Number"
+                              type="number"
+                              name="phone_number"
+                              maxLength={10}
+                              value={formik.values.phone_number}
+                              onChange={formik.handleChange}
+                              isInvalid={
+                                formik.touched.phone_number &&
+                                formik.errors.phone_number
+                              }
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {formik.errors.phone_number}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <Form.Group className="mb-3" controlId="message">
+                            <Form.Control
+                              as="textarea"
+                              style={{
+                                padding: "0.5rem",
+                                border: "2px solid rgba(0,0,0,0.2)",
+                                borderRadius: "10px",
+                              }}
+                              placeholder="Enter your message"
+                              type="text"
+                              name="message"
+                              value={formik.values.message}
+                              onChange={formik.handleChange}
+                              isInvalid={
+                                formik.touched.message && formik.errors.message
+                              }
+                              rows={4}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {formik.errors.message}
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+
+                      <div className=" d-flex justify-content-end">
+                        <CustomButton
+                          name="Send Message"
+                          type="submit"
+                          color="#FFFFFF"
+                          bgColor="#FA6130"
+                        />
                       </div>
                     </div>
-                  </form>
+                  </Form>
                 </div>
               </div>
             </div>

@@ -162,8 +162,8 @@ const AllReportLists = () => {
               <div className={styles.add_new_btn}>
                 <CustomButton
                   name="Add New Reports"
-                  bgColor="#F0EAFF"
-                  color="#000000"
+                  bgColor="#FA6130"
+                  color="#FFFFFF"
                   onClick={addNewReports}
                   border="1px solid #F0EAFF"
                 />

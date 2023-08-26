@@ -111,8 +111,7 @@ export const CongratulationsModal = (props) => {
                 {isCentral > 0 || isState > 0 ? (
                   <>
                     Based on the primary information provided there are{" "}
-                    {isCentral + isState} subsidies are applicable to you.{" "}
-                    <br />
+                    {isCentral + isState} subsidies applicable to you. <br />
                     Central Government Subsidies : {isCentral} <br />
                     State Government Subsidies : {isState}
                   </>
@@ -263,7 +262,7 @@ export const BenefitsModal = (props) => {
               {isCentral > 0 || isState > 0 ? (
                 <>
                   Based on the primary information provided there are{" "}
-                  {isCentral + isState} subsidies are applicable to you. <br />
+                  {isCentral + isState} subsidies applicable to you. <br />
                   Central Government Subsidies : {isCentral} <br />
                   State Government Subsidies : {isState}
                 </>

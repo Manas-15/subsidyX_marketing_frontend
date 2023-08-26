@@ -1,14 +1,41 @@
 /* eslint-disable @next/next/no-img-element */
-
-import config from "@config/config.json";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { AiFillFacebook } from "react-icons/ai";
 import { AiFillLinkedin } from "react-icons/ai";
 import { AiFillInstagram } from "react-icons/ai";
 import { GrTwitter } from "react-icons/gr";
+import { useDispatch } from "react-redux";
+import { contactUsAction } from "redux/Actions/contactUsAction";
 
 const Footer = () => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState({ email: "" });
+  const [emailError, setEmailError] = useState(false);
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+
+    if (e.target.value.trim() === "") {
+      setEmailError(true);
+      setEmail({ email: e.target.value });
+    } else {
+      setEmailError(false);
+      setEmail({ email: e.target.value });
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email?.email === "") {
+      setEmailError(true);
+    } else {
+      console.log(email);
+      dispatch(contactUsAction?.createSubscribe(email));
+      setEmail({ email: "" });
+    }
+  };
+
   return (
     <footer className="cmn_sec_pad footer_sec">
       <div className="container">
@@ -108,21 +135,40 @@ const Footer = () => {
         </div>
         <div className="row pt-5">
           <div className="col-md-8 pt-4">
-            <input
-              type="email"
-              className="inpt_fld"
-              placeholder="Enter Your Email Address"
-            ></input>
-            <button className="btn btn-sm btn-primary sub_btn">
-              SUBSCRIBE NOW
-            </button>
+            <div>
+              <input
+                type="email"
+                value={email?.email}
+                className="inpt_fld"
+                placeholder="Enter Your Email Address"
+                onChange={(e) => handleChange(e)}
+              ></input>
+              <button
+                className="btn btn-sm btn-primary sub_btn"
+                type="button"
+                onClick={(e) => handleSubmit(e)}
+              >
+                SUBSCRIBE NOW
+              </button>
+            </div>
+            {emailError && (
+              <span
+                style={{
+                  color: "red",
+                  fontSize: "15px",
+                  marginLeft: "15px",
+                }}
+              >
+                Email is required
+              </span>
+            )}
           </div>
           <div className="col-md-4">
             <p>FOLLOW US</p>
             <ul className="social-icons">
               <li>
                 <Link
-                  href="https://www.facebook.com/subsidyx"
+                  href="https://www.facebook.com/profile.php?id=61550573192139"
                   target="_blank"
                   title="facebook"
                 >
@@ -131,7 +177,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="https://www.linkedin.com/company/subsidyx/"
+                  href="https://www.linkedin.com/company/subsidyx"
                   target="_blank"
                   title="linkedin"
                 >
@@ -139,12 +185,20 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="#" target="_blank" title="instagram">
+                <Link
+                  href="https://www.instagram.com/subsidyx"
+                  target="_blank"
+                  title="instagram"
+                >
                   <AiFillInstagram size={30} />
                 </Link>
               </li>
               <li>
-                <Link href="#" target="_blank" title="twitter">
+                <Link
+                  href="https://twitter.com/subsidy_X"
+                  target="_blank"
+                  title="twitter"
+                >
                   <GrTwitter size={30} />
                 </Link>
               </li>
