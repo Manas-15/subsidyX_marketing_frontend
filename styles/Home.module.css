@@ -1,0 +1,207 @@
+.container {
+  /* background: #d3d6dd; */
+  background: #f0eaff;
+  /* position: relative; */
+  padding: 30px;
+  height: 100vh;
+}
+
+.tablee,
+.add {
+  padding-left: 30px;
+  padding-right: 30px;
+  /* height: auto; */
+  height: 630px;
+  overflow-y: scroll;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #ebe6e6;
+}
+.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.overlay {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: rgb(182 184 185 / 55%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.report_tablee {
+  margin: 30px;
+  /* height: 501px; */
+  overflow-y: scroll;
+  left: 262px;
+  top: 93px;
+  background: #ebe6e6;
+  border-radius: 20px;
+  border: 1px solid #ebe6e6;
+}
+.tableHeader {
+  height: 50px;
+  margin: 20px 30px;
+}
+.tableBody {
+  height: 450px;
+}
+.search_box {
+  position: relative;
+  width: 270px;
+  height: 40px;
+  background: #ffffff;
+  mix-blend-mode: normal;
+  /* border: 1px solid #817a7a; */
+  border-radius: 5px;
+}
+.search_icon {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+.search_bar {
+  border: none;
+  width: 233px;
+  height: 38px;
+  padding-left: 25px;
+  background: #ebf3ff;
+}
+
+.filter_bar {
+  background: #ebf3ff;
+  border-radius: 10px;
+}
+
+.add_new_btn {
+  border-radius: 10px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 300;
+}
+.export_btn {
+  text-align: center;
+  border-radius: 10px;
+}
+.export_name {
+  width: 69px;
+  height: 21px;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: right;
+  color: #04032b;
+}
+
+.startDate {
+  position: relative;
+}
+.startDateIcon {
+  position: absolute;
+  top: 9px;
+  right: 117px;
+  font-size: 20px;
+  color: #fa6130;
+}
+.endDate {
+  position: relative;
+}
+.endDateIcon {
+  position: absolute;
+  top: 9px;
+  right: 107px;
+  font-size: 20px;
+  color: #fa6130;
+}
+.add {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: space-between;
+  padding: 2rem;
+  height: 360px;
+  margin: 3rem;
+}
+.add > h4 {
+  color: #04032b;
+  font-weight: 700;
+}
+.view_client,
+.view_client_content {
+  display: flex;
+  flex-direction: row;
+  width: 100% !important;
+  align-items: center;
+  justify-content: space-between;
+  color: #04032b;
+  font-weight: 900;
+}
+.view_client_body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.view_client_content {
+  font-weight: 400 !important;
+}
+.view_client > div {
+  flex: 1;
+  justify-content: space-evenly;
+  align-items: center;
+  display: flex;
+
+  flex-direction: column;
+}
+.view_client > div > p {
+  width: 50%;
+  text-align: left !important;
+}
+.pagination_box {
+  margin-top: 15px;
+  height: 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0.8rem;
+}
+.dropdown_input_container {
+  position: relative;
+  width: 4rem;
+}
+
+.dropdown_icon_container {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  margin-left: 1rem;
+}
+
+.dropdown_icon {
+  color: #999;
+}
+.custom_toggle {
+  width: 5rem !important;
+  border: 1px solid rgb(70, 130, 227);
+}
+
+.custom_menu {
+  width: 1rem !important;
+}
+.radio_check input[type="radio"] {
+  border-color: #fa6130;
+}
+.radio_check input[type="radio"]:checked {
+  background: #fa6130;
+}
+.marker::marker {
+  color: #fa6130 !important;
+  
+}

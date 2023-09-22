@@ -1,0 +1,457 @@
+[
+  {
+    "id": 58,
+    "label": "Please select your Enterprise Classification",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 3,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null,
+    "options": [
+      {
+        "id": 92,
+        "option": "Micro"
+      },
+      {
+        "id": 93,
+        "option": "Small"
+      },
+      {
+        "id": 94,
+        "option": "Medium"
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "label": "Type of Project",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 1,
+    "field_type_id": 3,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null,
+    "options": [
+      {
+        "id": 95,
+        "option": "New"
+      },
+      {
+        "id": 96,
+        "option": "Expansion"
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "label": "Total Term Loan Amount ",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 61,
+    "label": "Disbursed Term Loan Amount",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 62,
+    "label": "Term Loan Tenure",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 63,
+    "label": "Are you a differently abled entrepreneur, women entrepreneur, and registered start-up in manufacturing sector? ",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 2,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null,
+    "options": [
+      {
+        "id": 100,
+        "option": "Yes"
+      },
+      {
+        "id": 101,
+        "option": "No"
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "label": "Are you a Young Entrepreneur below 35 years of Age on the date of sanction of Term Loan?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 2,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null,
+    "options": [
+      {
+        "id": 102,
+        "option": "Yes"
+      },
+      {
+        "id": 103,
+        "option": "No"
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "label": "Name of the Organisation",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 1,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 66,
+    "label": "Address of the Project",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 1,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 67,
+    "label": "District of the Project",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 1,
+    "field_type_id": 3,
+    "is_required": true,
+    "is_db_driven": "True",
+    "matching_criteria": "district"
+  },
+  {
+    "id": 68,
+    "label": "Taluka of the Project",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 1,
+    "field_type_id": 3,
+    "is_required": true,
+    "is_db_driven": "True",
+    "matching_criteria": "taluka"
+  },
+  {
+    "id": 70,
+    "label": "Fixed Capital Investment (building + plant & machinery + utilities + tools + equipments + other assets required for manufacturing the end product / rendering of services but not including land)\n",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": false,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 71,
+    "label": "Rate of Interest",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": false,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 72,
+    "label": "Are you Installing a captive solar power plant on your premises? (if the answer is yes then only for the existing enterprise will get the interest benefits i.e. this is for the enterprises who installs only renewable sources of energy on there premises)",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": false,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 73,
+    "label": "What is average amount of employers contribution towards provident fund over the preriod of 10 years?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": false,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 74,
+    "label": "Is Term Loan a Collateral Free Term Loan?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 2,
+    "is_required": false,
+    "is_db_driven": null,
+    "matching_criteria": null,
+    "options": [
+      {
+        "id": 106,
+        "option": "Yes"
+      },
+      {
+        "id": 107,
+        "option": "No"
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "label": "Have you taken or planning to take Quality Certification?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 2,
+    "is_required": false,
+    "is_db_driven": null,
+    "matching_criteria": null,
+    "options": [
+      {
+        "id": 104,
+        "option": "Yes"
+      },
+      {
+        "id": 105,
+        "option": "No"
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "label": "What is the Amount of Fees for Certification?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": false,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 77,
+    "label": "What is the Cost of Testing Equipment and Machinery Required for Certification?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": false,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 78,
+    "label": "Have you installed / planning to install ERP System?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 3,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null,
+    "options": [
+      {
+        "id": 108,
+        "option": "Yes"
+      },
+      {
+        "id": 109,
+        "option": "No"
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "label": "What is the Cost of Installing ERP System?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 80,
+    "label": "Have you obtained or planning to obtain ZED Certification?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 3,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null,
+    "options": [
+      {
+        "id": 109,
+        "option": "Yes"
+      },
+      {
+        "id": 110,
+        "option": "No"
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "label": "What is the Cost of ZED Certification?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 82,
+    "label": "Provide the Assistance Amount Received from Govt. Of India",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 83,
+    "label": "Have you implemented/planning to implement Information and Communication Technology?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 3,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null,
+    "options": [
+      {
+        "id": 103,
+        "option": "Yes"
+      },
+      {
+        "id": 104,
+        "option": "No"
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "label": "Provide the Expenditure related to Information and Communication Technology",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 85,
+    "label": "Have you acquired/planning to acquire any technology?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 3,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null,
+    "options": [
+      {
+        "id": 111,
+        "option": "Yes"
+      },
+      {
+        "id": 112,
+        "option": "No"
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "label": "What is the cost of Acquiring Technology?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 87,
+    "label": "Provide the Royalty Amount Paid / To Be Paid for Two Year (if any)",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  },
+  {
+    "id": 88,
+    "label": "Have you applied / planning to apply for any Patent?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 3,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null,
+    "options": [
+      {
+        "id": 113,
+        "option": "Yes"
+      },
+      {
+        "id": 114,
+        "option": "No"
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "label": "What is the cost incurred for the patent application?",
+    "industry_category_id": 18,
+    "industry_sector_id": 12,
+    "question_type_id": 2,
+    "field_type_id": 1,
+    "is_required": true,
+    "is_db_driven": null,
+    "matching_criteria": null
+  }
+]

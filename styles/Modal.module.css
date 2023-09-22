@@ -1,0 +1,59 @@
+.modalWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+  background-color: rgba(189, 189, 189, 0.41);
+  z-index: 999;
+  /* z-index: 9999;
+  opacity: 0;
+  visibility: hidden; */
+}
+
+.modalContainer {
+  position: fixed;
+  max-width: 30rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2rem 3.5rem;
+  border-radius: 0.5rem;
+  background-color: transparent;
+}
+
+.h2 {
+  font-size: 1.75rem;
+  display: flex;
+  justify-content: center;
+  line-height: 2.5;
+  margin-top: 15px;
+}
+.p {
+  font-size: 17px;
+  margin-left: 60px;
+  margin-top: 15px;
+  line-height: 1.8rem;
+  margin: 1rem 0 2rem 0;
+  color: #fff;
+  font-weight: 400;
+  /* line-break: anywhere; */
+  /* text-align: justify; */
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.modalFooterCongratulation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
