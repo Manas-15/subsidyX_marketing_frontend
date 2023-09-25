@@ -17,27 +17,19 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { IoIosArrowDropleft } from "react-icons/io";
 import withAuth from "@layouts/partials/withAuth";
+import { reportManagementAction } from "redux/Actions/reportManagementAction";
 
 function ViewReport({ data, setModalShow }) {
-  console.log(data);
+  // console.log(data);
   const router = useRouter();
   // const router = useRouter();
-  // const dispatch = useDispatch();
-
-  // const date = new Date();
-  // const formattedDate = date.toLocaleDateString("en-US", {
-  //   day: "2-digit",
-  //   month: "2-digit",
-  //   year: "numeric",
-  // });
+  const dispatch = useDispatch();
 
   const date = new Date(); // Replace this with your date variable
 
   const day = String(date.getDate()).padStart(2, "0");
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
-
-  const formattedDate = `${day}-${month}-${year}`;
 
   const subsidyReports = useSelector((state) => state?.eligibleSubsidy);
   const district_taluka_name = useSelector((state) => state?.taluka);
@@ -47,6 +39,10 @@ function ViewReport({ data, setModalShow }) {
     subsidyReports?.eligible_subsidy?.subsidies?.filter(
       (sub, idx) => sub?.id === 1
     );
+
+  useEffect(() => {
+    dispatch(reportManagementAction?.clearPDF());
+  }, []);
 
   useEffect(() => {
     if (capitalSubsidyData?.[0]?.id === 1) {
