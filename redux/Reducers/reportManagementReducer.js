@@ -53,6 +53,12 @@ export function report(state = initialState, action) {
         ...state,
         saved_page_date: action?.data,
       };
+
+    case reportManagementConstants.CLEAR_PDF_SUCCESS:
+      return {
+        ...state,
+        generate_pdf: {},
+      };
     default:
       return state;
   }

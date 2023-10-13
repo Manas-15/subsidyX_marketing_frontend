@@ -366,8 +366,8 @@ export const ReportManagementModal = (props) => {
         >
           <div className={styles.h2}>Delete Report</div>
           <div className={styles.p}>
-            Do you want to delete this report , this can't be undone, report
-            will removed from list.
+            Do you want to delete this report? This action can't be undone, and
+            the report will be removed from the list.
           </div>
 
           <div className={styles.modalFooter}>

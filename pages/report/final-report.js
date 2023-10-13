@@ -367,6 +367,7 @@ function FinalReport({ data, setModalShow }) {
     }
   }, [generatePdf]);
 
+
   return (
     <>
       <Base
