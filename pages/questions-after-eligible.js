@@ -434,7 +434,10 @@ const QuestionAfterEligible = ({ data }) => {
                       {questionData?.field_type_id === 2 && (
                         <>
                           {questionData?.options?.map((option, idx) => (
-                            <div className="d-flex justify-content-center">
+                            <div
+                              className="d-flex justify-content-center"
+                              key={idx}
+                            >
                               <input
                                 type="radio"
                                 name="subsidy"
